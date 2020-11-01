@@ -1,12 +1,12 @@
 #include "Game.h"
 #include <iostream>
 
-Game::Game(int size) : SIZE(size) {
-    this->player1 = new Player(1);
-    this->player1 = new Player(2);
+Game::Game(int size, int maxBall) {
+    this->player1 = new Player(1,  maxBall);
+    this->player2 = new Player(2, maxBall);
 
     turnTracker = true;
-    this->gameboard = new GameBoard(size, this->player1, this->player2);
+    this->gameboard = new GameBoard(size);
 }
 
 void Game::printBoardState(std::string state) const {
@@ -20,12 +20,10 @@ bool Game::makeMove(Move move, X x, Y y) {
 
     switch (move) {
         case Move::ADD: {
-            std::cout << "ADDING" << std::endl;
-
+            if (!player->hasBallsLeft()) {
+                return false;
+            }
             bool addedBall = this->gameboard->addBall(player->playerGetId(), x, y);
-
-            std::cout << addedBall << std::endl;
-
             if (addedBall) {
                 player->playerAddBall();
             }

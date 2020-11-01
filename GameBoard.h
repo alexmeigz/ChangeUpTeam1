@@ -11,7 +11,7 @@ enum class Z : int {BOTTOM = 0, CENTER = 1, TOP = 2};
 
 class GameBoard {
 public:
-    GameBoard(int size, Player * player1, Player * player2);
+    GameBoard(int size);
     int removeBall(X x, Y y);
     bool addBall(int player, X x, Y y);
     int ** getLayer(X x) const;
@@ -21,6 +21,4 @@ public:
 private:
     const int SIZE;
     GoalPost *** board;
-    Player * player1;
-    Player * player2;
 };

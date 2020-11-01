@@ -8,10 +8,7 @@ int ** create2D (int size) {
     return output;
 }
 
-GameBoard::GameBoard(int size, Player * player1, Player * player2) : SIZE(size) {
-    this->player1 = player1;
-    this->player2 = player2;
-
+GameBoard::GameBoard(int size) : SIZE(size) {
     this->board = new GoalPost ** [size];
     for (int i = 0; i < size; ++i) {
         this->board[i] = new GoalPost * [size];
