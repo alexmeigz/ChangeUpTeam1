@@ -2,9 +2,12 @@
 
 const int DIM = 3;
 const int MAX_BALLS = 16;
+const int WINNING_SCORE = 4;
+const int MOVES_PER_TURN = 3;
+const int MOVES_FIRST_TURN = 2;
 
 int main() {
-    Game game(DIM, MAX_BALLS);
+    Game game(DIM, MAX_BALLS, WINNING_SCORE, MOVES_PER_TURN, MOVES_FIRST_TURN);
 
     while(!game.finished()) {
 

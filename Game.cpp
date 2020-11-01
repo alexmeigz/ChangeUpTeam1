@@ -1,12 +1,17 @@
 #include "Game.h"
 #include <iostream>
 
-Game::Game(int size, int maxBall) {
+Game::Game(int size, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn) 
+: WINNING_SCORE(winningScore), MOVES_PER_TURN(movesPerTurn), MOVES_FIRST_TURN(movesFirstTurn) {
+    
     this->player1 = new Player(1,  maxBall);
     this->player2 = new Player(2, maxBall);
 
-    turnTracker = true;
     this->gameboard = new GameBoard(size);
+
+    this->turnTracker = true;
+    this->turn = 0;
+    this->moves = 0;
 }
 
 void Game::printBoardState(std::string state) const {
@@ -23,6 +28,8 @@ bool Game::makeMove(Move move, int x, int y) {
     /*
     
     KEEP TRACK OF TURNS
+
+    switch player for next round if movesRemaining() == 0
     
     */
             
@@ -32,14 +39,7 @@ bool Game::makeMove(Move move, int x, int y) {
                 return false;
             }
             bool addedBall = this->gameboard->addBall(player->playerGetId(), x, y);
-
-            /*
-            
-            Check for three in a row on the same x, y, z, and possibly diagonals???
-                - add / remove score of players
-
-            */
-
+            this->setScores();
             if (addedBall) {
                 player->playerAddBall();
             }
@@ -48,12 +48,7 @@ bool Game::makeMove(Move move, int x, int y) {
 
         case Move::REMOVE: {
             int playerId = this->gameboard->removeBall(x, y);
-            /*
-            
-            Check for three in a rows, might have to check all because removing changes everything
-                - add / remove score of players
-
-            */
+            this->setScores();
             switch (playerId) {
                 case 1: 
                     this->player1->playerRemoveBall();
@@ -70,6 +65,8 @@ bool Game::makeMove(Move move, int x, int y) {
 bool Game::finished() const {
     /*
     IMPLEMENT
+
+    check players' score
     */
 }
 
@@ -80,9 +77,7 @@ int Game::whoseTurn() const {
 }
 
 int Game::movesRemaining() const {
-    /*
-    IMPLEMENT
-    */
+    return this->turnMoves() - this->moves;
 }
 
 int Game::getScore(int player) const {
@@ -95,6 +90,21 @@ int Game::ballsLeft() const {
     /*
     IMPLEMENT
     */
+}
+
+void Game::setScores() {
+    /*
+    IMLEMENT
+
+    Count 3 in a rows from the getLayer functions (remember to delete array after)
+
+    I think we also have to account for the 4 remaining diagonals
+
+    */
+}
+
+int Game::turnMoves() const {
+    return this->turn == 0 ? this->MOVES_FIRST_TURN : this->MOVES_PER_TURN;
 }
 
 Game::~Game() {
