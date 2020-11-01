@@ -1,12 +1,5 @@
 #include "GameBoard.h"
-
-int ** create2D (int size) {
-    int ** output = new int * [size];
-    for (int i = 0; i < size; ++i) {
-        output[i] = new int [size];
-    }    
-    return output;
-}
+#include "utilities.h"
 
 GameBoard::GameBoard(int size) : SIZE(size) {
     this->board = new GoalPost ** [size];
@@ -19,46 +12,50 @@ GameBoard::GameBoard(int size) : SIZE(size) {
     }
 }
 
-int GameBoard::removeBall(X x, Y y) {
-    return this->board[(int)x][(int)y]->pop();
+int GameBoard::removeBall(int x, int y) {
+    return this->board[x][y]->pop();
 }
 
-bool GameBoard::addBall(int player, X x, Y y) {
-    return this->board[(int)x][(int)y]->push(player);
+bool GameBoard::addBall(int player, int x, int y) {
+    return this->board[x][y]->push(player);
 }
 
-int ** GameBoard::getLayer(X x) const {
+int ** GameBoard::getLayerX(int x) const {
     int ** output = create2D(this->SIZE);
 
     for (int y = 0; y < this->SIZE; ++y) {
-        std::vector<int> col = this->board[(int)x][y]->getPost();
+        int * col = this->board[x][y]->getPost();
         for (int z = 0; z < this->SIZE; ++z) {
             output[y][z] = col[z];
         }
+        delete col;
     }
 
     return output;
 }
 
-int ** GameBoard::getLayer(Y y) const {
+int ** GameBoard::getLayerY(int y) const {
     int ** output = create2D(this->SIZE);
 
     for (int x = 0; x < this->SIZE; ++x) {
-        std::vector<int> col = this->board[x][(int)y]->getPost();
+        int * col = this->board[x][y]->getPost();
         for (int z = 0; z < this->SIZE; ++z) {
             output[x][z] = col[z];
         }
+        delete col;
     }
 
     return output;
 }
 
-int ** GameBoard::getLayer(Z z) const {
+int ** GameBoard::getLayerZ(int z) const {
     int ** output = create2D(this->SIZE);
 
     for (int x = 0; x < this->SIZE; ++x) {
         for (int y = 0; y < this->SIZE; ++y) {
-            output[x][y] = this->board[x][y]->getPost()[(int)z];
+            int * col = this->board[x][y]->getPost();
+            output[x][y] = col[z];
+            delete col;
         }
     }
 

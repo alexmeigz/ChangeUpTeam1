@@ -7,7 +7,7 @@ public:
     GoalPost(int size);
     int pop(); //player id: 1, 2. if empty return 0
     bool push(int id);
-    std::vector<int> getPost() const;
+    int * getPost() const;
 private:
     std::vector<int> post;
 };
