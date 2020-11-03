@@ -10,4 +10,5 @@ public:
     int * getPost() const;
 private:
     std::vector<int> post;
+    const int SIZE;
 };

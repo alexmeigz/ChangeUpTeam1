@@ -22,5 +22,5 @@ public:
     ~GameBoard();
 private:
     const int SIZE;
-    GoalPost *** board; //2d array of GoalPost pointers - since SIZE is const maybe you don't have to dynamically alloc??
+    GoalPost *** board;
 };

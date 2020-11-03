@@ -1,10 +1,6 @@
 #include "GoalPost.h"
 
-GoalPost::GoalPost(int size) {
-    /*
-    IMPLEMENT
-    */
-}
+GoalPost::GoalPost(int size) : SIZE(size) {}
 
 int GoalPost::pop() { //player id: 1, 2. if empty return 0
     /*
@@ -19,7 +15,13 @@ bool GoalPost::push(int id) {
 }
 
 int * GoalPost::getPost() const {
+    int * output = new int [this->SIZE];
+
     /*
     IMPLEMENT
+    fill array with 0's if empty
+
     */
+
+    return output;
 }

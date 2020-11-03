@@ -1,8 +1,8 @@
 #include "Game.h"
 #include <iostream>
 
-Game::Game(int size, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn) 
-: WINNING_SCORE(winningScore), MOVES_PER_TURN(movesPerTurn), MOVES_FIRST_TURN(movesFirstTurn) {
+Game::Game(int size, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn) 
+: WINNING_SCORE(winningScore), MOVES_PER_TURN(movesPerTurn), MOVES_FIRST_TURN(movesFirstTurn), REMOVES_PER_TURN(removesPerTurn) {
     
     this->player1 = new Player(1,  maxBall);
     this->player2 = new Player(2, maxBall);
@@ -23,32 +23,46 @@ void Game::printBoardState(std::string state) const {
 }
 
 bool Game::makeMove(Move move, int x, int y) {
-    Player * player = turnTracker ? this->player1 : this->player2;
+    bool result = this->tryMove(move, x, y);
 
     /*
     
-    KEEP TRACK OF TURNS
+    KEEP TRACK OF TURNS, MOVES, REMOVES only if tryMove was successful
 
     switch player for next round if movesRemaining() == 0
     
     */
-            
+}
+
+bool Game::tryMove(Move move, int x, int y) {
+    /*
+    
+    Veryify 0<=x<SIZE, 0<=y<SIZE
+    
+    */
     switch (move) {
         case Move::ADD: {
+            Player * player = this->currentPlayer();
+
             if (!player->ballsLeft()) {
                 return false;
             }
             bool addedBall = this->gameboard->addBall(player->playerGetId(), x, y);
-            this->setScores();
+
             if (addedBall) {
                 player->playerAddBall();
             }
+
             return addedBall;
         }
 
         case Move::REMOVE: {
+            if (!this->canRemove()) {
+                return false;
+            }
+
             int playerId = this->gameboard->removeBall(x, y);
-            this->setScores();
+            
             switch (playerId) {
                 case 1: 
                     this->player1->playerRemoveBall();
@@ -60,6 +74,10 @@ bool Game::makeMove(Move move, int x, int y) {
         }
     }
     return false;
+}
+
+Player * Game::currentPlayer() const {
+    return turnTracker ? this->player1 : this->player2;
 }
 
 bool Game::finished() const {
@@ -92,9 +110,15 @@ int Game::ballsLeft() const {
     */
 }
 
+bool Game::canRemove() const {
+    /*
+    IMPLEMENT
+    */
+}
+
 void Game::setScores() {
     /*
-    IMLEMENT
+    IMPLEMENT
 
     Count 3 in a rows from the getLayer functions (remember to delete array after)
 
