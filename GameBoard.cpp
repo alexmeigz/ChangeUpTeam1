@@ -1,73 +1,60 @@
 #include "GameBoard.h"
 #include "utilities.h"
 
-GameBoard::GameBoard(int size) : SIZE(size) {
-    this->board = new GoalPost ** [size];
-    for (int i = 0; i < size; ++i) {
-        this->board[i] = new GoalPost * [size];
-
-        for (int j = 0; j < size; ++j) {
-            this->board[i][j] = new GoalPost(size);
-        }
-    }
+GameBoard::GameBoard(const int size) : SIZE(size) {
+    init2D<GoalPost>(this->board, this->SIZE);
 }
 
-int GameBoard::removeBall(int x, int y) {
-    return this->board[x][y]->pop();
+bool GameBoard::removeBall(int x, int y) {
+    return this->board[x][y].pop();
 }
 
 bool GameBoard::addBall(int player, int x, int y) {
-    return this->board[x][y]->push(player);
+    return this->board[x][y].push(player);
 }
 
-int ** GameBoard::getLayerX(int x) const {
-    int ** output = create2D(this->SIZE);
+std::vector<int> GameBoard::fillPost(std::vector<int> post) const {
+    std::vector<int> output = post;
+    
+    // probably a better way to do idk
+    while(output.size() != this->SIZE) {
+        output.push_back(0);
+    }
+
+    return output;
+}
+
+Vector2D<int> GameBoard::getLayerX(int x) const {
+    Vector2D<int> output = init2D<int>(this->SIZE);
 
     for (int y = 0; y < this->SIZE; ++y) {
-        int * col = this->board[x][y]->getPost();
-        for (int z = 0; z < this->SIZE; ++z) {
-            output[y][z] = col[z];
-        }
-        delete col;
+        std::vector<int> col = this->board[x][y].getPost();
+        output[y] = this->fillPost(col);
     }
 
     return output;
 }
 
-int ** GameBoard::getLayerY(int y) const {
-    int ** output = create2D(this->SIZE);
+Vector2D<int> GameBoard::getLayerY(int y) const {
+    Vector2D<int> output = init2D<int>(this->SIZE);
 
     for (int x = 0; x < this->SIZE; ++x) {
-        int * col = this->board[x][y]->getPost();
-        for (int z = 0; z < this->SIZE; ++z) {
-            output[x][z] = col[z];
-        }
-        delete col;
+        std::vector<int> col = this->board[x][y].getPost();
+        output[x] = this->fillPost(col);
     }
 
     return output;
 }
 
-int ** GameBoard::getLayerZ(int z) const {
-    int ** output = create2D(this->SIZE);
+Vector2D<int> GameBoard::getLayerZ(int z) const {
+    Vector2D<int> output = init2D<int>(this->SIZE);
 
     for (int x = 0; x < this->SIZE; ++x) {
         for (int y = 0; y < this->SIZE; ++y) {
-            int * col = this->board[x][y]->getPost();
-            output[x][y] = col[z];
-            delete col;
+            std::vector<int> col = this->board[x][y].getPost();
+            output[x][y] = col.size() > z ? col[z] : 0;
         }
     }
 
     return output;
-}
-
-GameBoard::~GameBoard() {
-    for (int i = 0; i < this->SIZE; ++i) {
-        for (int j = 0; j < this->SIZE; ++j) {
-            delete this->board[i][j];
-        }
-        delete this->board[i];
-    }
-    delete this->board;
 }
