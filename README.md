@@ -7,3 +7,4 @@ Brandon Lee
 - Brandon Lee <br/>
 - Amy Hao
 - Matthew Ho
+- Alex Rudolph
