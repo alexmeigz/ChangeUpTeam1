@@ -1,6 +1,5 @@
 #include "GameBoard.h"
 
-#include <iostream>
 GameBoard::GameBoard(const int size) : SIZE(size), board(size) {
     for (int i = 0; i < this->SIZE; ++i) {
         // set each element to a vector of size SIZE, passing in SIZE to the constructor of GoalPost
@@ -52,6 +51,7 @@ Vector2D<int> GameBoard::getLayerZ(int z) const {
     Vector2D<int> output(this->SIZE);
 
     for (int x = 0; x < this->SIZE; ++x) {
+        output[i] = std::vector<int>(this->SIZE);
         for (int y = 0; y < this->SIZE; ++y) {
             std::vector<int> col = this->board[x][y].getPost();
             output[x][y] = this->fillPost(col)[z];
