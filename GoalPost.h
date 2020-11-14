@@ -11,5 +11,5 @@ public:
     vector<int> getPost() const;
 private:
     vector<int> post;
-    int size;
+    const int size;
 };
