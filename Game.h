@@ -4,7 +4,7 @@ using namespace std;
 class Game
 {
     public:
-        Game(int size, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn);
+        Game(int size, int maxBalls, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn);
         // Pre-Condition: Game parameters	
 		//post-condition: initializes game with desired gameboard size, max number of balls per player, the winning score,
         // moves a player can make per turn, moves a player can make the first turn, max number of removes a player can make in a turn and initializes the two players and gameboard
