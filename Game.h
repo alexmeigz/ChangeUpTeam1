@@ -7,7 +7,7 @@ using namespace std;
 class Game
 {
     public:
-        Game(int size, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn);
+        Game(int size, int numPlayers, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn);
         // Pre-Condition: Game parameters	
 		//post-condition: initializes game with desired gameboard size, max number of balls per player, the winning score,
         // moves a player can make per turn, moves a player can make the first turn, max number of removes a player can make in a turn and initializes the two players and gameboard
@@ -46,9 +46,8 @@ class Game
 
     private:
         GameBoard gameboard; //gameboard structure 
-		Player players_arr[]
+		std::vector<Player> player_arr;
         bool turnTracker; //true = player 1’s turn; false = player 2’s turn
-		const int NUM_PLAYERS = 2;
 		int turn;
 		int moves;
 		int removes;
@@ -56,6 +55,7 @@ class Game
 		const int MOVES_PER_TURN;
 		const int MOVES_FIRST_TURN;
 		const int REMOVES_PER_TURN;
+        const int NUM_PLAYERS;
 
         int maxMoves() const;
         //precondition: n/a
@@ -65,7 +65,7 @@ class Game
         //Pre-Condition:  no input required
 		//Post-Condition:  calculates scores for each player
 
-        bool tryMove(Move move, int x, int y);
+        int tryMove(std::string move, int x, int y);
         //Pre-Condition: the type of move (add/remove) and position on board
 		//Post-Condition:  returns true if the move was successful  
 }
