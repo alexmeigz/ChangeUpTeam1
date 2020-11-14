@@ -9,4 +9,4 @@ Team Members: <br/>
 - Alex Rudolph
 - Max Shen
 - Kelly Lin
-
+- William Huang
