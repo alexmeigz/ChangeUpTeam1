@@ -1,6 +1,9 @@
 using namespace std;
 #include <string>
 
+#include "GameBoard.h"
+#include "Player.h"
+
 class Game
 {
     public:
@@ -50,9 +53,9 @@ class Game
 		int moves;
 		int removes;
 		const int WINNING_SCORE;
-		const int MOVES_PER_TURN = 3;
-		const int MOVES_FIRST_TURN = 2;
-		const int REMOVES_PER_TURN = 1;
+		const int MOVES_PER_TURN;
+		const int MOVES_FIRST_TURN;
+		const int REMOVES_PER_TURN;
 
         int maxMoves() const;
         //precondition: n/a
