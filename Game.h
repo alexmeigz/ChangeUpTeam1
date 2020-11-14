@@ -49,6 +49,7 @@ class Game
 		int turn;
 		int moves;
 		int removes;
+		int maxBalls;
 		const int WINNING_SCORE;
 		const int MOVES_PER_TURN = 3;
 		const int MOVES_FIRST_TURN = 2;
@@ -64,5 +65,5 @@ class Game
 
         bool tryMove(Move move, int x, int y);
         //Pre-Condition: the type of move (add/remove) and position on board
-		//Post-Condition:  returns true if the move was successful  
+	//Post-Condition:  returns true if the move was successful  
 }
