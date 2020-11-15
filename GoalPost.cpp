@@ -11,14 +11,12 @@ int GoalPost::pop() //player id: 1, 2. if empty return 0
     return playerID;
 }
 
-bool GoalPost::push(int id)
-{
-    if(post.size() >= 0 || post.size() < this->size)
-    {
-        post.push_back(id);
-        return true;
+bool GoalPost::push(int id) {
+    if(post.size() < 0 || post.size() >= this->size) {
+        return false;
     }
-    return false;
+    post.push_back(id);
+    return true;
 }
 
 vector<int> GoalPost::getPost() const 

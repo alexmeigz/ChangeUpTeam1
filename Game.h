@@ -60,6 +60,7 @@ class Game
 		const int MOVES_FIRST_TURN;
 		const int REMOVES_PER_TURN;
         const int NUM_PLAYERS;
+        const int SIZE;
 
 	vector<int> layerDiagScore(char c, int i);
         void set3dDiagScore();

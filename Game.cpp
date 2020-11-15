@@ -1,12 +1,13 @@
 #include "Game.h"
 
 Game::Game(int size, int numPlayers, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn)
-	: WINNING_SCORE(winningScore),
-	MOVES_PER_TURN(movesPerTurn),
-	MOVES_FIRST_TURN(movesFirstTurn),
-	REMOVES_PER_TURN(removesPerTurn),
-	NUM_PLAYERS(numPlayers),
-	gameboard(size)
+  : WINNING_SCORE(winningScore),
+    MOVES_PER_TURN(movesPerTurn),
+    MOVES_FIRST_TURN(movesFirstTurn),
+    REMOVES_PER_TURN(removesPerTurn),
+    NUM_PLAYERS(numPlayers),
+    gameboard(size),
+    SIZE(size)
 {    
 	turnTracker = true;
 	moves = 0;
@@ -45,11 +46,11 @@ bool Game::makeMove(std::string move, int x, int y) {
 		return false;
 	}
 
-	if (move == "remove") {
+	if (move == "REMOVE") {
 		++this->removes;
 		this->player_arr[result - 1].playerRemoveBall();
 	}
-	else if (move == "add") {
+	else if (move == "ADD") {
 		this->player_arr[this->whoseTurn() - 1].playerAddBall();
 	}
 
@@ -63,9 +64,7 @@ bool Game::makeMove(std::string move, int x, int y) {
 		this->turnTracker = !this->turnTracker;
 		++this->turn;
 	}
-
 	this->setScores();
-
 	return true;
 }
 
@@ -74,10 +73,10 @@ int Game::maxMoves() const {
 }
 
 int Game::tryMove(std::string move, int x, int y) {
-	if (move == "add" && ballsLeft()) {
+	if (move == "ADD" && ballsLeft()) {
 		return this->gameboard.addBall(this->whoseTurn(), x, y);
 	}
-	else if (move == "remove" && canRemove()) {
+	else if (move == "REMOVE" && canRemove()) {
 		return this->gameboard.removeBall(x, y);
 	}
 
@@ -105,7 +104,7 @@ vector<int> Game::layerDiagScore(char c, int i) {
 	layer = gameboard.getLayer(c, i);
 	vector<int> diag1, diag2, to_return = {0, 0};
 
-	int mid = layer[0][0];
+	int mid = layer[1][1];
 	if(mid == 0){
 		return to_return;
 	}
@@ -113,22 +112,26 @@ vector<int> Game::layerDiagScore(char c, int i) {
 	diag1.push_back(layer[0][0]);
 	diag1.push_back(layer[1][1]);
 	diag1.push_back(layer[2][2]);
-	diag1.push_back(layer[0][2]);
-	diag1.push_back(layer[1][1]);
-	diag1.push_back(layer[2][0]);
+	diag2.push_back(layer[0][2]);
+	diag2.push_back(layer[1][1]);
+	diag2.push_back(layer[2][0]);
 
 	int diag1s = isSame(diag1);
 	int diag2s = isSame(diag2);
 	to_return[mid - 1] = diag1s + diag2s;
+    
 	return to_return;
 }
 
 void Game::setScores() {
-	set3dDiagScore();
-	set2dDiagScore();
-	setZScore();
-	setXScore();
-	setYScore();
+    player_arr[0].setScore(0);
+    player_arr[1].setScore(0);
+
+    set3dDiagScore();
+    set2dDiagScore();
+    setZScore();
+    setXScore();
+    setYScore();
 }
 
 void Game::set3dDiagScore() {
@@ -173,16 +176,70 @@ void Game::set2dDiagScore() {
 	return;
 }
 
-void Game::setZScore() {
+// checks if all of the columns in a 2d vector have same value and adds corresponding score
+void countVertical(Vector2D<int> layer, int &x, int &y) {
+    // go through each columns:
+    for (int i = 0; i < layer.size(); ++i) {
+        // first value in column:
+        int player = layer[i][0];
 
+        // if player had ball and the column is the same, increment values
+        if (player && isSame(layer[i])) {
+            player == 1 ? ++x : ++y;
+        }
+    }
+}
+
+// checks if all of the rows in a 2d vector have same value and adds corresponding score
+void countHorizontal(Vector2D<int> layer, int &x, int &y) {
+    for (int i = 0; i < layer.size(); ++i) {
+        // first value in row
+        int player = layer[0][i];
+
+        // build up row
+        std::vector<int> row(layer[i].size());
+        for (int j = 0; j < row.size(); ++j) {
+            row[j] = layer[j][i];
+        }
+
+        // check with row
+        if (player && isSame(row)) {
+            player == 1 ? ++x : ++y;
+        }
+    }
+}
+
+void Game::setZScore() {
+    int x = 0, y = 0;
+    for (int i = 0; i < SIZE; ++i) {
+        // use the x layers to get the columns
+        Vector2D<int> layer = gameboard.getLayerX(i);
+        countVertical(layer, x, y);
+    }
+    player_arr[0].addScore(x);
+    player_arr[1].addScore(y);
 }
 
 void Game::setXScore() {
-
+    int x = 0, y = 0;
+    for (int i = 0; i < SIZE; ++i) {
+        // columns of z layer are the x rows
+        Vector2D<int> layer = gameboard.getLayerZ(i);
+        countVertical(layer, x, y);
+    }
+    player_arr[0].addScore(x);
+    player_arr[1].addScore(y);
 }
 
 void Game::setYScore() {
-
+    int x = 0, y = 0;
+    for (int i = 0; i < SIZE; ++i) {
+        // rows of z layer are the y rows:
+        Vector2D<int> layer = gameboard.getLayerZ(i);
+        countHorizontal(layer, x, y);
+    }
+    player_arr[0].addScore(x);
+    player_arr[1].addScore(y);
 }
 
 int Game::ballsLeft() const {
