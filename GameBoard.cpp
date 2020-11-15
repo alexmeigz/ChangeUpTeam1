@@ -84,13 +84,13 @@ void GameBoard::displayBoard() const {
 	string display = 
 		"        *     *     *\n"
 		"        *     *     *\n"
-		"        * --- * --- *\n"  
+		"        * --- * --- *    0\n"  
 		"    *  /  *  /  *  /\n"
 		"    * /   * /   * /\n" 
-		"    * --- * --- *\n"
+		"    * --- * --- *    1\n"
 		"*  /  *  /  *  /\n"
 		"* /   * /   * /\n"
-		"* --- * --- *\n";
+		"* --- * --- *    2 \n";
 
 	vector<int> ball_indices;
 	for(int i = 0; i < display.size(); i++){
@@ -113,6 +113,8 @@ void GameBoard::displayBoard() const {
 	for(int i = 0; i < 27; i++){
 		display = drawBall(display, ball_indices[i], balls[i]);
 	}
+
+    display += "0     1     2 X\\Y\n";
 
 	cout << display << endl;
 	return;
