@@ -96,7 +96,31 @@ int Game::getScore(int player) const {
 }
 
 void Game::setScores() {
+    set3dDiagScore();
+    set2dDiagScore();
+    setZScore();
+    setXScore();
+    setYScore();
+}
 
+void Game::set3dDiagScore() {
+
+}
+
+void Game::set2dDiagScore() {
+
+}
+
+void Game::setZScore() {
+
+}
+
+void Game::setXScore() {
+
+}
+
+void Game::setYScore() {
+    
 }
 
 int Game::ballsLeft() const {
