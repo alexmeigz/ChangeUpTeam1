@@ -11,7 +11,7 @@ using Vector2D = std::vector<std::vector<T> >;
 class GameBoard {
 public:
     GameBoard(int size);
-    bool removeBall(int x, int y);
+    int removeBall(int x, int y);
     bool addBall(int player, int x, int y);
 
     Vector2D<int> getLayerX(int x) const;

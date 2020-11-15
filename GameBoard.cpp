@@ -7,11 +7,19 @@ GameBoard::GameBoard(const int size) : SIZE(size), board(size) {
     }
 }
 
-bool GameBoard::removeBall(int x, int y) {
+int GameBoard::removeBall(int x, int y) {
+    if (x < 0 || x >= this->SIZE || y < 0 || y >= this->SIZE) {
+        return false;
+    }
+
     return this->board[x][y].pop();
 }
 
 bool GameBoard::addBall(int player, int x, int y) {
+    if (x < 0 || x >= this->SIZE || y < 0 || y >= this->SIZE) {
+        return false;
+    }
+
     return this->board[x][y].push(player);
 }
 
