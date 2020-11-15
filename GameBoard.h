@@ -1,10 +1,12 @@
 #pragma once
 
+#include <iostream>
 #include <vector>
+#include <string>
 #include "GoalPost.h"
 
 template <class T>
-using Vector2D = std::vector<std::vector<T>>;
+using Vector2D = std::vector<std::vector<T> >;
 
 class GameBoard {
 public:
@@ -15,6 +17,7 @@ public:
     Vector2D<int> getLayerX(int x) const;
     Vector2D<int> getLayerY(int y) const;
     Vector2D<int> getLayerZ(int z) const;
+    void displayBoard() const;
 private:
     std::vector<int> fillPost(const std::vector<int> &post) const;
     
