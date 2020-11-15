@@ -59,6 +59,7 @@ class Game
 		const int MOVES_FIRST_TURN;
 		const int REMOVES_PER_TURN;
         const int NUM_PLAYERS;
+        const int SIZE;
 
         void set3dDiagScore();
         void set2dDiagScore();
