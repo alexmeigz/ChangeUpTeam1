@@ -57,8 +57,18 @@ Vector2D<int> GameBoard::getLayerZ(int z) const {
             output[x][y] = this->fillPost(col)[z];
         }
     }
-
     return output;
+}
+
+Vector2D<int> GameBoard::getLayer(char c, int i) const {
+	switch(c){
+		case 'x':
+			return getLayerX(i);
+		case 'y':
+			return getLayerY(i);
+		case 'z':
+			return getLayerZ(i);
+	}
 }
 
 string drawBall(string skel, int index, int id){
