@@ -65,8 +65,21 @@ Vector2D<int> GameBoard::getLayerZ(int z) const {
             output[x][y] = this->fillPost(col)[z];
         }
     }
-
     return output;
+}
+
+vector<vector<int> > GameBoard::getLayer(char c, int i) const {
+	switch(c){
+		case 'x':
+			return getLayerX(i);
+		case 'y':
+			return getLayerY(i);
+		case 'z':
+			return getLayerZ(i);
+		default:
+			return {{-1}};
+	}
+	return {{-1}};
 }
 
 string drawBall(string skel, int index, int id){
@@ -100,7 +113,6 @@ void GameBoard::displayBoard() const {
 	}
 
 	vector<int> balls;
-	//int balls[27];
 
 	for(int y = 0; y < 3; y++){
 		for(int z = 2; z >= 0; z--){

@@ -21,10 +21,10 @@ int main() {
               MOVES_FIRST_TURN, 
               REMOVES_PER_TURN);
 
-    std::regex input_rgx("(ADD/REMOVE) ([0-9) ([0-9])");
+    std::regex input_rgx("(ADD|REMOVE) (\\d) (\\d)");
 
+    std::cout << "---------------------------------------------------------------------------\n"; 
     while (!game.finished()) {
-        std::cout << "---------------------------------------------------------------------------\n"; 
         game.displayBoard();
         std::cout << "---------------------------------------------------------------------------\n\n"; 
         std::cout << "Player 1: " << game.getScore(1) << "\nPlayer 2: " << game.getScore(2) << "\n\n";
@@ -44,18 +44,15 @@ int main() {
             std::string input;
             std::getline(std::cin, input);
             std::smatch matches;
-            
-            std::cout << input << std::endl;
 
             if (std::regex_search(input, matches, input_rgx)) {
-                move = matches.str(1);
-                std::cout << move << "," << matches.str(2) << "," << matches.str(3) << std::endl;
+                move = matches[1].str();
+                x = std::stoi(matches[2].str());
+                y = std::stoi(matches[3].str());
             }
         } while(!game.makeMove(move, x, y));
         
         std::cout << "---------------------------------------------------------------------------\n\n"; 
-
-        break;
     }
 
 }

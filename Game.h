@@ -1,11 +1,12 @@
 #pragma once
 
-using namespace std;
 #include <string>
 #include <vector>
 
 #include "GameBoard.h"
 #include "Player.h"
+
+using namespace std;
 
 class Game
 {
@@ -61,6 +62,7 @@ class Game
         const int NUM_PLAYERS;
         const int SIZE;
 
+	vector<int> layerDiagScore(char c, int i);
         void set3dDiagScore();
         void set2dDiagScore();
         void setZScore();
