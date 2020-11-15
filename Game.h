@@ -1,11 +1,12 @@
 #pragma once
 
-using namespace std;
 #include <string>
 #include <vector>
 
 #include "GameBoard.h"
 #include "Player.h"
+
+using namespace std;
 
 class Game
 {
@@ -59,6 +60,14 @@ class Game
 		const int MOVES_FIRST_TURN;
 		const int REMOVES_PER_TURN;
         const int NUM_PLAYERS;
+        const int SIZE;
+
+	vector<int> layerDiagScore(char c, int i);
+        void set3dDiagScore();
+        void set2dDiagScore();
+        void setZScore();
+        void setYScore();
+        void setXScore();
 
 		int maxMoves() const;
 		//precondition: n/a

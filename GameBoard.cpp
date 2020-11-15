@@ -65,8 +65,21 @@ Vector2D<int> GameBoard::getLayerZ(int z) const {
             output[x][y] = this->fillPost(col)[z];
         }
     }
-
     return output;
+}
+
+vector<vector<int> > GameBoard::getLayer(char c, int i) const {
+	switch(c){
+		case 'x':
+			return getLayerX(i);
+		case 'y':
+			return getLayerY(i);
+		case 'z':
+			return getLayerZ(i);
+		default:
+			return {{-1}};
+	}
+	return {{-1}};
 }
 
 string drawBall(string skel, int index, int id){
@@ -84,13 +97,13 @@ void GameBoard::displayBoard() const {
 	string display = 
 		"        *     *     *\n"
 		"        *     *     *\n"
-		"        * --- * --- *\n"  
+		"        * --- * --- *    0\n"  
 		"    *  /  *  /  *  /\n"
 		"    * /   * /   * /\n" 
-		"    * --- * --- *\n"
+		"    * --- * --- *    1\n"
 		"*  /  *  /  *  /\n"
 		"* /   * /   * /\n"
-		"* --- * --- *\n";
+		"* --- * --- *    2 \n";
 
 	vector<int> ball_indices;
 	for(int i = 0; i < display.size(); i++){
@@ -100,7 +113,6 @@ void GameBoard::displayBoard() const {
 	}
 
 	vector<int> balls;
-	//int balls[27];
 
 	for(int y = 0; y < 3; y++){
 		for(int z = 2; z >= 0; z--){
@@ -113,6 +125,8 @@ void GameBoard::displayBoard() const {
 	for(int i = 0; i < 27; i++){
 		display = drawBall(display, ball_indices[i], balls[i]);
 	}
+
+    display += "0     1     2 X\\Y\n";
 
 	cout << display << endl;
 	return;

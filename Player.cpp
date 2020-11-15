@@ -44,3 +44,7 @@ int Player::getScore() const{
 void Player::setScore(int newScore){
     score = newScore;
 }
+
+void Player::addScore(int score) {
+    this->score += score;
+}
