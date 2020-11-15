@@ -41,6 +41,6 @@ int Player::getScore() const{
 
 //Pre-Condition:  input: the player’s new score
 //Post-Condition:  update the player’s score to the new score
-void Player::setScore(int score){
-    this->score = score;
+void Player::setScore(int newScore){
+    score = newScore;
 }
