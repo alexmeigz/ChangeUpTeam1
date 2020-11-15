@@ -17,6 +17,7 @@ public:
     Vector2D<int> getLayerX(int x) const;
     Vector2D<int> getLayerY(int y) const;
     Vector2D<int> getLayerZ(int z) const;
+    Vector2D<int> getLayer(char c, int i) const;
     void displayBoard() const;
 private:
     std::vector<int> fillPost(const std::vector<int> &post) const;
