@@ -28,12 +28,16 @@ class Player {
 		//Post-Condition:  update the player’s score to the new score
 		void setScore(int score);
 
-	protected:
+		void addScore(int score);
+
+	private:
 		//integer variable to keep explicit title of each player
-		int playerId;
+		const int playerId;
 		
 		//integer variable to keep track of how many balls each individual player has
 		int playerBallCount;
 		
 		int score;
+
+		const int maxBalls;	
 };
