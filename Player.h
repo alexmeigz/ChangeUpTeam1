@@ -28,6 +28,8 @@ class Player {
 		//Post-Condition:  update the player’s score to the new score
 		void setScore(int score);
 
+		void addScore(int score);
+
 	private:
 		//integer variable to keep explicit title of each player
 		const int playerId;

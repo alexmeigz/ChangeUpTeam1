@@ -60,6 +60,12 @@ class Game
 		const int REMOVES_PER_TURN;
         const int NUM_PLAYERS;
 
+        void set3dDiagScore();
+        void set2dDiagScore();
+        void setZScore();
+        void setYScore();
+        void setXScore();
+
 		int maxMoves() const;
 		//precondition: n/a
 		//postcondition: returns the number of max moves;
