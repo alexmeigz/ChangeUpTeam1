@@ -1,5 +1,8 @@
+#pragma once
+
 using namespace std;
 #include <string>
+#include <vector>
 
 #include "GameBoard.h"
 #include "Player.h"
@@ -68,4 +71,4 @@ class Game
         int tryMove(std::string move, int x, int y);
         //Pre-Condition: the type of move (add/remove) and position on board
 		//Post-Condition:  returns true if the move was successful  
-}
+};

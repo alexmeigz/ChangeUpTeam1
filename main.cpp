@@ -9,7 +9,6 @@ const int MOVES_PER_TURN = 3;
 const int MOVES_FIRST_TURN = 2;
 const int REMOVES_PER_TURN = 1;
 
-
 int main() {
     Game game(SIZE, 
               NUM_PLAYERS, 
@@ -18,4 +17,5 @@ int main() {
               MOVES_PER_TURN, 
               MOVES_FIRST_TURN, 
               REMOVES_PER_TURN);
+
 }

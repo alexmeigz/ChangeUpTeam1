@@ -59,7 +59,7 @@ Vector2D<int> GameBoard::getLayerZ(int z) const {
     Vector2D<int> output(this->SIZE);
 
     for (int x = 0; x < this->SIZE; ++x) {
-        output[i] = std::vector<int>(this->SIZE);
+        output[x] = std::vector<int>(this->SIZE);
         for (int y = 0; y < this->SIZE; ++y) {
             std::vector<int> col = this->board[x][y].getPost();
             output[x][y] = this->fillPost(col)[z];
