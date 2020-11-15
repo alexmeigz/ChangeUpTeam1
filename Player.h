@@ -36,6 +36,4 @@ class Player {
 		int playerBallCount;
 		
 		int score;
-
-		int playerBallCount;	
 };
