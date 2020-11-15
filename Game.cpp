@@ -1,27 +1,36 @@
 #include "Game.h"
-#include <string>
+#include "Player.h"
 
-Game::Game(int size, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn)
- : WINNING_SCORE(winningScore), MOVES_PER_TURN(movesPerTurn), MOVES_FIRST_TURN(movesFirstTurn), REMOVES_PER_TURN(removesPerTUrn) {
-    this->gameboard = GameBoard(size);
-    
- }
+using namespace std;
 
-int Game::maxMoves() const {
-    return turn == 1 ? MOVES_FIRST_TURN : MOVES_PER_TURN;
+bool Game::canRemove() const {
+	return removes < 1 && moves < 3;
 }
 
-void Game::setScores() {
-
+int Game::whoseTurn() const {
+	if(turnTracker)
+		return 1;
+	return 2;
 }
 
-bool tryMove(std::string move, int x, int y) {
-    if (move == "add") {
-        return this->gameboard.addBall(this->whoseTurn(), x, y);
-    }
-    else if (move == "remove") {
-        return this->gameboard.removeBall(x, y);
-    }
+int Game::getScore(int player) const {
+	return players[!turnTracker].getScore();
+}
 
-    return false;
+
+
+string drawBall(string skel, int index, int id){
+	string replacement;
+	if(!id){
+		replacement = to_string(id);
+	} else {
+		replacement = " ";
+	}
+
+	return skel.replace(index, 1, replacement);
+}
+
+void Game::displayBoard() const {
+	gameboard.displayBoard();
+	return;
 }
