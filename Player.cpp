@@ -1,10 +1,13 @@
 #include "Player.h"
 
+#include <iostream>
+
 //Pre-Condition: input is a string value for the team name
 //Post-Condition: sets variable teamName to the input argument, sets playerBallCount to 16
-Player::Player(int id, int maxBalls) : playerId(id), maxBalls(maxBalls) {}
-
-		
+Player::Player(int id, int maxBalls) : playerId(id), maxBalls(maxBalls) {
+    playerBallCount = 0;
+    score = 0;
+}
 
 //Pre-Condition: no input required
 //Post-Condition:  decrease the value of variable playerBallCount by 1

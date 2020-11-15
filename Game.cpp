@@ -1,5 +1,4 @@
 #include "Game.h"
-#include <string>
 
 Game::Game(int size, int numPlayers, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn)
   : WINNING_SCORE(winningScore),
@@ -7,14 +6,18 @@ Game::Game(int size, int numPlayers, int maxBall, int winningScore, int movesPer
     MOVES_FIRST_TURN(movesFirstTurn),
     REMOVES_PER_TURN(removesPerTurn),
     NUM_PLAYERS(numPlayers),
-    gameboard(size),
-    player_arr(numPlayers)
+    gameboard(size)
 {    
+    turnTracker = true;
+    moves = 0;
+    removes = 0;
+    turn = 1;
 
-    for (int i = 1; i <= numPlayers; ++i) {
-        this->player_arr[i] = Player(i, maxBall);
-    }   
- }
+    Player player1(1, maxBall);
+    Player player2(2, maxBall);
+
+    this->player_arr = std::vector<Player>{player1, player2}; 
+}
 
 int Game::maxMoves() const {
     return turn == 1 ? MOVES_FIRST_TURN : MOVES_PER_TURN;
@@ -22,6 +25,14 @@ int Game::maxMoves() const {
 
 void Game::setScores() {
 
+}
+
+int Game::whoseTurn() const {
+    return 1;
+}
+
+bool Game::canRemove() const {
+    return false;
 }
 
 bool Game::finished() const {
@@ -34,16 +45,6 @@ bool Game::finished() const {
 }
 
 bool Game::makeMove(std::string move, int x, int y) {
-    Player currentPlayer = this->player_arr[this->whoseTurn() - 1];
-
-    // if they aren't allowed to remove or add:
-    if (move == "remove" && this->removes == this->REMOVES_PER_TURN) {
-        return false;
-    }
-    else if (move == "add" && currentPlayer.ballsLeft() == 0) {
-        return false;
-    }
-
     // try to make the move:
     int result = this->tryMove(move, x, y);
 
@@ -72,15 +73,33 @@ bool Game::makeMove(std::string move, int x, int y) {
     }
 
     this->setScores();
+
+    return true;
 }
 
 int Game::tryMove(std::string move, int x, int y) {
-    if (move == "add") {
+    if (move == "add" && ballsLeft()) {
         return this->gameboard.addBall(this->whoseTurn(), x, y);
     }
-    else if (move == "remove") {
+    else if (move == "remove" && canRemove()) {
         return this->gameboard.removeBall(x, y);
     }
 
     return false;
+}
+
+int Game::movesRemaining() const {
+    return this->maxMoves() - this->moves;
+}
+
+int Game::getScore(int player) const {
+    if (player > 0 && player <= this->NUM_PLAYERS) {
+        return this->player_arr[player - 1].getScore(); 
+    }
+    return -1;
+}
+
+int Game::ballsLeft() const {
+    Player p = this->player_arr[this->whoseTurn() - 1];
+    return p.ballsLeft();
 }
