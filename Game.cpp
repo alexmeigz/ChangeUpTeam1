@@ -19,24 +19,6 @@ Game::Game(int size, int numPlayers, int maxBall, int winningScore, int movesPer
     this->player_arr = std::vector<Player>{player1, player2}; 
 }
 
-bool Game::canRemove() const {
-	return removes < 1 && moves < 3;
-}
-
-int Game::whoseTurn() const {
-	if(turnTracker)
-		return 1;
-	return 2;
-}
-
-int Game::getScore(int player) const {
-    if (player < 1 || player > NUM_PLAYERS) {
-        return -1;
-    }
-
-	return player_arr[player - 1].getScore();
-}
-
 int Game::whoseTurn() const {
     return turnTracker ? 1 : 2;
 }
@@ -87,6 +69,10 @@ bool Game::makeMove(std::string move, int x, int y) {
     return true;
 }
 
+int Game::maxMoves() const {
+    return turn == 1 ? MOVES_FIRST_TURN : MOVES_PER_TURN;
+}
+
 int Game::tryMove(std::string move, int x, int y) {
     if (move == "add" && ballsLeft()) {
         return this->gameboard.addBall(this->whoseTurn(), x, y);
@@ -109,24 +95,15 @@ int Game::getScore(int player) const {
     return -1;
 }
 
+void Game::setScores() {
+
+}
+
 int Game::ballsLeft() const {
     Player p = this->player_arr[this->whoseTurn() - 1];
     return p.ballsLeft();
 }
 
-
-string drawBall(string skel, int index, int id){
-	string replacement;
-	if(!id){
-		replacement = to_string(id);
-	} else {
-		replacement = " ";
-	}
-
-	return skel.replace(index, 1, replacement);
-}
-
 void Game::displayBoard() const {
 	gameboard.displayBoard();
-	return;
 }

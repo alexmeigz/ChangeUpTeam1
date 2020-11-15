@@ -20,4 +20,5 @@ int main() {
               MOVES_FIRST_TURN, 
               REMOVES_PER_TURN);
 
+    game.displayBoard();
 }
