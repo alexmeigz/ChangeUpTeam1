@@ -7,11 +7,19 @@ GameBoard::GameBoard(const int size) : SIZE(size), board(size) {
     }
 }
 
-bool GameBoard::removeBall(int x, int y) {
+int GameBoard::removeBall(int x, int y) {
+    if (x < 0 || x >= this->SIZE || y < 0 || y >= this->SIZE) {
+        return false;
+    }
+
     return this->board[x][y].pop();
 }
 
 bool GameBoard::addBall(int player, int x, int y) {
+    if (x < 0 || x >= this->SIZE || y < 0 || y >= this->SIZE) {
+        return false;
+    }
+
     return this->board[x][y].push(player);
 }
 
@@ -60,7 +68,7 @@ Vector2D<int> GameBoard::getLayerZ(int z) const {
     return output;
 }
 
-Vector2D<int> GameBoard::getLayer(char c, int i) const {
+vector<vector<int> > GameBoard::getLayer(char c, int i) const {
 	switch(c){
 		case 'x':
 			return getLayerX(i);
@@ -68,7 +76,10 @@ Vector2D<int> GameBoard::getLayer(char c, int i) const {
 			return getLayerY(i);
 		case 'z':
 			return getLayerZ(i);
+		default:
+			return {{-1}};
 	}
+	return {{-1}};
 }
 
 string drawBall(string skel, int index, int id){
@@ -102,7 +113,6 @@ void GameBoard::displayBoard() const {
 	}
 
 	vector<int> balls;
-	//int balls[27];
 
 	for(int y = 0; y < 3; y++){
 		for(int z = 2; z >= 0; z--){

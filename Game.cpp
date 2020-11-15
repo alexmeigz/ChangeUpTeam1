@@ -1,45 +1,114 @@
 #include "Game.h"
-#include "Player.h"
 
-using namespace std;
+Game::Game(int size, int numPlayers, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn)
+	: WINNING_SCORE(winningScore),
+	MOVES_PER_TURN(movesPerTurn),
+	MOVES_FIRST_TURN(movesFirstTurn),
+	REMOVES_PER_TURN(removesPerTurn),
+	NUM_PLAYERS(numPlayers),
+	gameboard(size)
+{    
+	turnTracker = true;
+	moves = 0;
+	removes = 0;
+	turn = 1;
 
-bool Game::canRemove() const {
-	return removes < 1 && moves < 3;
+	Player player1(1, maxBall);
+	Player player2(2, maxBall);
+
+	this->player_arr = std::vector<Player>{player1, player2}; 
 }
 
 int Game::whoseTurn() const {
-	if(turnTracker)
-		return 1;
-	return 2;
+	return turnTracker ? 1 : 2;
+}
+
+bool Game::canRemove() const {
+	return removes < REMOVES_PER_TURN;
+}
+
+bool Game::finished() const {
+	for (int i = 0; i < this->NUM_PLAYERS; ++i) {
+		if (this->player_arr[i].getScore() == this->WINNING_SCORE) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Game::makeMove(std::string move, int x, int y) {
+	// try to make the move:
+	int result = this->tryMove(move, x, y);
+
+	// move was unsuccessful
+	if (!result) {
+		return false;
+	}
+
+	if (move == "remove") {
+		++this->removes;
+		this->player_arr[result - 1].playerRemoveBall();
+	}
+	else if (move == "add") {
+		this->player_arr[this->whoseTurn() - 1].playerAddBall();
+	}
+
+	++this->moves;
+
+	// switch player's turn:
+	if (this->moves == this->maxMoves()) {
+		this->moves = 0;
+		this->removes = 0;
+
+		this->turnTracker = !this->turnTracker;
+		++this->turn;
+	}
+
+	this->setScores();
+
+	return true;
+}
+
+int Game::maxMoves() const {
+	return turn == 1 ? MOVES_FIRST_TURN : MOVES_PER_TURN;
+}
+
+int Game::tryMove(std::string move, int x, int y) {
+	if (move == "add" && ballsLeft()) {
+		return this->gameboard.addBall(this->whoseTurn(), x, y);
+	}
+	else if (move == "remove" && canRemove()) {
+		return this->gameboard.removeBall(x, y);
+	}
+
+	return false;
+}
+
+int Game::movesRemaining() const {
+	return this->maxMoves() - this->moves;
 }
 
 int Game::getScore(int player) const {
-	//turnTracker is true if it is player1's turn
-	return players[!turnTracker].getScore();
-}
-
-
-
-string drawBall(string skel, int index, int id){
-	string replacement;
-	if(!id){
-		replacement = to_string(id);
-	} else {
-		replacement = " ";
+	if (player > 0 && player <= this->NUM_PLAYERS) {
+		return this->player_arr[player - 1].getScore(); 
 	}
-
-	return skel.replace(index, 1, replacement);
+	return -1;
 }
 
-void Game::displayBoard() const {
-	gameboard.displayBoard();
-	return;
+
+bool isSame(vector<int> v){
+	return v[0] == v[1] && v[1] == v[2];
 }
 
-//in y layer
-int layerDiagScore(char c, int i) {
-	vector<vector<int> > layer = gameboard.getLayer(c, i);
-	vector<int> diag1, diag2;
+vector<int> Game::layerDiagScore(char c, int i) {
+	vector<vector<int> > layer;
+	layer = gameboard.getLayer(c, i);
+	vector<int> diag1, diag2, to_return = {0, 0};
+
+	int mid = layer[0][0];
+	if(mid == 0){
+		return to_return;
+	}
 
 	diag1.push_back(layer[0][0]);
 	diag1.push_back(layer[1][1]);
@@ -50,12 +119,79 @@ int layerDiagScore(char c, int i) {
 
 	int diag1s = isSame(diag1);
 	int diag2s = isSame(diag2);
+	to_return[mid - 1] = diag1s + diag2s;
+	return to_return;
+}
+
+void Game::setScores() {
+	set3dDiagScore();
+	set2dDiagScore();
+	setZScore();
+	setXScore();
+	setYScore();
+}
+
+void Game::set3dDiagScore() {
+	vector<vector<vector<int> > > board;
+	for(int i = 0; i < 3; i++){	
+		board.push_back(gameboard.getLayerZ(i));
+	}
 	
-	return diag1s + diag2s;
+	int mid = board[1][1][1];
+	if(mid == 0){
+		return;
+	}
+
+	vector<int> diag1, diag2;
+	diag1.push_back(board[0][0][0]);
+	diag1.push_back(board[1][1][1]);
+	diag1.push_back(board[2][2][2]);
+	diag2.push_back(board[0][2][2]);
+	diag2.push_back(board[1][1][1]);
+	diag2.push_back(board[2][0][0]);
+
+	if(isSame(diag1)){
+		player_arr[mid - 1].addScore(1);
+	}
+
+	if(isSame(diag2)){
+		player_arr[mid - 1].addScore(1);
+	}
+	return;
 }
 
-//void 
-
-bool isSame(vector<int> v){
-	return v[0] == v[1] && v[1] == v[2];
+void Game::set2dDiagScore() {
+	vector<int> score_additions;
+	string xyz = "xyz";
+	for(int i = 0; i < 3; i++){
+		for(int j = 0; j < 3; j++){
+			score_additions = layerDiagScore(xyz[i], j);
+			player_arr[0].addScore(score_additions[0]);
+			player_arr[1].addScore(score_additions[1]);
+		}
+	}
+	return;
 }
+
+void Game::setZScore() {
+
+}
+
+void Game::setXScore() {
+
+}
+
+void Game::setYScore() {
+
+}
+
+int Game::ballsLeft() const {
+	Player p = this->player_arr[this->whoseTurn() - 1];
+	return p.ballsLeft();
+}
+
+void Game::displayBoard() const {
+	gameboard.displayBoard();
+}
+
+
