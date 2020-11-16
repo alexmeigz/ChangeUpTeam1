@@ -23,14 +23,14 @@ int main() {
 			MOVES_FIRST_TURN, 
 			REMOVES_PER_TURN);
 
-	std::regex input_rgx("(add|remove) ([abcdefghi])");
+	std::regex input_rgx("(add|remove) (\\d)");
 
 	std::cout << "---------------------------------------------------------------------------\n"; 
 	while (!game.finished()) {
 		game.displayBoard();
 		std::cout << "---------------------------------------------------------------------------\n"; 
 		std::cout << "Current Score" << endl;
-		std::cout << "Player 1: " << game.getScore(1) << "\nPlayer 2: " << game.getScore(2) << "\n\n";
+		std::cout << "Player 1: O : " << game.getScore(1) << "\nPlayer 2: X : " << game.getScore(2) << "\n\n";
 		std::cout << "It is player " << game.whoseTurn() << "'s turn.\n";
 		std::cout << "  - " << game.movesRemaining() << " moves remaining.\n";
 		std::cout << "  - " << game.canRemove() << " removes remaining.\n";
@@ -45,11 +45,11 @@ int main() {
 		do {
 			string alpha = "abcdefghi";
 			string slots =
-				"    a -- b -- c  << slot_letters\n"
-				"   /    /    /\n"
-				"  d -- e -- f\n"
-				" /    /    /        Move Format: add/remove slot_letter\n"
-				"g -- h -- i         Make a Move: ";
+				"    1 -- 2 -- 3\n"
+				"   /    /    /     << Slot Numbers\n"
+				"  4 -- 5 -- 6\n"
+				" /    /    /        Move Format: add/remove slot#\n"
+				"7 -- 8 -- 9         Make a Move: ";
 			std::cout << slots;
 			std::string input;
 			std::getline(std::cin, input);
@@ -59,7 +59,7 @@ int main() {
 				move = matches.str(1);
 				for(int i = 0; i < move.size(); i++)
 					move[i] = static_cast<char>(toupper(move[i]));
-				slot_num = alpha.find(matches.str(2));
+				slot_num = stoi(matches.str(2)) - 1;
 				x = slot_num % 3;
 				y = slot_num / 3;	
 			}

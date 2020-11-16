@@ -84,8 +84,9 @@ vector<vector<int> > GameBoard::getLayer(char c, int i) const {
 
 string drawBall(string skel, int index, int id){
 	string replacement;
+	string symbols = "OX";
 	if(id){
-		replacement = to_string(id);
+		replacement = symbols[id - 1];
 	} else {
 		replacement = " ";
 	}
