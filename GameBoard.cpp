@@ -84,8 +84,9 @@ vector<vector<int> > GameBoard::getLayer(char c, int i) const {
 
 string drawBall(string skel, int index, int id){
 	string replacement;
+	string symbols = "OX";
 	if(id){
-		replacement = to_string(id);
+		replacement = symbols[id - 1];
 	} else {
 		replacement = " ";
 	}
@@ -94,6 +95,7 @@ string drawBall(string skel, int index, int id){
 }
 
 void GameBoard::displayBoard() const {
+	/*	
 	string display = 
 		"        *     *     *\n"
 		"        *     *     *\n"
@@ -104,6 +106,17 @@ void GameBoard::displayBoard() const {
 		"*  /  *  /  *  /\n"
 		"* /   * /   * /\n"
 		"* --- * --- *    2 \n";
+	*/
+	string display = 
+		"        *     *     *\n"
+		"        *     *     *\n"
+		"        * --- * --- *\n"  
+		"    *  /  *  /  *  / \n"
+		"    * /   * /   * /  \n" 
+		"    * --- * --- *    \n"
+		"*  /  *  /  *  /     \n"
+		"* /   * /   * /      \n"
+		"* --- * --- *        \n";
 
 	vector<int> ball_indices;
 	for(int i = 0; i < display.size(); i++){
@@ -125,8 +138,8 @@ void GameBoard::displayBoard() const {
 	for(int i = 0; i < 27; i++){
 		display = drawBall(display, ball_indices[i], balls[i]);
 	}
-
-    display += "0     1     2 X\\Y\n";
+	
+	//display += "0     1     2 X\\Y\n";
 
 	cout << display << endl;
 	return;
