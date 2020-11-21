@@ -10,4 +10,5 @@ Team Members: <br/>
 - Max Shen
 - Kelly Lin
 - William Huang
+- Erin Ambriz
 
