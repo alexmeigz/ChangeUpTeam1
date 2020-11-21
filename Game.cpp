@@ -29,6 +29,10 @@ bool Game::canRemove() const {
 }
 
 bool Game::finished() const {
+	if (gameboard.isFull()) {
+		return true;
+	}
+
 	for (int i = 0; i < this->NUM_PLAYERS; ++i) {
 		if (this->player_arr[i].getScore() >= this->WINNING_SCORE) {
 			return true;

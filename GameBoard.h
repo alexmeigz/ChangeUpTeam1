@@ -19,9 +19,13 @@ public:
     Vector2D<int> getLayerZ(int z) const;
     Vector2D<int> getLayer(char c, int i) const;
     void displayBoard() const;
+
+    bool isFull() const;
 private:
     std::vector<int> fillPost(const std::vector<int> &post) const;
     
     Vector2D<GoalPost> board;
     const int SIZE;
+
+    int numBalls;
 };

@@ -5,14 +5,22 @@ GameBoard::GameBoard(const int size) : SIZE(size), board(size) {
         // set each element to a vector of size SIZE, passing in SIZE to the constructor of GoalPost
         this->board[i] = std::vector<GoalPost>(this->SIZE, this->SIZE);
     }
+
+	numBalls = 0;
 }
 
 int GameBoard::removeBall(int x, int y) {
     if (x < 0 || x >= this->SIZE || y < 0 || y >= this->SIZE) {
         return false;
-    }
+	}
 
-    return this->board[x][y].pop();
+    bool result =  this->board[x][y].pop();
+
+	if (result) {
+		--numBalls;
+	}
+
+	return result;
 }
 
 bool GameBoard::addBall(int player, int x, int y) {
@@ -20,7 +28,13 @@ bool GameBoard::addBall(int player, int x, int y) {
         return false;
     }
 
-    return this->board[x][y].push(player);
+    bool result = this->board[x][y].push(player);
+
+	if (result) {
+		++numBalls;
+	}
+
+	return result;
 }
 
 std::vector<int> GameBoard::fillPost(const std::vector<int> &post) const {
@@ -80,6 +94,10 @@ vector<vector<int> > GameBoard::getLayer(char c, int i) const {
 			return {{-1}};
 	}
 	return {{-1}};
+}
+
+bool GameBoard::isFull() const {
+	return numBalls == SIZE * SIZE * SIZE;
 }
 
 string drawBall(string skel, int index, int id){
