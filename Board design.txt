@@ -1,0 +1,53 @@
+You could figure out how to print one z layer and then loop through all 3:
+
+    1 --- 0 --- 0
+   /     /     /|
+  0 --- 0 --- 2 |
+ /     /     /  |
+1 --- 0 --- 1   |
+|               |
+|   1 --- 1 --- 1
+|  /     /     /|
+| 0 --- 2 --- 2 |
+|/     /     /  |
+1 --- 1 --- 1   |
+|               |
+|   1 --- 1 --- 1
+|  /     /     /
+| 0 --- 2 --- 2
+|/     /     /
+1 --- 1 --- 1
+
+This would be a layer and you would have a conditional to figure out if you should fill in the *'s:
+
+*   1 --- 0 --- 0
+*  /     /     /*
+* 0 --- 0 --- 2 *
+*/     /     /  *
+1 --- 0 --- 1   *
+
+====================================================================================
+
+I like this one more:
+
+====================================================================================
+
+You could figure out how to print out one y layer and then cycle through all three:
+
+        1          
+        1     2     
+        1 --- 2 --- .   
+    1  /  2  /     /
+    1 /   2 /     / 
+    1 --- 2 --- .
+1  /     /  1  /
+1 /     /   1 /
+1 --- 1 --- 1
+
+(I think it looks better if you leave blanks as empty instead of putting in 0's)
+
+This would be a layer, and you could have a conditional to figure out if you should fill in *'s:
+
+********1  *  1  *  1  *
+********1 *   1 *   1 *
+********1 --- 1 --- 1
