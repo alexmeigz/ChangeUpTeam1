@@ -21,6 +21,7 @@ public:
     void displayBoard() const;
 
     bool isFull() const;
+    vector<int> flatten() const;
 private:
     std::vector<int> fillPost(const std::vector<int> &post) const;
     

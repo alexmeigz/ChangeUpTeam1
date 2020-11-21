@@ -143,6 +143,19 @@ void GameBoard::displayBoard() const {
 		}
 	}
 
+	vector<int> balls = flatten();
+
+	for(int i = 0; i < 27; i++){
+		display = drawBall(display, ball_indices[i], balls[i]);
+	}
+	
+	//display += "0     1     2 X\\Y\n";
+
+	cout << display << endl;
+	return;
+}
+
+vector<int> GameBoard::flatten() const {
 	vector<int> balls;
 
 	for(int y = 0; y < 3; y++){
@@ -153,12 +166,5 @@ void GameBoard::displayBoard() const {
 		}
 	}
 
-	for(int i = 0; i < 27; i++){
-		display = drawBall(display, ball_indices[i], balls[i]);
-	}
-	
-	//display += "0     1     2 X\\Y\n";
-
-	cout << display << endl;
-	return;
+	return balls;
 }
