@@ -18,34 +18,23 @@ double Bot::giveReward() {
 	return 0;    
 }
 
-Move Bot::chooseMove(unordered_map<Move, vector<int> > possible_moves){
+Move Bot::chooseMove(Dict<Move, vector<int> > possible_moves){
 
 	if((rand() % 100) <= exploration_rate * 100){
 		//make a random move
 		srand(time(0));
 		int move_index = rand() % possible_moves.size();
-		int counter = 0;
-		for(pair<Move, vector<int> option: possible_moves){
-			if(counter == move_index){
-				return option.first;
-			}
-			counter++;
+		return possible_moves.index_get(move_index).first;
+	}
+
+	int greedy_index = 0;
+	for(int i = 1; i < possible_moves.size(); i++){
+		if(state_vals.get(possible_moves.index_get(i).second) >
+			state_vals.get(possible_moves.index_get(greedy_choice.second))){
+			greedy_index = i;	
 		}
 	}
 
-	pair<Move, vector<int> > greedy_choice;
-	bool on_first_pair = true;
-	for(pair<Move, vector<int> option: possible_moves){
-		if(on_first_pair){
-			greedy_choice = option;
-			on_first_pair = false;
-		} else {
-			if(state_vals.get(option.second) > state_vals.get(greedy_choice.second)){
-				greedy_choice = option;
-			}
-		}
-	}
-
-	return greedy_choice.first;
+	return possible_moves.index_get(greedy_index).first;
 
 }

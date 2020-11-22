@@ -62,6 +62,8 @@ class Game {
 
 		vector<int> get_state_after(Move move);
 		Dict<Move, vector<int> > get_possibilities();
+		
+
 	private:
 		GameBoard gameboard; //gameboard structure 
 		std::vector<Player> player_arr;

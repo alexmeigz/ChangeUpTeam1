@@ -18,8 +18,6 @@ class Bot : public Player {
 		//chooses a move, randomly or greedily
 		void feedReward(double reward);
 		//backprops rewards, updating state_vals
-		double giveReward();
-		//distributes rewards at the end of the game with feedReward
 		void reset();
 		//resets states to empty
 

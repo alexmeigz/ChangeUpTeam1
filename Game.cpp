@@ -348,4 +348,3 @@ Dict<Move, vector<int> > Game::get_possibilities(){
 
 	return possibilities;
 }
-

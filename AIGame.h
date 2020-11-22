@@ -12,7 +12,7 @@ class AIGame : public Game {
 			: Game(size, numPlayers, maxBall, winningScore, movesPerTurn, movesFirstTurn, removesPerTurn), PLAYER_ID(playerId) {}
 
 		bool makeMove(std::string move, int x, int y);
-
+		void playCPU();
 	private:
 		void AIMakeMove();
 		const int PLAYER_ID;
