@@ -6,6 +6,7 @@
 #include <utility>
 #include <ctime>
 #include <cstdlib>
+#include "Dict.h"
 #include "Game.h"
 
 class Bot : public Player {
@@ -30,6 +31,6 @@ class Bot : public Player {
 		double gamma = 0.9;
 		double explore_rate = 0.3;
 		vector<vector<int> > states;
-		unordered_map<vector<int>, double> state_vals;
+		Dict<vector<int>, double> state_vals;
 
 };

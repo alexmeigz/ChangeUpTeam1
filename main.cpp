@@ -44,7 +44,6 @@ int main() {
 
 		std::cout << "---------------------------------------------------------------------------\n\n"; 
 		do {
-			string alpha = "abcdefghi";
 			string slots =
 				"    1 -- 2 -- 3\n"
 				"   /    /    /     << Slot Numbers\n"
