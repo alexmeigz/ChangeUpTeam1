@@ -1,5 +1,7 @@
 #include "Game.h"
 
+Game::Game(){}
+
 Game::Game(int size, int numPlayers, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn)
   : WINNING_SCORE(winningScore),
     MOVES_PER_TURN(movesPerTurn),
@@ -300,3 +302,26 @@ Game Game::operator=(const Game &g) {
 	newGame.player_arr = g.player_arr;
 	newGame.gameboard = g.gameboard;
 }
+
+vector<int> Game::get_state_after(Move move){
+	Game dummy_game = *this;
+	dummy_game.makeMove(move.add_rem, move.x, move.y);
+	return dummy_game.flatten();
+}
+
+unordered_map<Move, vector<int> > Game::get_possibilities(){
+	unordered_map<Move, vector<int> > possibilities;
+
+	for(int i = 0; i < this->availableAdds().size(); i++){
+		Move temp = {"ADD", this->availableAdds().first, this->availableAdds().second};
+		possibilities[temp] = get_state_after(temp);
+	}
+
+	for(int i = 0; i < this->availableRemoves().size(); i++){
+		Move temp = {"REMOVE", this->availableRemoves().first, this->availableRemoves().second};
+		possibilities[temp] = get_state_after(temp);
+	}
+
+	return possibilities;
+}
+

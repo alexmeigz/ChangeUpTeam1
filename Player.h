@@ -1,3 +1,9 @@
+struct Move {
+	string add_rem;
+	int x;
+	int y;
+};
+
 class Player {
 	public:
 		//Pre-Condition: input is a string value for the team name
