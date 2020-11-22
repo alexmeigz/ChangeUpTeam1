@@ -1,4 +1,5 @@
 #include "GameBoard.h"
+#include <functional>
 
 GameBoard::GameBoard(const int size) : SIZE(size), board(size) {
     for (int i = 0; i < this->SIZE; ++i) {
@@ -167,4 +168,28 @@ vector<int> GameBoard::flatten() const {
 	}
 
 	return balls;
+}
+
+vector<pair<int, int>> getAvailable(Vector2D<int> layer, std::function<bool(int)> condition) {
+	vector<pair<int, int>> output;
+
+	for (int i = 0; i < layer.size(); ++i) {
+		for (int j = 0; j < layer[i].size(); ++j) {
+			if (condition(layer[i][j])) {
+				output.push_back(pair<int, int>(i, j));
+			}
+		}
+	}
+	
+	return output;
+}
+
+vector<pair<int, int>> GameBoard::getAvailableRemoves() {
+	// bottom layer isn't a zero (there is a value to remove)
+	return getAvailable(getLayerZ(0), [](int a){ return a != 0; });
+}
+
+vector<pair<int, int>> GameBoard::getAvailableAdds() {
+	// top layer is a zero (there is a space to add)
+	return getAvailable(getLayerZ(SIZE - 1), [](int a){ return a == 0; });	
 }

@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <utility>
 
 #include "GameBoard.h"
 #include "Player.h"
@@ -48,6 +49,10 @@ class Game
 		//Pre-Condition:  no input required
 		//Post-Condition:  returns the number of balls the current player has remaining
 
+	protected:
+		vector<pair<int, int>> avaiableAdds();
+		vector<pair<int, int>> avaiableRemoves();
+
     private:
         GameBoard gameboard; //gameboard structure 
 		std::vector<Player> player_arr;
@@ -62,7 +67,7 @@ class Game
         const int NUM_PLAYERS;
         const int SIZE;
 
-	vector<int> layerDiagScore(char c, int i);
+		vector<int> layerDiagScore(char c, int i);
         void set3dDiagScore();
         void set2dDiagScore();
         void setZScore();

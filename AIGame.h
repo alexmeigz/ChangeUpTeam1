@@ -3,6 +3,9 @@
 #include <random>
 #include <string>
 
+#include <vector>
+#include <utility>
+
 class AIGame : public Game {
 public:
     AIGame(int playerId, int size, int numPlayers, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn)
