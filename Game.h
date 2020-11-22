@@ -51,10 +51,8 @@ class Game
 		//Pre-Condition:  no input required
 		//Post-Condition:  returns the number of balls the current player has remaining
 
-	protected:
-		vector<pair<int, int>> avaiableAdds();
-		vector<pair<int, int>> avaiableRemoves();
-
+		vector<pair<int, int>> availableAdds() const;
+		vector<pair<int, int>> availableRemoves() const;
     private:
         GameBoard gameboard; //gameboard structure 
 		std::vector<Player> player_arr;
