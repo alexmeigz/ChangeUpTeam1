@@ -21,6 +21,12 @@ Game::Game(int size, int numPlayers, int maxBall, int winningScore, int movesPer
 	this->player_arr = std::vector<Player>{player1, player2}; 
 }
 
+Game::Game(int size, int numPlayers, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn, Player p1, Player p2)
+	: Game(size, numPlayers, maxBall, winningScore, movesPerTurn, movesFirstTurn, removesPerTurn) {
+	this->player_arr = std::vector<Player>{p1, p2};
+}
+
+
 int Game::whoseTurn() const {
 	return turnTracker ? 1 : 2;
 }
