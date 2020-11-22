@@ -26,6 +26,8 @@ public:
 
     vector<pair<int, int>> getAvailableRemoves() const;
     vector<pair<int, int>> getAvailableAdds() const;
+
+    GameBoard operator=(const GameBoard &gb);
 private:
     std::vector<int> fillPost(const std::vector<int> &post) const;
     

@@ -16,8 +16,9 @@ void Bot::feedReward(double reward) {
 double Bot::giveReward() {
     
 }
-Move Bot::chooseMove(vector<pairs<int, int> > av_add, 
-	vector<pairs<int, int> > av_rem, 
+
+Move Bot::chooseMove(vector<pair<int, int> > av_add, 
+	vector<pair<int, int> > av_rem, 
 	vector<int> current_state){
 	vector<Move> possible_moves;
 	for(int i = 0; i < av_add.size(); i++){

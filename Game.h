@@ -53,6 +53,9 @@ class Game
 
 		vector<pair<int, int>> availableAdds() const;
 		vector<pair<int, int>> availableRemoves() const;
+		vector<int> flatten() const;
+
+		Game operator=(const Game &g);
     private:
         GameBoard gameboard; //gameboard structure 
 		std::vector<Player> player_arr;
@@ -60,6 +63,7 @@ class Game
 		int turn;
 		int moves;
 		int removes;
+		const int MAX_BALL;
 		const int WINNING_SCORE;
 		const int MOVES_PER_TURN;
 		const int MOVES_FIRST_TURN;

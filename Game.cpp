@@ -7,7 +7,8 @@ Game::Game(int size, int numPlayers, int maxBall, int winningScore, int movesPer
     REMOVES_PER_TURN(removesPerTurn),
     NUM_PLAYERS(numPlayers),
     gameboard(size),
-    SIZE(size)
+    SIZE(size),
+	MAX_BALL(maxBall)
 {    
 	turnTracker = true;
 	moves = 0;
@@ -279,4 +280,23 @@ vector<pair<int, int>> Game::availableRemoves() const {
 	}
 
 	return gameboard.getAvailableRemoves();
+}
+
+
+vector<int> Game::flatten() const {
+	return gameboard.flatten();
+}
+
+//int size, int numPlayers, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn
+
+Game Game::operator=(const Game &g) {
+	Game newGame = Game(g.SIZE, g.NUM_PLAYERS, g.MAX_BALL, g.WINNING_SCORE, g.MOVES_PER_TURN, g.MOVES_FIRST_TURN, g.REMOVES_PER_TURN);
+	
+	newGame.turnTracker = g.turnTracker;
+	newGame.turn = g.turn;
+	newGame.moves = g.moves;
+	newGame.removes = g.removes;
+
+	newGame.player_arr = g.player_arr;
+	newGame.gameboard = g.gameboard;
 }
