@@ -29,6 +29,8 @@ class Game
 		//Pre-Condition: no input required
 		//Post-Condition:  1 if the game is finished and 0 if it’s not
 
+		int winner() const;
+
 		int whoseTurn() const;
 		//Pre-Condition:  no input required
 		//Post-Condition:  returns the id of the player who has to make a move

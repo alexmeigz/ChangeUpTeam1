@@ -41,6 +41,16 @@ bool Game::finished() const {
 	return false;
 }
 
+int Game::winner() const {
+	if (!finished()) {
+		return -1;
+	}
+	if (getScore(1) == getScore(2)) {
+		return 0;
+	}
+	return getScore(1) > getScore(2) ? 1 : 2;
+}
+
 bool Game::makeMove(std::string move, int x, int y) {
 	// try to make the move:
 	int result = this->tryMove(move, x, y);
@@ -254,8 +264,6 @@ int Game::ballsLeft() const {
 void Game::displayBoard() const {
 	gameboard.displayBoard();
 }
-
-
 
 vector<pair<int, int>> Game::avaiableAdds() {
 	if (!ballsLeft()) {
