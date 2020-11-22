@@ -3,6 +3,9 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <utility>
+#include <ctime>
+#include <cstdlib>
 
 #include "Game.h"
 
