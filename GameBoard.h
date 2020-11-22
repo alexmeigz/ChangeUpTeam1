@@ -24,8 +24,8 @@ public:
     bool isFull() const;
     vector<int> flatten() const;
 
-    vector<pair<int, int>> getAvailableRemoves();
-    vector<pair<int, int>> getAvailableAdds();
+    vector<pair<int, int>> getAvailableRemoves() const;
+    vector<pair<int, int>> getAvailableAdds() const;
 private:
     std::vector<int> fillPost(const std::vector<int> &post) const;
     

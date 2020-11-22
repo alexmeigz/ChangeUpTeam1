@@ -184,12 +184,12 @@ vector<pair<int, int>> getAvailable(Vector2D<int> layer, std::function<bool(int)
 	return output;
 }
 
-vector<pair<int, int>> GameBoard::getAvailableRemoves() {
+vector<pair<int, int>> GameBoard::getAvailableRemoves() const {
 	// bottom layer isn't a zero (there is a value to remove)
 	return getAvailable(getLayerZ(0), [](int a){ return a != 0; });
 }
 
-vector<pair<int, int>> GameBoard::getAvailableAdds() {
+vector<pair<int, int>> GameBoard::getAvailableAdds() const {
 	// top layer is a zero (there is a space to add)
 	return getAvailable(getLayerZ(SIZE - 1), [](int a){ return a == 0; });	
 }

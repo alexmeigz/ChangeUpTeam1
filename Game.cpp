@@ -265,7 +265,7 @@ void Game::displayBoard() const {
 	gameboard.displayBoard();
 }
 
-vector<pair<int, int>> Game::avaiableAdds() {
+vector<pair<int, int>> Game::availableAdds() const {
 	if (!ballsLeft()) {
 		return {};
 	}
@@ -273,7 +273,7 @@ vector<pair<int, int>> Game::avaiableAdds() {
 	return gameboard.getAvailableAdds();
 }
 
-vector<pair<int, int>> Game::avaiableRemoves() {
+vector<pair<int, int>> Game::availableRemoves() const {
 	if (!canRemove()) {
 		return {};
 	}
