@@ -17,6 +17,11 @@ class Dict {
 			return u;
 		}
 
+		pair<T, U> index_get(int index){
+			pair<T, U> p = {keys[index], values[index]};
+			return p;
+		}
+			
 		bool has_key(T key){
 			for(int i = 0; i < keys.size(); i++){
 				if(keys[i] == key){
@@ -29,6 +34,10 @@ class Dict {
 		void add(T key, U val){
 			keys.push_back(key);
 			values.push_back(val);
+		}
+
+		int size(){
+			return keys.size();
 		}
 
 	private:
