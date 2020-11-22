@@ -256,3 +256,19 @@ void Game::displayBoard() const {
 }
 
 
+
+vector<pair<int, int>> Game::avaiableAdds() {
+	if (!ballsLeft()) {
+		return {};
+	}
+
+	return gameboard.getAvailableAdds();
+}
+
+vector<pair<int, int>> Game::avaiableRemoves() {
+	if (!canRemove()) {
+		return {};
+	}
+
+	return gameboard.getAvailableRemoves();
+}

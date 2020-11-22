@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include "GoalPost.h"
+#include <utility>
 
 template <class T>
 using Vector2D = std::vector<std::vector<T> >;
@@ -22,6 +23,9 @@ public:
 
     bool isFull() const;
     vector<int> flatten() const;
+
+    vector<pair<int, int>> getAvailableRemoves();
+    vector<pair<int, int>> getAvailableAdds();
 private:
     std::vector<int> fillPost(const std::vector<int> &post) const;
     
