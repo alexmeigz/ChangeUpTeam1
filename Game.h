@@ -5,6 +5,7 @@
 #include <utility>
 #include <unordered_map>
 
+#include "Dict.h"
 #include "GameBoard.h"
 #include "Player.h"
 
@@ -13,7 +14,6 @@ using namespace std;
 class Game
 {
 	public:
-		Game();
 		Game(int size, int numPlayers, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn);
 		// Pre-Condition: Game parameters	
 		//post-condition: initializes game with desired gameboard size, max number of balls per player, the winning score,
@@ -57,8 +57,9 @@ class Game
 		vector<pair<int, int>> availableRemoves() const;
 		vector<int> flatten() const;
 
-		Game operator=(const Game &g);
+		Game copy();
 		vector<int> get_state_after(Move move);
+		Dict<Move, vector<int> > get_possibilities();
 	private:
 		GameBoard gameboard; //gameboard structure 
 		std::vector<Player> player_arr;

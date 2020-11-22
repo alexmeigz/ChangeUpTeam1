@@ -1,7 +1,14 @@
+#pragma once
+#include <string>
+
 struct Move {
-	string add_rem;
+	std::string add_rem;
 	int x;
 	int y;
+	bool operator==(const Move& other) const {
+		return (add_rem == other.add_rem) &&
+			(x == other.x) && (y == other.y);
+	}
 };
 
 class Player {
