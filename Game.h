@@ -6,6 +6,7 @@
 
 #include "GameBoard.h"
 #include "Player.h"
+#include <functional>
 
 using namespace std;
 
@@ -55,7 +56,7 @@ class Game
 		vector<pair<int, int>> availableRemoves() const;
 		vector<int> flatten() const;
 
-		Game operator=(const Game &g);
+		//Game operator=(const Game &g);
     private:
         GameBoard gameboard; //gameboard structure 
 		std::vector<Player> player_arr;
@@ -77,6 +78,7 @@ class Game
         void setZScore();
         void setYScore();
         void setXScore();
+		void setSingleScore(std::function<void(int i, int &p1, int &p2)> func);
 
 		int maxMoves() const;
 		//precondition: n/a

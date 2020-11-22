@@ -9,7 +9,7 @@
 #include "Game.h"
 
 struct Move {
-	string add_rem;
+	std::string add_rem;
 	int x;
 	int y;
 };
@@ -17,9 +17,9 @@ struct Move {
 class Bot : public Player {
 	public:
 		Bot(string name_str);
-		string name;
+		std::string name;
 	private:
-		Move chooseMove(vector<pair<int, int> > av_add, vector<pair<int, int> > av_rem, vector<int> current_state);	
+		//Move chooseMove(vector<pair<int, int> > av_add, vector<pair<int, int> > av_rem, vector<int> current_state);	
 		//chooses a move, randomly or greedily
 		void feedReward(double reward);
 		//backprops rewards, updating state_vals
@@ -35,7 +35,6 @@ class Bot : public Player {
 		double alpha = 0.2;
 		double gamma = 0.9;
 		double explore_rate = 0.3;
-		vector<vector<int> > states;
-		unordered_map<vector<int>, double> state_vals;
-
+		std::vector<std::vector<int> > states;
+		std::unordered_map<std::vector<int>, double> state_vals;
 };

@@ -1,25 +1,20 @@
 #include "Bot.h"
 
 void Bot::feedReward(double reward) {
-    for (int i = states.size() - 1; i >= 0; --i) {
-        vector<int> state = states[i];
 
-        if (state_vals.find(state) != state_vals.end()) {
-            state_vals[state] = 0;
-        }
-
-        state_vals[state] += alpha * (gamma * reward - state_vals[state]);
-        reward = state_vals[state];
-    }
 }
 
 double Bot::giveReward() {
-    
+    return 0;
 }
 
+/*
 Move Bot::chooseMove(vector<pair<int, int> > av_add, 
 	vector<pair<int, int> > av_rem, 
 	vector<int> current_state){
+
+    int exploration_rate = 0;
+
 	vector<Move> possible_moves;
 	for(int i = 0; i < av_add.size(); i++){
 		Move dummy = {"ADD", av_add[i].first, av_add[i].second};
@@ -40,3 +35,4 @@ Move Bot::chooseMove(vector<pair<int, int> > av_add,
 	//choose greedy move
 	
 }
+*/

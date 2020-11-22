@@ -194,9 +194,11 @@ vector<pair<int, int>> GameBoard::getAvailableAdds() const {
 	return getAvailable(getLayerZ(SIZE - 1), [](int a){ return a == 0; });	
 }
 
+/*
 GameBoard GameBoard::operator=(const GameBoard &gb) {
 	GameBoard newGameBoard = GameBoard(gb.SIZE);
 	newGameBoard.board = gb.board;
 
 	return newGameBoard;
 }
+*/

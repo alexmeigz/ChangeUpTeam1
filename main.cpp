@@ -6,6 +6,9 @@
 #include <cctype>
 #include <cstdlib>
 
+//#include "State.h"
+
+
 const int SIZE = 3;
 const int NUM_PLAYERS = 2;
 const int MAX_BALL = 16;
@@ -14,7 +17,7 @@ const int MOVES_PER_TURN = 3;
 const int MOVES_FIRST_TURN = 2;
 const int REMOVES_PER_TURN = 1;
 
-int main() {
+int main1() {
 	AIGame game(1,
             SIZE, 
 			NUM_PLAYERS, 
@@ -78,3 +81,10 @@ int main() {
 
 	return 0;
 }
+
+
+/*
+int main () {
+    State s();
+}
+*/

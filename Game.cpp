@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <functional>
 
 Game::Game(int size, int numPlayers, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn)
   : WINNING_SCORE(winningScore),
@@ -84,7 +85,9 @@ bool Game::makeMove(std::string move, int x, int y) {
 }
 
 int Game::maxMoves() const {
-	return turn == 1 ? MOVES_FIRST_TURN : MOVES_PER_TURN;
+	return turn == 1 
+		? MOVES_FIRST_TURN 
+		: MOVES_PER_TURN;
 }
 
 int Game::tryMove(std::string move, int x, int y) {
@@ -224,7 +227,21 @@ void countHorizontal(Vector2D<int> layer, int &x, int &y) {
     }
 }
 
+void Game::setSingleScore(std::function<void(int i, int &p1, int &p2)> func) {
+	int p1 = 0, p2 = 0;
+    for (int i = 0; i < SIZE; ++i) {
+		func(i, p1, p2);
+    }
+    player_arr[0].addScore(p1);
+    player_arr[1].addScore(p2);
+}
+
+
 void Game::setZScore() {
+	setSingleScore([this](int i, int &p1, int &p2){
+		countVertical(gameboard.getLayerX(i), p1, p2);
+	});
+	/*
     int x = 0, y = 0;
     for (int i = 0; i < SIZE; ++i) {
         // use the x layers to get the columns
@@ -233,9 +250,15 @@ void Game::setZScore() {
     }
     player_arr[0].addScore(x);
     player_arr[1].addScore(y);
+	*/
 }
 
 void Game::setXScore() {
+	setSingleScore([this](int i, int &p1, int &p2){
+		countVertical(gameboard.getLayerZ(i), p1, p2);
+	});
+
+	/*
     int x = 0, y = 0;
     for (int i = 0; i < SIZE; ++i) {
         // columns of z layer are the x rows
@@ -244,9 +267,15 @@ void Game::setXScore() {
     }
     player_arr[0].addScore(x);
     player_arr[1].addScore(y);
+	*/
 }
 
 void Game::setYScore() {
+	setSingleScore([this](int i, int &p1, int &p2){
+		countHorizontal(gameboard.getLayerZ(i), p1, p2);
+	});
+
+	/*
     int x = 0, y = 0;
     for (int i = 0; i < SIZE; ++i) {
         // rows of z layer are the y rows:
@@ -254,12 +283,11 @@ void Game::setYScore() {
         countHorizontal(layer, x, y);
     }
     player_arr[0].addScore(x);
-    player_arr[1].addScore(y);
+    player_arr[1].addScore(y);*/
 }
 
 int Game::ballsLeft() const {
-	Player p = this->player_arr[this->whoseTurn() - 1];
-	return p.ballsLeft();
+	return this->player_arr[this->whoseTurn() - 1].ballsLeft();
 }
 
 void Game::displayBoard() const {
@@ -267,28 +295,22 @@ void Game::displayBoard() const {
 }
 
 vector<pair<int, int>> Game::availableAdds() const {
-	if (!ballsLeft()) {
-		return {};
-	}
-
-	return gameboard.getAvailableAdds();
+	return ballsLeft() 
+		? gameboard.getAvailableAdds() 
+		: vector<pair<int, int>>();
 }
 
 vector<pair<int, int>> Game::availableRemoves() const {
-	if (!canRemove()) {
-		return {};
-	}
-
-	return gameboard.getAvailableRemoves();
+	return canRemove() 
+		? gameboard.getAvailableRemoves() 
+		: vector<pair<int, int>>();
 }
-
 
 vector<int> Game::flatten() const {
 	return gameboard.flatten();
 }
 
-//int size, int numPlayers, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn
-
+/*
 Game Game::operator=(const Game &g) {
 	Game newGame = Game(g.SIZE, g.NUM_PLAYERS, g.MAX_BALL, g.WINNING_SCORE, g.MOVES_PER_TURN, g.MOVES_FIRST_TURN, g.REMOVES_PER_TURN);
 	
@@ -299,4 +321,7 @@ Game Game::operator=(const Game &g) {
 
 	newGame.player_arr = g.player_arr;
 	newGame.gameboard = g.gameboard;
+
+	return newGame;
 }
+*/
