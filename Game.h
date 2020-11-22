@@ -11,8 +11,7 @@
 
 using namespace std;
 
-class Game
-{
+class Game {
 	public:
 		Game(int size, int numPlayers, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn);
 		// Pre-Condition: Game parameters	
@@ -57,7 +56,10 @@ class Game
 		vector<pair<int, int>> availableRemoves() const;
 		vector<int> flatten() const;
 
-		Game copy();
+		//Game(const Game &og);
+
+		Game operator=(const Game &g);
+
 		vector<int> get_state_after(Move move);
 		Dict<Move, vector<int> > get_possibilities();
 	private:

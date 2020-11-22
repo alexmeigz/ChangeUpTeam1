@@ -22,7 +22,7 @@ class Bot : public Player {
 		//distributes rewards at the end of the game with feedReward
 		void reset();
 		//resets states to empty
-		
+
 		//Member Variables
 		//alpha: learning rate
 		//gamma: decay rate

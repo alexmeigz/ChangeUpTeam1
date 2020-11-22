@@ -14,7 +14,7 @@ bool AIGame::makeMove(std::string move, int x, int y) {
 }
 
 void AIGame::AIMakeMove(){
-	vector<pair<int, int>> availableAdds = Game::availableAdds(),
+	vector<pair<int, int> > availableAdds = Game::availableAdds(),
 		availableRemoves = Game::availableRemoves();
 
 	// available adds now contains all possible move pairs

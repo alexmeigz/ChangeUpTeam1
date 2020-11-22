@@ -1,13 +1,13 @@
 #include "Game.h"
 
 Game::Game(int size, int numPlayers, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn)
-  : WINNING_SCORE(winningScore),
-    MOVES_PER_TURN(movesPerTurn),
-    MOVES_FIRST_TURN(movesFirstTurn),
-    REMOVES_PER_TURN(removesPerTurn),
-    NUM_PLAYERS(numPlayers),
-    gameboard(size),
-    SIZE(size),
+	: WINNING_SCORE(winningScore),
+	MOVES_PER_TURN(movesPerTurn),
+	MOVES_FIRST_TURN(movesFirstTurn),
+	REMOVES_PER_TURN(removesPerTurn),
+	NUM_PLAYERS(numPlayers),
+	gameboard(size),
+	SIZE(size),
 	MAX_BALL(maxBall)
 {    
 	turnTracker = true;
@@ -134,19 +134,19 @@ vector<int> Game::layerDiagScore(char c, int i) {
 	int diag1s = isSame(diag1);
 	int diag2s = isSame(diag2);
 	to_return[mid - 1] = diag1s + diag2s;
-    
+
 	return to_return;
 }
 
 void Game::setScores() {
-    player_arr[0].setScore(0);
-    player_arr[1].setScore(0);
+	player_arr[0].setScore(0);
+	player_arr[1].setScore(0);
 
-    set3dDiagScore();
-    set2dDiagScore();
-    setZScore();
-    setXScore();
-    setYScore();
+	set3dDiagScore();
+	set2dDiagScore();
+	setZScore();
+	setXScore();
+	setYScore();
 }
 
 void Game::set3dDiagScore() {
@@ -154,7 +154,7 @@ void Game::set3dDiagScore() {
 	for(int i = 0; i < 3; i++){	
 		board.push_back(gameboard.getLayerZ(i));
 	}
-	
+
 	int mid = board[1][1][1];
 	if(mid == 0){
 		return;
@@ -193,68 +193,68 @@ void Game::set2dDiagScore() {
 
 // checks if all of the columns in a 2d vector have same value and adds corresponding score
 void countVertical(Vector2D<int> layer, int &x, int &y) {
-    // go through each columns:
-    for (int i = 0; i < layer.size(); ++i) {
-        // first value in column:
-        int player = layer[i][0];
+	// go through each columns:
+	for (int i = 0; i < layer.size(); ++i) {
+		// first value in column:
+		int player = layer[i][0];
 
-        // if player had ball and the column is the same, increment values
-        if (player && isSame(layer[i])) {
-            player == 1 ? ++x : ++y;
-        }
-    }
+		// if player had ball and the column is the same, increment values
+		if (player && isSame(layer[i])) {
+			player == 1 ? ++x : ++y;
+		}
+	}
 }
 
 // checks if all of the rows in a 2d vector have same value and adds corresponding score
 void countHorizontal(Vector2D<int> layer, int &x, int &y) {
-    for (int i = 0; i < layer.size(); ++i) {
-        // first value in row
-        int player = layer[0][i];
+	for (int i = 0; i < layer.size(); ++i) {
+		// first value in row
+		int player = layer[0][i];
 
-        // build up row
-        std::vector<int> row(layer[i].size());
-        for (int j = 0; j < row.size(); ++j) {
-            row[j] = layer[j][i];
-        }
+		// build up row
+		std::vector<int> row(layer[i].size());
+		for (int j = 0; j < row.size(); ++j) {
+			row[j] = layer[j][i];
+		}
 
-        // check with row
-        if (player && isSame(row)) {
-            player == 1 ? ++x : ++y;
-        }
-    }
+		// check with row
+		if (player && isSame(row)) {
+			player == 1 ? ++x : ++y;
+		}
+	}
 }
 
 void Game::setZScore() {
-    int x = 0, y = 0;
-    for (int i = 0; i < SIZE; ++i) {
-        // use the x layers to get the columns
-        Vector2D<int> layer = gameboard.getLayerX(i);
-        countVertical(layer, x, y);
-    }
-    player_arr[0].addScore(x);
-    player_arr[1].addScore(y);
+	int x = 0, y = 0;
+	for (int i = 0; i < SIZE; ++i) {
+		// use the x layers to get the columns
+		Vector2D<int> layer = gameboard.getLayerX(i);
+		countVertical(layer, x, y);
+	}
+	player_arr[0].addScore(x);
+	player_arr[1].addScore(y);
 }
 
 void Game::setXScore() {
-    int x = 0, y = 0;
-    for (int i = 0; i < SIZE; ++i) {
-        // columns of z layer are the x rows
-        Vector2D<int> layer = gameboard.getLayerZ(i);
-        countVertical(layer, x, y);
-    }
-    player_arr[0].addScore(x);
-    player_arr[1].addScore(y);
+	int x = 0, y = 0;
+	for (int i = 0; i < SIZE; ++i) {
+		// columns of z layer are the x rows
+		Vector2D<int> layer = gameboard.getLayerZ(i);
+		countVertical(layer, x, y);
+	}
+	player_arr[0].addScore(x);
+	player_arr[1].addScore(y);
 }
 
 void Game::setYScore() {
-    int x = 0, y = 0;
-    for (int i = 0; i < SIZE; ++i) {
-        // rows of z layer are the y rows:
-        Vector2D<int> layer = gameboard.getLayerZ(i);
-        countHorizontal(layer, x, y);
-    }
-    player_arr[0].addScore(x);
-    player_arr[1].addScore(y);
+	int x = 0, y = 0;
+	for (int i = 0; i < SIZE; ++i) {
+		// rows of z layer are the y rows:
+		Vector2D<int> layer = gameboard.getLayerZ(i);
+		countHorizontal(layer, x, y);
+	}
+	player_arr[0].addScore(x);
+	player_arr[1].addScore(y);
 }
 
 int Game::ballsLeft() const {
@@ -289,19 +289,41 @@ vector<int> Game::flatten() const {
 
 //int size, int numPlayers, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn
 
-Game Game::copy() {
-	Game newGame = Game(SIZE, NUM_PLAYERS, MAX_BALL, WINNING_SCORE, MOVES_PER_TURN, MOVES_FIRST_TURN, REMOVES_PER_TURN);
-	
-	newGame.turnTracker = turnTracker;
-	newGame.turn = turn;
-	newGame.moves = moves;
-	newGame.removes = removes;
 
-	newGame.player_arr = player_arr;
-	newGame.gameboard = gameboard;
-	
+/*
+   Game::Game(const Game &og): WINNING_SCORE(og.WINNING_SCORE),
+   MOVES_PER_TURN(og.MOVES_PER_TURN),
+   MOVES_FIRST_TURN(og.MOVES_FIRST_TURN),
+   REMOVES_PER_TURN(og.REMOVES_PER_TURN),
+   NUM_PLAYERS(og.NUM_PLAYERS),
+//gameboard(size),
+SIZE(og.SIZE),
+MAX_BALL(og.MAX_BALL),
+gameboard(og.gameboard){
+
+turnTracker = og.turnTracker;
+turn = og.turn;
+moves = og.moves;
+removes = og.removes;
+player_arr = {Player(og.player_arr[0]), Player(og.player_arr[1])};
+}
+ */
+
+
+Game Game::operator=(const Game &g) {
+	Game newGame = Game(g.SIZE, g.NUM_PLAYERS, g.MAX_BALL, g.WINNING_SCORE, g.MOVES_PER_TURN, g.MOVES_FIRST_TURN, g.REMOVES_PER_TURN);
+
+	newGame.turnTracker = g.turnTracker;
+	newGame.turn = g.turn;
+	newGame.moves = g.moves;
+	newGame.removes = g.removes;
+
+	newGame.player_arr = g.player_arr;
+	newGame.gameboard = g.gameboard;
+
 	return newGame;
 }
+
 
 vector<int> Game::get_state_after(Move move){
 	Game dummy_game = *this;

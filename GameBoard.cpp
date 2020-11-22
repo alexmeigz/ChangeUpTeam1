@@ -2,20 +2,20 @@
 #include <functional>
 
 GameBoard::GameBoard(const int size) : SIZE(size), board(size) {
-    for (int i = 0; i < this->SIZE; ++i) {
-        // set each element to a vector of size SIZE, passing in SIZE to the constructor of GoalPost
-        this->board[i] = std::vector<GoalPost>(this->SIZE, this->SIZE);
-    }
+	for (int i = 0; i < this->SIZE; ++i) {
+		// set each element to a vector of size SIZE, passing in SIZE to the constructor of GoalPost
+		this->board[i] = std::vector<GoalPost>(this->SIZE, this->SIZE);
+	}
 
 	numBalls = 0;
 }
 
 int GameBoard::removeBall(int x, int y) {
-    if (x < 0 || x >= this->SIZE || y < 0 || y >= this->SIZE) {
-        return false;
+	if (x < 0 || x >= this->SIZE || y < 0 || y >= this->SIZE) {
+		return false;
 	}
 
-    bool result =  this->board[x][y].pop();
+	bool result =  this->board[x][y].pop();
 
 	if (result) {
 		--numBalls;
@@ -25,11 +25,11 @@ int GameBoard::removeBall(int x, int y) {
 }
 
 bool GameBoard::addBall(int player, int x, int y) {
-    if (x < 0 || x >= this->SIZE || y < 0 || y >= this->SIZE) {
-        return false;
-    }
+	if (x < 0 || x >= this->SIZE || y < 0 || y >= this->SIZE) {
+		return false;
+	}
 
-    bool result = this->board[x][y].push(player);
+	bool result = this->board[x][y].push(player);
 
 	if (result) {
 		++numBalls;
@@ -39,48 +39,48 @@ bool GameBoard::addBall(int player, int x, int y) {
 }
 
 std::vector<int> GameBoard::fillPost(const std::vector<int> &post) const {
-    // copy over the filled in values
-    std::vector<int> output = post;
+	// copy over the filled in values
+	std::vector<int> output = post;
 
-    // fill in the rest with 0's
-    output.resize(this->SIZE, 0);
+	// fill in the rest with 0's
+	output.resize(this->SIZE, 0);
 
-    return output;
+	return output;
 }
 
 Vector2D<int> GameBoard::getLayerX(int x) const {
-    Vector2D<int> output(this->SIZE);
+	Vector2D<int> output(this->SIZE);
 
-    for (int y = 0; y < this->SIZE; ++y) {
-        std::vector<int> col = this->board[x][y].getPost();
-        output[y] = this->fillPost(col);
-    }
+	for (int y = 0; y < this->SIZE; ++y) {
+		std::vector<int> col = this->board[x][y].getPost();
+		output[y] = this->fillPost(col);
+	}
 
-    return output;
+	return output;
 }
 
 Vector2D<int> GameBoard::getLayerY(int y) const {
-    Vector2D<int> output(this->SIZE);
+	Vector2D<int> output(this->SIZE);
 
-    for (int x = 0; x < this->SIZE; ++x) {
-        std::vector<int> col = this->board[x][y].getPost();
-        output[x] = this->fillPost(col);
-    }
+	for (int x = 0; x < this->SIZE; ++x) {
+		std::vector<int> col = this->board[x][y].getPost();
+		output[x] = this->fillPost(col);
+	}
 
-    return output;
+	return output;
 }
 
 Vector2D<int> GameBoard::getLayerZ(int z) const {
-    Vector2D<int> output(this->SIZE);
+	Vector2D<int> output(this->SIZE);
 
-    for (int x = 0; x < this->SIZE; ++x) {
-        output[x] = std::vector<int>(this->SIZE);
-        for (int y = 0; y < this->SIZE; ++y) {
-            std::vector<int> col = this->board[x][y].getPost();
-            output[x][y] = this->fillPost(col)[z];
-        }
-    }
-    return output;
+	for (int x = 0; x < this->SIZE; ++x) {
+		output[x] = std::vector<int>(this->SIZE);
+		for (int y = 0; y < this->SIZE; ++y) {
+			std::vector<int> col = this->board[x][y].getPost();
+			output[x][y] = this->fillPost(col)[z];
+		}
+	}
+	return output;
 }
 
 vector<vector<int> > GameBoard::getLayer(char c, int i) const {
@@ -115,7 +115,7 @@ string drawBall(string skel, int index, int id){
 
 void GameBoard::displayBoard() const {
 	/*	
-	string display = 
+		string display = 
 		"        *     *     *\n"
 		"        *     *     *\n"
 		"        * --- * --- *    0\n"  
@@ -125,7 +125,7 @@ void GameBoard::displayBoard() const {
 		"*  /  *  /  *  /\n"
 		"* /   * /   * /\n"
 		"* --- * --- *    2 \n";
-	*/
+	 */
 	string display = 
 		"        *     *     *\n"
 		"        *     *     *\n"
@@ -149,7 +149,7 @@ void GameBoard::displayBoard() const {
 	for(int i = 0; i < 27; i++){
 		display = drawBall(display, ball_indices[i], balls[i]);
 	}
-	
+
 	//display += "0     1     2 X\\Y\n";
 
 	cout << display << endl;
@@ -180,7 +180,7 @@ vector<pair<int, int>> getAvailable(Vector2D<int> layer, std::function<bool(int)
 			}
 		}
 	}
-	
+
 	return output;
 }
 
