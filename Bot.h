@@ -6,7 +6,6 @@
 #include <utility>
 #include <ctime>
 #include <cstdlib>
-
 #include "Game.h"
 
 struct Move {
@@ -20,11 +19,11 @@ class Bot : public Player {
 		Bot(string name_str);
 		string name;
 	private:
-		Move chooseMove();	
+		Move chooseMove(vector<pair<int, int> > av_add, vector<pair<int, int> > av_rem, vector<int> current_state);	
 		//chooses a move, randomly or greedily
-		void feedReward();
+		void feedReward(double reward);
 		//backprops rewards, updating state_vals
-		void giveReward();
+		double giveReward();
 		//distributes rewards at the end of the game with feedReward
 		void reset();
 		//resets states to empty
