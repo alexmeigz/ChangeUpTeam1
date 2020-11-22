@@ -8,12 +8,6 @@
 #include <cstdlib>
 #include "Game.h"
 
-struct Move {
-	string add_rem;
-	int x;
-	int y;
-};
-
 class Bot : public Player {
 	public:
 		Bot(string name_str);
