@@ -16,7 +16,7 @@ const int REMOVES_PER_TURN = 1;
 
 int main() {
 	AIGame game(1,
-            SIZE, 
+			SIZE, 
 			NUM_PLAYERS, 
 			MAX_BALL, 
 			WINNING_SCORE, 

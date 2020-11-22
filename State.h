@@ -11,25 +11,25 @@ const int MOVES_FIRST_TURN = 2;
 const int REMOVES_PER_TURN = 1;
 
 class State {
-public:
-    State () {
-        g = new Game(SIZE, 
-			NUM_PLAYERS, 
-			MAX_BALL, 
-			WINNING_SCORE, 
-			MOVES_PER_TURN, 
-			MOVES_FIRST_TURN, 
-			REMOVES_PER_TURN);
-    }
+	public:
+		State () {
+			g = new Game(SIZE, 
+					NUM_PLAYERS, 
+					MAX_BALL, 
+					WINNING_SCORE, 
+					MOVES_PER_TURN, 
+					MOVES_FIRST_TURN, 
+					REMOVES_PER_TURN);
+		}
 
 
 
-    ~State() {
-        delete g;
-    }
+		~State() {
+			delete g;
+		}
 
-private:
-    Game * g;
-    Bot bot1 = Bot("bot 1");
-    Bot bot2 = Bot("bot 2");
+	private:
+		Game * g;
+		Bot bot1 = Bot("bot 1");
+		Bot bot2 = Bot("bot 2");
 };

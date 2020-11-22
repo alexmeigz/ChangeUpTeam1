@@ -17,6 +17,14 @@ class Player {
 		//Post-Condition: sets variable teamName to the input argument, sets playerBallCount to 16
 		Player(int id, int maxBalls);
 
+		/*
+		   Player(const Player &og): playerId(og.playerId),
+		   maxBalls(og.maxBalls) {
+		   playerBallCount = og.playerBallCount;
+		   score = og.score;
+		   }
+		 */
+
 		//Pre-Condition: no input required
 		//Post-Condition:  decrease the value of variable playerBallCount by 1
 		void playerRemoveBall();
@@ -43,13 +51,20 @@ class Player {
 
 		void addScore(int score);
 
+		Player operator=(const Player &p){
+			Player newPlayer = Player(p.playerId, p.maxBalls);
+			newPlayer.playerBallCount = p.playerBallCount;
+			newPlayer.score = p.score;
+			return newPlayer;
+		}
+
 	private:
 		//integer variable to keep explicit title of each player
 		const int playerId;
-		
+
 		//integer variable to keep track of how many balls each individual player has
 		int playerBallCount;
-		
+
 		int score;
 
 		const int maxBalls;	
