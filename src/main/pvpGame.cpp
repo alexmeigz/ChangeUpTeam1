@@ -6,8 +6,6 @@
 #include <cctype>
 #include <cstdlib>
 
-#include "../../include/game/GameParams.h"
-
 int main() {
 	Game game;
 

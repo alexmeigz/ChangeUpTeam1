@@ -12,7 +12,7 @@ GameBoard::GameBoard() : board(SIZE) {
 	}
 }
 
-bool GameBoard::action(int x, int y, function<bool(int x, int y)> action) {
+int GameBoard::action(int x, int y, function<int(int x, int y)> action) {
 	if (!inRange(x, SIZE) || !inRange(y, SIZE)) {
 		return false;
 	}

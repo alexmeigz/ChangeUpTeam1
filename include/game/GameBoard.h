@@ -27,7 +27,7 @@ public:
 
     //GameBoard operator=(const GameBoard &gb);
 private:
-    bool action(int x, int y, function<bool(int x, int y)> action);
+    int action(int x, int y, function<int(int x, int y)> action);
     Vector2D<int> getLayer(function<vector<int>(int itr)> func) const;
     
     Vector2D<GoalPost> board;
