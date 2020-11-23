@@ -14,9 +14,9 @@ class Dict {
 					return values[i];
 				}
 			}
-			return 0;
-			//cerr << "key not found" << endl;
-			//exit(1);	
+			//return 0;
+			cerr << "key not found" << endl;
+			exit(1);	
 		}
 
 		void set(KeyType key, ValueType value) {

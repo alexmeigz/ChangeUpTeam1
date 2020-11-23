@@ -70,8 +70,6 @@ class Game {
 		//Pre-Condition: none
 		//Post-Condition: returns flatten gameboard
 		vector<int> flatten() const;
-	
-		Game operator=(const Game &g);
 
 		vector<int> get_state_after(Move move) const;
 

@@ -2,6 +2,6 @@
 
 int main() {
     TheGym model;
-    model.train(1);
+    model.train(10);
     model.print();
 }

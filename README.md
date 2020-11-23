@@ -13,6 +13,10 @@ Team Members: <br/>
 
 ---
 
+## Goal
+
+---
+
 ## How to run
 
 Player vs Player game:
@@ -27,8 +31,47 @@ make aigame
 aigame.exe
 ```
 
+---
+
+## The game
+
+There is a 3x3 grid of goal posts with a max of 3 balls in each post...
+Goal is to get 4, 3 in a rows...
+
+---
+
+## How to play
+
+When prompted you can `add` or `remove` a ball from the board by specifying the post number. A mmini board will be displayed with the post numbers.
+
+Add a ball to the board:
+
+```bash
+add #
+```
+
+Remove a ball from the board:
+
+```bash
+remove #
+```
+
+If you're playing against the computer, the computer's will run automatically after your turn is over.
+
+---
+
+## How it works
+
+---
+
+## Graphics
+
+---
+
+## Reinforcement Learning
+
 Train model:
 ```bash
 make train
-trainer.exe
+train.exe
 ```

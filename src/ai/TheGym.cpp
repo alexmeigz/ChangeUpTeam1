@@ -41,11 +41,12 @@ void TheGym::train(int rounds){
 		std::cout << "\nRound: " << i << endl;
 		playRound();
 	}
-	std::cout << bot1.getStateVals().size() << endl;
 }
 
 void printBot(Bot bot) {
 	ofstream file ("C:/Users/Alex3/Desktop/ROBOTICS SOFTWARE/Project/ChangeUpTeam1/" + bot.name + ".json");
+
+	std::cout << bot.name << " has " << bot.getStateVals().size() << " number of states to output.\n";
 
 	file << "[\n";
 
@@ -54,13 +55,13 @@ void printBot(Bot bot) {
 		pair<vector<int>, double> val = dict.index_get(i);
 
 		file << "\t{\n";
-		file << "\t\t\"state\": [";
-		for (int j = 0; j < val.first.size(); ++j) {
-			file << val.first[j] << ",";	
+		file << "\t\t\"state\": [" << (val.first.size() ? to_string(val.first[0]) : "");
+		for (int j = 1; j < val.first.size(); ++j) {
+			file << "," << val.first[j];	
 		}
 
-		file << "]\n\t\t\"val\": " << val.second << endl;
-		file << "\t},\n";
+		file << "],\n\t\t\"val\": " << val.second << endl;
+		file << "\t}" << (i + 1 < dict.size() ? "," : "") << "\n";
 	}
 
 	file << "]\n";

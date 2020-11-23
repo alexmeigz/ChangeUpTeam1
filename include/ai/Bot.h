@@ -16,6 +16,8 @@ class Bot : public Player {
 
 		void reset(){
 			states = {};
+			playerBallCount = 0;
+			score = 0;
 		}
 
 		void add_state(vector<int> state){

@@ -100,13 +100,3 @@ vector<pair<int, int>> GameBoard::getAvailableAdds() const {
 	// top layer is a zero (there is a space to add)
 	return getAvailable(getLayerZ(SIZE - 1), [](int a){ return a == 0; });	
 }
-
-GameBoard GameBoard::operator=(const GameBoard &gb) {
-	if (this == &gb) {
-		return *this;
-	}
-	
-	board = gb.board;
-
-	return *this;
-}

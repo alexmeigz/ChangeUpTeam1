@@ -47,3 +47,10 @@ void Player::setScore(int newScore){
 void Player::addScore(int inc) {
 	score += inc;
 }
+
+Player Player::operator=(const Player &p){
+	Player newPlayer = Player(p.playerId);
+	newPlayer.playerBallCount = p.playerBallCount;
+	newPlayer.score = p.score;
+	return newPlayer;
+}

@@ -53,17 +53,13 @@ class Player {
 		//Post-Condition: increase player's score by that value
 		void addScore(int score);
 
-		Player operator=(const Player &p){
-			Player newPlayer = Player(p.playerId);
-			newPlayer.playerBallCount = p.playerBallCount;
-			newPlayer.score = p.score;
-			return newPlayer;
-		}
+		Player operator=(const Player &p);
 
 	private:
 		//integer variable to keep explicit title of each player
 		const int playerId;
-
+	
+	protected:
 		//integer variable to keep track of how many balls each individual player has
 		int playerBallCount;
 

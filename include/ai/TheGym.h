@@ -26,9 +26,9 @@ class TheGym {
 		}
 		
 		void reset(){
-			g = Game(bot1, bot2);
 			bot1.reset();
 			bot2.reset();
+			g = Game(bot1, bot2);
 		}	
 		void playRound();
 		void train(int rounds);

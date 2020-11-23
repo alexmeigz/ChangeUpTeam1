@@ -21,22 +21,6 @@ Game::Game(Player p1, Player p2) : Game() {
 	player_arr = {p1, p2};
 }
 
-Game Game::operator=(const Game &g) {
-	if (this == &g) {
-		return *this;
-	}
-
-	turnTracker = g.turnTracker;
-	turn = g.turn;
-	moves = g.moves;
-	removes = g.removes;
-
-	player_arr = g.player_arr;
-	gameboard = g.gameboard;
-
-	return *this;
-}
-
 int Game::whoseTurn() const {
 	return turnTracker ? 1 : 2;
 }
