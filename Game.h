@@ -13,6 +13,8 @@ using namespace std;
 
 class Game {
 	public:
+		Game(int size, int numPlayers, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn, Player p1, Player p2);
+
 		Game(int size, int numPlayers, int maxBall, int winningScore, int movesPerTurn, int movesFirstTurn, int removesPerTurn);
 		// Pre-Condition: Game parameters	
 		//post-condition: initializes game with desired gameboard size, max number of balls per player, the winning score,
