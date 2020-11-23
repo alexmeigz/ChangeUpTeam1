@@ -2,16 +2,15 @@
 
 #include <iostream>
 #include <vector>
-#include <string>
 #include "GoalPost.h"
 #include <utility>
+#include <functional>
 
-template <class T>
-using Vector2D = std::vector<std::vector<T> >;
+#include "utility.h"
 
 class GameBoard {
 public:
-    GameBoard(int size);
+    GameBoard();
     int removeBall(int x, int y);
     bool addBall(int player, int x, int y);
 
@@ -19,7 +18,6 @@ public:
     Vector2D<int> getLayerY(int y) const;
     Vector2D<int> getLayerZ(int z) const;
     Vector2D<int> getLayer(char c, int i) const;
-    void displayBoard() const;
 
     bool isFull() const;
     vector<int> flatten() const;
@@ -29,10 +27,8 @@ public:
 
     //GameBoard operator=(const GameBoard &gb);
 private:
-    std::vector<int> fillPost(const std::vector<int> &post) const;
+    bool action(int x, int y, function<bool(int x, int y)> action);
+    Vector2D<int> getLayer(function<vector<int>(int itr)> func) const;
     
     Vector2D<GoalPost> board;
-    const int SIZE;
-
-    int numBalls;
 };

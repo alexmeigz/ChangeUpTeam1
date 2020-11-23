@@ -1,11 +1,32 @@
+#pragma once
+#include <string>
+
+struct Move {
+	std::string add_rem;
+	int x;
+	int y;
+	bool operator==(const Move& other) const {
+		return (add_rem == other.add_rem) &&
+			(x == other.x) && (y == other.y);
+	}
+};
+
 class Player {
 	public:
-		//Pre-Condition: input is a string value for the team name
-		//Post-Condition: sets variable teamName to the input argument, sets playerBallCount to 16
-		Player(int id, int maxBalls);
+		//Pre-Condition: input is an int value for the team name
+		//Post-Condition: sets variable teamName to the input argument, sets playerBallCount to 0
+		Player(int id);
+
+		/*
+		   Player(const Player &og): playerId(og.playerId),
+		   maxBalls(og.maxBalls) {
+		   playerBallCount = og.playerBallCount;
+		   score = og.score;
+		   }
+		 */
 
 		//Pre-Condition: no input required
-		//Post-Condition:  decrease the value of variable playerBallCount by 1
+		//Post-Condition: decrease the value of variable playerBallCount by 1
 		void playerRemoveBall();
 
 		//Pre-Condition: no input required
@@ -28,16 +49,23 @@ class Player {
 		//Post-Condition:  update the player’s score to the new score
 		void setScore(int score);
 
+		//Pre-Condition: player's additional score
+		//Post-Condition: increase player's score by that value
 		void addScore(int score);
+
+		Player operator=(const Player &p){
+			Player newPlayer = Player(p.playerId);
+			newPlayer.playerBallCount = p.playerBallCount;
+			newPlayer.score = p.score;
+			return newPlayer;
+		}
 
 	private:
 		//integer variable to keep explicit title of each player
 		const int playerId;
-		
+
 		//integer variable to keep track of how many balls each individual player has
 		int playerBallCount;
-		
-		int score;
 
-		const int maxBalls;	
+		int score;
 };

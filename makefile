@@ -1,2 +1,11 @@
-game: main.cpp AIGame.cpp Game.cpp GameBoard.cpp GoalPost.cpp Player.cpp AIGame.h Game.h GameBoard.h GoalPost.h Player.h
-	g++ -std=c++11 -o main main.cpp AIGame.cpp Game.cpp GameBoard.cpp GoalPost.cpp Player.cpp
+MAIN_SRC_DIR := src/game
+MAIN_SRC_FILES := $(wildcard $(MAIN_SRC_DIR)/*.cpp)
+
+AI_SRC_DIR := src/ai
+AI_SRC_FILES := $(wildcard $(AI_SRC_DIR)/*.cpp)
+
+game:
+	g++ -std=c++11 -o game src/main/game.cpp $(MAIN_SRC_FILES)
+
+aigame:
+	g++ -std=c++11 -o aigame src/main/aigame.cpp $(MAIN_SRC_FILES) $(AI_SRC_FILES)
