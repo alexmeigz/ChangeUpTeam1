@@ -5,26 +5,34 @@
 #include <cstdlib>
 using namespace std;
 
-template<class T, class U>
+template<class KeyType, class ValueType>
 class Dict {
 	public:
-		U& get(T key){
+		ValueType get(KeyType key){
 			for(int i = 0; i < keys.size(); i++){
 				if(keys[i] == key){
 					return values[i];
 				}
 			}
-			
-			cerr << "key not found" << endl;
-			exit(1);	
+			return 0;
+			//cerr << "key not found" << endl;
+			//exit(1);	
 		}
 
-		pair<T, U> index_get(int index){
-			pair<T, U> p = {keys[index], values[index]};
+		void set(KeyType key, ValueType value) {
+			for(int i = 0; i < keys.size(); i++){
+				if(keys[i] == key){
+					values[i] = value;
+				}
+			}
+		}
+
+		pair<KeyType, ValueType> index_get(int index){
+			pair<KeyType, ValueType> p = {keys[index], values[index]};
 			return p;
 		}
 	
-		bool has_key(T key){
+		bool has_key(KeyType key){
 			for(int i = 0; i < keys.size(); i++){
 				if(keys[i] == key){
 					return true;
@@ -33,7 +41,7 @@ class Dict {
 			return false;
 		}
 
-		void add(T key, U val){
+		void add(KeyType key, ValueType val){
 			keys.push_back(key);
 			values.push_back(val);
 		}
@@ -43,8 +51,8 @@ class Dict {
 		}
 
 	private:
-		vector<T > keys;
-		vector<U > values;
+		vector<KeyType> keys;
+		vector<ValueType> values;
 };
 
 /*

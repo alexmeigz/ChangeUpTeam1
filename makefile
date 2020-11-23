@@ -9,3 +9,6 @@ game:
 
 aigame:
 	g++ -std=c++11 -o aigame src/main/computerGame.cpp $(MAIN_SRC_FILES) src/ai/AIGame.cpp
+
+train:
+	g++ -std=c++11 -o trainer src/main/train.cpp $(MAIN_SRC_FILES) $(AI_SRC_FILES)

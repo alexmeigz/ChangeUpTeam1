@@ -6,8 +6,8 @@
 class TheGym {
 	public:
 		TheGym() : 	
-			bot1("bot1", 1, MAX_BALL),
-			bot2("bot2", 2, MAX_BALL),
+			bot1("bot1", 1),
+			bot2("bot2", 2),
 			g(){}
 
 		void giveReward(){
@@ -26,34 +26,17 @@ class TheGym {
 		}
 		
 		void reset(){
-			g = Game(SIZE, 
-				NUM_PLAYERS, 
-				MAX_BALL, 
-				WINNING_SCORE, 
-				MOVES_PER_TURN, 
-				MOVES_FIRST_TURN, 
-				REMOVES_PER_TURN,
-				bot1, bot2);
+			g = Game(bot1, bot2);
 			bot1.reset();
 			bot2.reset();
 		}	
 		void playRound();
 		void train(int rounds);
 
+		void print();
 
 	private:
 		Bot bot1;
 		Bot bot2;
-
 		Game g;
-		/*
-		Game g(SIZE, 
-			NUM_PLAYERS, 
-			MAX_BALL, 
-			WINNING_SCORE, 
-			MOVES_PER_TURN, 
-			MOVES_FIRST_TURN, 
-			REMOVES_PER_TURN,
-			bot1, bot2);
-		*/
 };

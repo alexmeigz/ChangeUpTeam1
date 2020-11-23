@@ -11,7 +11,7 @@
 
 class Bot : public Player {
 	public:
-		Bot(string name_str, int id, int maxBalls);
+		Bot(string name_str, int id);
 		//Bot(string name_str, double rand_move_pct);
 
 		void reset(){
@@ -30,6 +30,8 @@ class Bot : public Player {
 
 		string name;
 
+		Dict<vector<int>, double> getStateVals() const;
+ 
 	private:
 
 		//Member Variables

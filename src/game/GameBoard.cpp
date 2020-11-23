@@ -1,5 +1,4 @@
 #include "../../include/game/GameBoard.h"
-#include "../../include/game/GameParams.h"
 #include "../../include/game/utility.h"
 #include <functional>
 
@@ -92,18 +91,6 @@ vector<int> GameBoard::flatten() const {
 	return balls;
 }
 
-vector<pair<int, int>> getAvailable(Vector2D<int> layer, function<bool(int)> condition) {
-	vector<pair<int, int>> output;
-
-	for (pair<int, int> p : ORDERED_PAIRS) {
-		if (condition(layer[p.first][p.second])) {
-			output.push_back(p);
-		}
-	}
-
-	return output;
-}
-
 vector<pair<int, int>> GameBoard::getAvailableRemoves() const {
 	// bottom layer isn't a zero (there is a value to remove)
 	return getAvailable(getLayerZ(0), [](int a){ return a != 0; });
@@ -114,11 +101,12 @@ vector<pair<int, int>> GameBoard::getAvailableAdds() const {
 	return getAvailable(getLayerZ(SIZE - 1), [](int a){ return a == 0; });	
 }
 
-/*
 GameBoard GameBoard::operator=(const GameBoard &gb) {
-	GameBoard newGameBoard = GameBoard(gb.SIZE);
-	newGameBoard.board = gb.board;
+	if (this == &gb) {
+		return *this;
+	}
+	
+	board = gb.board;
 
-	return newGameBoard;
+	return *this;
 }
-*/

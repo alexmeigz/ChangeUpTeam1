@@ -1,39 +1,74 @@
 #include "../../include/ai/TheGym.h"
-
+#include "../../include/ai/Dict.h"
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <utility>
 void TheGym::playRound(){
 	double winner;
 	Dict<Move, vector<int> > options;
 	Move next_move;
 
 	while(!g.finished()) {
+		std::cout << "bot 1's turn:\n";
 		while(!g.finished() && g.whoseTurn() == 1){
 			options = g.get_possibilities();
+			std::cout << "\tchoosing move\n";
 			next_move = bot1.chooseMove(options);
+			std::cout << "\tmoving\n";
 			g.makeMove(next_move.add_rem, next_move.x, next_move.y);
 			bot1.add_state(g.flatten());
 		}
-
-		winner = g.winner();
-		if(winner > -1){
-			giveReward();
-		} else {
-			while(!g.finished() && g.whoseTurn() == 2){
-				options = g.get_possibilities();
-				next_move = bot2.chooseMove(options);
-				g.makeMove(next_move.add_rem, next_move.x, next_move.y);
-				bot2.add_state(g.flatten());
-			}
-		}
-
-		if(winner > -1){
-			giveReward();
+		std::cout << "bot 2's turn:\n";
+		while(!g.finished() && g.whoseTurn() == 2){
+			options = g.get_possibilities();
+			std::cout << "\tchoosing move\n";
+			next_move = bot2.chooseMove(options);
+			std::cout << "\tmoving\n";
+			g.makeMove(next_move.add_rem, next_move.x, next_move.y);
+			bot2.add_state(g.flatten());
 		}
 	}
+	giveReward();
 	reset();
+	std::cout << "finished round\n";
 }
 
 void TheGym::train(int rounds){
+	std::cout << "Staring training...\n";
 	for(int i = 0; i < rounds; i++){
+		std::cout << "\nRound: " << i << endl;
 		playRound();
 	}
+	std::cout << bot1.getStateVals().size() << endl;
+}
+
+void printBot(Bot bot) {
+	ofstream file ("C:/Users/Alex3/Desktop/ROBOTICS SOFTWARE/Project/ChangeUpTeam1/" + bot.name + ".json");
+
+	file << "[\n";
+
+	Dict<vector<int>, double> dict = bot.getStateVals();
+	for (int i = 0; i < dict.size(); ++i) {
+		pair<vector<int>, double> val = dict.index_get(i);
+
+		file << "\t{\n";
+		file << "\t\t\"state\": [";
+		for (int j = 0; j < val.first.size(); ++j) {
+			file << val.first[j] << ",";	
+		}
+
+		file << "]\n\t\t\"val\": " << val.second << endl;
+		file << "\t},\n";
+	}
+
+	file << "]\n";
+
+	file.close();
+}
+
+void TheGym::print() {
+	printBot(bot1);
+	printBot(bot2);
 }

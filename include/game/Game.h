@@ -5,7 +5,7 @@
 #include <utility>
 #include <unordered_map>
 
-// #include "Dict.h"
+#include "../ai/Dict.h"
 #include "GameBoard.h"
 #include "Player.h"
 #include "GameParams.h"
@@ -22,6 +22,8 @@ class Game {
 		// Pre-Condition: Game parameters	
 		//post-condition: initializes game with desired gameboard size, max number of balls per player, the winning score,
 		// moves a player can make per turn, moves a player can make the first turn, max number of removes a player can make in a turn and initializes the two players and gameboard
+
+		Game(Player p1, Player p2);
 
 		void displayBoard() const;
 		//Pre-condition: 
@@ -54,9 +56,9 @@ class Game {
 		//Post-Condition:  player’s score
 
 		int ballsLeft() const;
-		//Pre-Condition:  no input required
-		//Post-Condition:  returns the number of balls the current player has remaining
-
+		//Pre-Condition: no input required
+		//Post-Condition: returns the number of balls the current player has remaining
+	
 		//Pre-Condition: none
 		//Post-Condition: returns ordered pairs of available places to add
 		vector<pair<int, int>> availableAdds() const;
@@ -68,9 +70,19 @@ class Game {
 		//Pre-Condition: none
 		//Post-Condition: returns flatten gameboard
 		vector<int> flatten() const;
+	
+		Game operator=(const Game &g);
 
-		//Game operator=(const Game &g);
-    private:
+		vector<int> get_state_after(Move move) const;
+
+		Dict<Move, vector<int> > get_possibilities() const;
+
+	protected:
+		string drawBall(string skel, int index, int playerId) const;
+	
+        GameBoard gameboard; //gameboard structure 
+
+	private:
 		//Pre-Condition: none
 		//Post-Condition: increments moves, calculates scores
 		void nextMove();
@@ -78,14 +90,6 @@ class Game {
 		//Pre-Condition: none
 		//Post-Condition: switches player and resets for next turn
 		void nextTurn();
-
-        GameBoard gameboard; //gameboard structure 
-		//Game(const Game &og);
-
-		//Game operator=(const Game &g);
-
-		vector<int> get_state_after(Move move);
-		//Dict<Move, vector<int> > get_possibilities();
 		
 		std::vector<Player> player_arr;
 		bool turnTracker; //true = player 1’s turn; false = player 2’s turn

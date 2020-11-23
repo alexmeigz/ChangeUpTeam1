@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include <utility> // for pair
+#include <functional>
+#include "../../include/game/GameParams.h"
 
 using namespace std;
 
@@ -28,6 +30,9 @@ struct triple {
 };
 vector<triple> crossing(int a, int b, int c);
 
+const vector<pair<int, int>> ORDERED_PAIRS = crossing(SIZE, SIZE); // all combinations (0,0) to (2, 2)
+const vector<triple> ORDERED_TRIPLES = crossing(SIZE, SIZE, SIZE); // all combinations (0, 0, 0) to (2, 2, 2)
+
 //Pre-Condition: input: value, upper limit, lower limit
 //Post-Condition: true if lower<=val<upper, false otherwise
 bool inRange(int val, int upper, int lower = 0);
@@ -51,3 +56,7 @@ pair<int, int> countDiag(Vector2D<int> layer);
 //Pre-Condition: 3D vector of ints
 //Post-Condition: pair of player1, player2 score, where the score is the number of 3 in arows along the largest diagonal
 pair<int, int> countDiag3D(vector<Vector2D<int> > layer);
+
+//Pre-Condition: 2D vector of ints, 
+//Post-Condition: returns coordinates of layers where the condition is met by iterating over one value
+vector<pair<int, int>> getAvailable(Vector2D<int> layer, function<bool(int)> condition);

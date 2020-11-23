@@ -7,14 +7,34 @@
 
 using namespace std;
 
-Game::Game() : gameboard() {    
+Game::Game() : gameboard() {
 	turnTracker = false;
 	turn = 0;
 	nextTurn();
 
-	Player player1(1);
-	Player player2(2);
-	this->player_arr = std::vector<Player>{player1, player2}; 
+	Player p1(1);
+	Player p2(2);
+	player_arr = {p1, p2};
+}
+
+Game::Game(Player p1, Player p2) : Game() {
+	player_arr = {p1, p2};
+}
+
+Game Game::operator=(const Game &g) {
+	if (this == &g) {
+		return *this;
+	}
+
+	turnTracker = g.turnTracker;
+	turn = g.turn;
+	moves = g.moves;
+	removes = g.removes;
+
+	player_arr = g.player_arr;
+	gameboard = g.gameboard;
+
+	return *this;
 }
 
 int Game::whoseTurn() const {
@@ -140,7 +160,7 @@ void Game::set2dDiagScore() {
 void Game::setScore(std::function<pair<int, int>(int i)> func, int len) {
     for (int i = 0; i < len; ++i) {
 		pair<int, int> p = func(i);
-		
+
 		player_arr[0].addScore(p.first);
 		player_arr[1].addScore(p.second);
 	}
@@ -168,7 +188,7 @@ int Game::ballsLeft() const {
 	return player_arr[whoseTurn() - 1].ballsLeft();
 }
 
-string drawBall(string skel, int index, int playerId){
+string Game::drawBall(string skel, int index, int playerId) const{
 	string symbols = "OX";
 	string replacement {playerId ? symbols[playerId - 1] : ' '};
 
@@ -220,44 +240,27 @@ vector<int> Game::flatten() const {
 	return gameboard.flatten();
 }
 
-/*
-Game Game::operator=(const Game &g) {
-	Game newGame = Game(g.SIZE, g.NUM_PLAYERS, g.MAX_BALL, g.WINNING_SCORE, g.MOVES_PER_TURN, g.MOVES_FIRST_TURN, g.REMOVES_PER_TURN);
-
-	newGame.turnTracker = g.turnTracker;
-	newGame.turn = g.turn;
-	newGame.moves = g.moves;
-	newGame.removes = g.removes;
-
-	newGame.player_arr = g.player_arr;
-	newGame.gameboard = g.gameboard;
-
-	return newGame;
-}
-*/
-
-vector<int> Game::get_state_after(Move move){
+vector<int> Game::get_state_after(Move move) const {
 	Game dummy_game = *this;
 	dummy_game.makeMove(move.add_rem, move.x, move.y);
 	return dummy_game.flatten();
 }
 
-/*
-Dict<Move, vector<int> > Game::get_possibilities(){
+Dict<Move, vector<int> > Game::get_possibilities() const {
 	Dict<Move, vector<int> > possibilities;
 	vector<pair<int, int> > adds = availableAdds();
 	vector<pair<int, int> > removes = availableRemoves();
 
 	for(int i = 0; i < this->availableAdds().size(); i++){
-		Move temp = {"ADD", adds[i].first, adds[i].second};
+		Move temp = {ADD, adds[i].first, adds[i].second};
 		possibilities.add(temp, get_state_after(temp));
 	}
 
 	for(int i = 0; i < this->availableRemoves().size(); i++){
-		Move temp = {"REMOVE", removes[i].first, removes[i].second};
+		Move temp = {REMOVE, removes[i].first, removes[i].second};
 		possibilities.add(temp, get_state_after(temp));
 	}
 
 	return possibilities;
 }
-*/
+

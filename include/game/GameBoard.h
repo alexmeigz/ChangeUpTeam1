@@ -25,7 +25,7 @@ public:
     vector<pair<int, int>> getAvailableRemoves() const;
     vector<pair<int, int>> getAvailableAdds() const;
 
-    //GameBoard operator=(const GameBoard &gb);
+    GameBoard operator=(const GameBoard &gb);
 private:
     int action(int x, int y, function<int(int x, int y)> action);
     Vector2D<int> getLayer(function<vector<int>(int itr)> func) const;

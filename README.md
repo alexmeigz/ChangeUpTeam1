@@ -11,3 +11,24 @@ Team Members: <br/>
 - Kelly Lin
 - William Huang
 
+---
+
+## How to run
+
+Player vs Player game:
+```bash 
+make game
+game.exe
+```
+
+Player vs Computer game:
+```bash 
+make aigame
+aigame.exe
+```
+
+Train model:
+```bash
+make train
+trainer.exe
+```

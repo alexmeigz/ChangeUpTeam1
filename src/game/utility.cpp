@@ -1,5 +1,6 @@
 #include "../../include/game/utility.h"
-
+#include "../../include/game/GameParams.h"
+#include <functional>
 #include <vector>
 #include <utility>
 
@@ -104,4 +105,16 @@ pair<int, int> countDiag3D(vector<Vector2D<int> > layer) {
 	return mid == 1 
 		? pair<int, int>(score, 0) 
 		: pair<int, int>(0, score);
+}
+
+vector<pair<int, int>> getAvailable(Vector2D<int> layer, function<bool(int)> condition) {
+	vector<pair<int, int>> output;
+
+	for (pair<int, int> p : ORDERED_PAIRS) {
+		if (condition(layer[p.first][p.second])) {
+			output.push_back(p);
+		}
+	}
+
+	return output;
 }
