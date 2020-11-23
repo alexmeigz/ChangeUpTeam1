@@ -2,26 +2,28 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <cstdlib>
 using namespace std;
 
 template<class T, class U>
 class Dict {
 	public:
-		U get(T key){
+		U& get(T key){
 			for(int i = 0; i < keys.size(); i++){
 				if(keys[i] == key){
 					return values[i];
 				}
 			}
-			U u;
-			return u;
+			
+			cerr << "key not found" << endl;
+			exit(1);	
 		}
 
 		pair<T, U> index_get(int index){
 			pair<T, U> p = {keys[index], values[index]};
 			return p;
 		}
-			
+	
 		bool has_key(T key){
 			for(int i = 0; i < keys.size(); i++){
 				if(keys[i] == key){

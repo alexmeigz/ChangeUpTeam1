@@ -11,15 +11,26 @@
 
 class Bot : public Player {
 	public:
-		Bot(string name_str);
-		string name;
-	private:
-		Move chooseMove(vector<pair<int, int> > av_add, vector<pair<int, int> > av_rem, vector<int> current_state);	
-		//chooses a move, randomly or greedily
+		Bot(string name_str, int id, int maxBalls);
+		//Bot(string name_str, double rand_move_pct);
+
+		void reset(){
+			states = {};
+		}
+
+		void add_state(vector<int> state){
+			states.push_back(state);
+		}
+
 		void feedReward(double reward);
 		//backprops rewards, updating state_vals
-		void reset();
-		//resets states to empty
+
+		Move chooseMove(Dict<Move, vector<int> > options);
+		//chooses a move, randomly or greedily
+
+		string name;
+
+	private:
 
 		//Member Variables
 		//alpha: learning rate
