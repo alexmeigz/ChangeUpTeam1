@@ -34,6 +34,18 @@ void TheGym::reset(){
 	g = Game(bot1, bot2);
 }	
 
+void print_states(Bot bot){
+	vector<vector<int> > states;
+	states = bot.getStates();
+
+	for(int i = 0; i < states.size(); i++){
+		for(int j = 0; j < 27; j++){
+			cout << states[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+
 void TheGym::playRound(){
 	double winner;
 	Dict<Move, vector<int> > options;
@@ -60,6 +72,9 @@ void TheGym::playRound(){
 		}
 	}
 	giveReward();
+
+	print_states(bot1);
+
 	reset();
 	std::cout << "finished round\n";
 }
@@ -86,6 +101,7 @@ void TheGym::playRound(bool quiet){
 		}
 	}
 	giveReward();
+	//print_states(bot1);
 	reset();
 }
 

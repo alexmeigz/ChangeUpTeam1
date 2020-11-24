@@ -38,6 +38,10 @@ class Bot : public Player {
 		//Pre-condition: none
 		//Post-condition: returns stateVals dictionary
 
+		vector<vector<int> > getStates() const;
+		//Pre-condition: none
+		//Post-condition: returns states 2d vector
+
 		string name;
  		bool quiet = false;
  

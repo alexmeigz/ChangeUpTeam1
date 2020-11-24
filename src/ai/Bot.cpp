@@ -57,3 +57,7 @@ Move Bot::chooseMove(Dict<Move, vector<int> > possible_moves){
 Dict<vector<int>, double> Bot::getStateVals() const {
 	return state_vals;	
 }
+
+vector<vector<int> > Bot::getStates() const {
+	return states;
+}

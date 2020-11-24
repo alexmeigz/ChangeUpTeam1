@@ -3,6 +3,6 @@
 int main() {
 	TheGym model;
 	//model.train(10);
-	model.train(10, true);
+	model.train(1, true);
 	model.print();
 }
