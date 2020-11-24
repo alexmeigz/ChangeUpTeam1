@@ -35,7 +35,8 @@ void TheGym::reset(){
 }	
 
 void print_states(Bot bot){
-	vector<vector<int> > states;
+	//vector<vector<int> > states;
+	vector<string> states;
 	states = bot.getStates();
 
 	for(int i = 0; i < states.size(); i++){
@@ -48,7 +49,8 @@ void print_states(Bot bot){
 
 void TheGym::playRound(){
 	double winner;
-	Dict<Move, vector<int> > options;
+	//Dict<Move, vector<int> > options;
+	std::unordered_map<std::string, Move> options;
 	Move next_move;
 
 	while(!g.finished()) {
@@ -81,7 +83,8 @@ void TheGym::playRound(){
 
 void TheGym::playRound(bool quiet){
 	double winner;
-	Dict<Move, vector<int> > options;
+	//Dict<Move, vector<int> > options;
+	std::unordered_map<std::string, Move> options;
 	Move next_move;
 	
 	beQuiet();
@@ -122,10 +125,11 @@ void TheGym::train(int rounds, bool quiet, bool start_fresh){
 	}
 }
 
+/*
 void printBot(Bot bot) {
 	ofstream file ("src/ai/" + bot.name + ".json");
 
-	std::cout << bot.name << " has " << bot.getStateVals().size() << " number of states to output.\n";
+	std::cout << bot.name << " has " << bot.getStateVals().size() << " state-val pairs to output.\n";
 
 	file << "[\n";
 
@@ -147,13 +151,16 @@ void printBot(Bot bot) {
 
 	file.close();
 }
+*/
 
 void savePolicy(Bot bot){
 	ofstream file("src/ai/" + bot.name + ".txt");
-	Dict<vector<int>, double> dict = bot.getStateVals();
+	//Dict<vector<int>, double> dict = bot.getStateVals();
+	std::unordered_map<std::string, double> dict = bot.getStateVals();
 	file << dict.size() << endl;
-	for(int i = 0; i < dict.size(); i++){
-		pair<vector<int>, double> sv_pair = dict.index_get(i);
+	//for(int i = 0; i < dict.size(); i++){
+	for(pair<std::string, double> sv_pair : dict){
+		//pair<vector<int>, double> sv_pair = dict.index_get(i);
 		//std::cout << sv_pair.second << endl;
 		file << sv_pair.second << " ";
 		for(int j = 0; j < 27; j++){
@@ -168,9 +175,9 @@ void Bot::readPolicy(string filename){
 	ifstream file(filename);
 	state_vals.empty();
 	double dummy_val;
-	vector<int> dummy_state;
+	string dummy_state = "";
 	for(int i = 0; i < 27; i++){
-		dummy_state.push_back(0);
+		dummy_state += " ";
 	}
 	int pair_count;
 	file >> pair_count;
@@ -179,7 +186,8 @@ void Bot::readPolicy(string filename){
 		for(int j = 0; j < 27; j++){
 			file >> dummy_state[j];
 		}
-		state_vals.add(dummy_state, dummy_val);
+		//state_vals.add(dummy_state, dummy_val);
+		state_vals[dummy_state] = dummy_val;
 	}
 	file.close();
 }
@@ -192,6 +200,6 @@ void TheGym::beQuiet(){
 void TheGym::print() {
 	savePolicy(bot1);
 	savePolicy(bot2);
-	printBot(bot1);
-	printBot(bot2);
+	//printBot(bot1);
+	//printBot(bot2);
 }

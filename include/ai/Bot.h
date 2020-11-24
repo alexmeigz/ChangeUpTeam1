@@ -19,7 +19,7 @@ class Bot : public Player {
 		//Post-condition: empties states from training round,
 		//resets its score and ball count
 
-		void add_state(vector<int> state);
+		void add_state(string state);
 		//Pre-condition: takes an input state
 		//Post-condition: stores state to track the current training round
 
@@ -28,17 +28,17 @@ class Bot : public Player {
 		//Post-condition: backpropagates the reward to the stored game states, updating
 		//its policy dictionary accordingly
 
-		Move chooseMove(Dict<Move, vector<int> > options);
+		Move chooseMove(unordered_map<string, Move> options);
 		//Pre-condition: takes a dictionary of moves and corresponding game states
 		//Post-condition: chooses a move randomly or the best move according to its policy
 		//the proportion of random moves is the Bot's explore_rate
 
 
-		Dict<vector<int>, double> getStateVals() const;
+		unordered_map<string, double> getStateVals() const;
 		//Pre-condition: none
 		//Post-condition: returns stateVals dictionary
 
-		vector<vector<int> > getStates() const;
+		vector<string> getStates() const;
 		//Pre-condition: none
 		//Post-condition: returns states 2d vector
 
@@ -53,7 +53,9 @@ class Bot : public Player {
 		double alpha = 0.2; //learning rate
 		double gamma = 0.9; //decay rate
 		double explore_rate = 0.3; //random move rate
-		vector<vector<int> > states; //tracks training round
-		Dict<vector<int>, double> state_vals; //move policy; matches game states to its value
+		//vector<vector<int> > states; //tracks training round
+		vector<string> states;
+		//Dict<vector<int>, double> state_vals; //move policy; matches game states to its value
+		unordered_map<string, double> state_vals;
 
 };

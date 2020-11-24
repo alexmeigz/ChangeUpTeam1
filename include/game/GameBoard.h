@@ -20,7 +20,7 @@ public:
     Vector2D<int> getLayer(char c, int i) const;
 
     bool isFull() const;
-    vector<int> flatten() const;
+    string flatten() const;
 
     vector<pair<int, int>> getAvailableRemoves() const;
     vector<pair<int, int>> getAvailableAdds() const;

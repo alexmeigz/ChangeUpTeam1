@@ -63,7 +63,7 @@ void AIGame::displayBoard() const {
 		}
 	}
 
-	vector<int> balls = gameboard.flatten();
+	std::string balls = gameboard.flatten();
 
 	for(int i = 0; i < 27; i++){
 		display = drawBall(display, ball_indices[i], balls[i]);

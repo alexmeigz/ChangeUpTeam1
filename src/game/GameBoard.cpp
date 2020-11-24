@@ -81,11 +81,12 @@ bool GameBoard::isFull() const {
 	return getAvailableAdds().size() == 0;
 }
 
-vector<int> GameBoard::flatten() const {
-	vector<int> balls;
+string GameBoard::flatten() const {
+	//vector<int> balls;
+	string balls = "";
 
 	for (triple t : ORDERED_TRIPLES) {
-		balls.push_back(getLayerY(t.first)[t.third][SIZE - t.second - 1]);
+		balls += to_string(getLayerY(t.first)[t.third][SIZE - t.second - 1]);
 	}
 
 	return balls;

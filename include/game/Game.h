@@ -69,11 +69,11 @@ class Game {
 		
 		//Pre-Condition: none
 		//Post-Condition: returns flatten gameboard
-		vector<int> flatten() const;
+		string flatten() const;
 
-		vector<int> get_state_after(Move move) const;
+		string get_state_after(Move move) const;
 
-		Dict<Move, vector<int> > get_possibilities() const;
+		unordered_map<string, Move> get_possibilities() const;
 
 	protected:
 		string drawBall(string skel, int index, int playerId) const;
