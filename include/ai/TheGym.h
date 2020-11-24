@@ -1,42 +1,48 @@
 #pragma once
 #include "../game/Game.h"
 #include "Bot.h"
+#include "State.h"
 #include <iostream>
 
 class TheGym {
 	public:
-		TheGym() : 	
-			bot1("bot1", 1),
-			bot2("bot2", 2),
-			g(){}
+		TheGym();
+		//default constructor, starts with bot1 and bot2
 
-		void giveReward(){
-			if(g.winner() == 1){
-				bot1.feedReward(1);
-				bot2.feedReward(0);
-			}
-			else if(g.winner() == 2){
-				bot1.feedReward(0);
-				bot2.feedReward(1);
-			}
-			else {
-				bot1.feedReward(0.1);
-				bot2.feedReward(0.5);
-			}
-		}
-		
-		void reset(){
-			bot1.reset();
-			bot2.reset();
-			g = Game(bot1, bot2);
-		}	
+		void giveReward();
+		//Pre-condition: none
+		//Post-condition: distributes reward, updating bot policies
+
+		void reset();
+		//Pre-condition: none
+		//Post-condition: resets bots and game
+
 		void playRound();
-		void train(int rounds);
+		//Pre-condition: none
+		//Post-condition: plays one training round
+
+		void playRound(bool quiet);
+		//Pre-condition: none
+		//Post-condition: plays one training round without printing individual turns
+
+		void train(int rounds, bool quiet=false);
+		//Pre-condition: takes an int number of rounds and bool quiet (default false)
+		//Post-condition: plays that many number of rounds, with fewer
+		//prints if quiet is true
+
+		void beQuiet();
+		//Pre-condition: none
+		//Post-condition: sets Bots to quiet
 
 		void print();
+		//Pre-condition: none
+		//Post-condition: prints both bots
+
+		State getState() const;
 
 	private:
 		Bot bot1;
 		Bot bot2;
 		Game g;
+		State state;
 };

@@ -34,7 +34,7 @@ Goal is to get 4, 3 in a rows...
 
 ## How to play
 
-When prompted you can `add` or `remove` a ball from the board by specifying the post number. A mini board will be displayed with the post numbers.
+When prompted you can `add` or `remove` a ball from the board by specifying the post number. A mmini board will be displayed with the post numbers.
 
 Add a ball to the board:
 

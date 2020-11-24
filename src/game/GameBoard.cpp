@@ -9,20 +9,33 @@ GameBoard::GameBoard() : board(SIZE) {
 		// set each element to a vector of size SIZE, passing in SIZE to the constructor of GoalPost
 		board[i] = vector<GoalPost>(SIZE, SIZE);
 	}
+	numBalls = 0;
 }
 
 int GameBoard::removeBall(int x, int y) {
 	if (!inRange(x, SIZE) || !inRange(y, SIZE)) {
 		return false;
 	}
-	return board[x][y].pop();
+	bool result = board[x][y].pop();
+
+	if (result) {
+		--numBalls;
+	}
+
+	return result;
 }
 
 bool GameBoard::addBall(int player, int x, int y) {
 	if (!inRange(x, SIZE) || !inRange(y, SIZE)) {
 		return false;
 	}
-	return board[x][y].push(player);
+	bool result = board[x][y].push(player);
+
+	if (result) {
+		++numBalls;
+	}
+
+	return result;
 }
 
 Vector2D<int> GameBoard::getLayer(char c, int i) const {
@@ -74,7 +87,7 @@ Vector2D<int> GameBoard::getLayerZ(int z) const {
 }
 
 bool GameBoard::isFull() const {
-	return getAvailableAdds().size() == 0;
+	return numBalls == SIZE * SIZE * SIZE;
 }
 
 vector<int> GameBoard::flatten() const {

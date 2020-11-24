@@ -15,5 +15,4 @@ train:
 
 test:
 	g++ -std=c++11 -o test1 tests/testAssignmentOperators.cpp $(MAIN_SRC_FILES)
-	test1.exe
 	
