@@ -44,7 +44,7 @@ void TheGym::train(int rounds){
 }
 
 void printBot(Bot bot) {
-	ofstream file ("C:/Users/Alex3/Desktop/ROBOTICS SOFTWARE/Project/ChangeUpTeam1/" + bot.name + ".json");
+	ofstream file ("src/ai/" + bot.name + ".json");
 
 	std::cout << bot.name << " has " << bot.getStateVals().size() << " number of states to output.\n";
 
