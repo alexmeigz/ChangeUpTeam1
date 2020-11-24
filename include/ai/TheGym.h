@@ -25,7 +25,7 @@ class TheGym {
 		//Pre-condition: none
 		//Post-condition: plays one training round without printing individual turns
 
-		void train(int rounds, bool quiet=false);
+		void train(int rounds, bool quiet=false, bool start_fresh=false);
 		//Pre-condition: takes an int number of rounds and bool quiet (default false)
 		//Post-condition: plays that many number of rounds, with fewer
 		//prints if quiet is true
@@ -34,11 +34,9 @@ class TheGym {
 		//Pre-condition: none
 		//Post-condition: sets Bots to quiet
 
-		void print();
-		//Pre-condition: none
-		//Post-condition: prints both bots
-
 		State getState() const;
+
+		void savePolicy();
 
 	private:
 		Bot bot1;

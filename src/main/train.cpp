@@ -2,6 +2,7 @@
 
 int main() {
 	TheGym model;
-	model.train(1000, true);
-	model.print();
+	//model.train(10);
+	model.train(1, true, false);
+    model.savePolicy();
 }

@@ -73,7 +73,7 @@ class Game {
 
 		vector<int> get_state_after(Move move) const;
 
-		Dict<Move, vector<int> > get_possibilities() const;
+		Dict<Move, string> get_possibilities() const;
 
 	protected:
 		string drawBall(string skel, int index, int playerId) const;

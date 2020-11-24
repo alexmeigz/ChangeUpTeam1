@@ -3,6 +3,8 @@
 #include <functional>
 #include <vector>
 #include <utility>
+#include <sstream>
+#include <iterator>
 
 vector<pair<int, int>> crossing(int a, int b) {
     vector<pair<int, int>> output(a * b);
@@ -117,4 +119,10 @@ vector<pair<int, int>> getAvailable(Vector2D<int> layer, function<bool(int)> con
 	}
 
 	return output;
+}
+
+string serialize(vector<int> input) {
+    std::stringstream result;
+    std::copy(input.begin(), input.end(), std::ostream_iterator<int>(result, ""));
+    return result.str();
 }

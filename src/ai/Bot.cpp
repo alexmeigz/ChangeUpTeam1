@@ -1,4 +1,5 @@
 #include "../../include/ai/Bot.h"
+#include "../../include/ai/State.h"
 
 Bot::Bot(string name_str, int id): Player(id){
 	name = name_str;
@@ -10,50 +11,48 @@ void Bot::reset(){
 	score = 0;
 }
 
-void Bot::add_state(vector<int> state){
+void Bot::add_state(string state){
 	states.push_back(state);
 }
 
-void Bot::feedReward(double reward) {
-	for (int i = states.size() - 1; i >= 0; i--) {
-		vector<int> state = states[i];
+vector<string> Bot::getStates() const {
+	return states;
+}
 
-		if(!state_vals.has_key(state)){
-			state_vals.add(state, 0);
+void Bot::feedReward(State &stateDict, double reward) {
+	for (int i = states.size() - 1; i >= 0; i--) {
+		string state = states[i];
+
+		if(!stateDict.has_key(state, playerGetId())){
+			stateDict.set(state, 0, playerGetId());
 		}
 
-		state_vals.set(state, state_vals.get(state) + alpha * (gamma * reward - state_vals.get(state)));
-		reward = state_vals.get(state);
+		stateDict.set(state, stateDict.get(state, playerGetId()) + alpha * (gamma * reward - stateDict.get(state, playerGetId())), playerGetId());
+		reward = stateDict.get(state, playerGetId());
 	}
 }
 
-Move Bot::chooseMove(Dict<Move, vector<int> > possible_moves){
+Move Bot::chooseMove(State &stateDict, Dict<Move, string> possible_moves){
 	// if possible_moves is empty then do random:
-	if(state_vals.size() == 0 || (rand() % 100) <= explore_rate * 100){
-		if(!quiet){ std::cout << "\t\trandom move\n"; }
+	if(stateDict.size() == 0 || (rand() % 100) <= explore_rate * 100){
+		std::cout << "\t\trandom move\n";
 		srand(time(0));
 		int move_index = rand() % possible_moves.size();
 		return possible_moves.index_get(move_index).first;
 	}
 
-	if(!quiet){ std::cout << "\t\tbest move of " << state_vals.size() << "\n"; }
+	std::cout << "\t\tbest move of " << stateDict.size() << "\n";
 
-	int greedy_index = 0;
-	bool foundValue = false;
+	int greedy_index = -1;
 	for(int i = 0; i < possible_moves.size(); i++){
 		//std::cout << "i: " << i << " : " << possible_moves.index_get(i).second[0] << endl;
-		if(state_vals.has_key(possible_moves.index_get(i).second) &&
-			(!foundValue ||
-			state_vals.get(possible_moves.index_get(i).second) >
-			state_vals.get(possible_moves.index_get(greedy_index).second))){
-
+		if(	stateDict.has_key(possible_moves.index_get(i).second, playerGetId()) &&
+			(greedy_index == -1 ||
+			stateDict.get(possible_moves.index_get(i).second, playerGetId()) >
+			stateDict.get(possible_moves.index_get(greedy_index).second, playerGetId()))){
+			
 			greedy_index = i;	
-			foundValue = true;
 		}
 	}
 	return possible_moves.index_get(greedy_index).first;
-}
-
-Dict<vector<int>, double> Bot::getStateVals() const {
-	return state_vals;	
 }

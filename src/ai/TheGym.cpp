@@ -1,5 +1,6 @@
 #include "../../include/ai/TheGym.h"
 #include "../../include/ai/Dict.h"
+#include "../../include/game/utility.h"
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -15,16 +16,16 @@ TheGym::TheGym() :
 
 void TheGym::giveReward(){
 	if(g.winner() == 1){
-		bot1.feedReward(1);
-		bot2.feedReward(0);
+		bot1.feedReward(state, 1);
+		bot2.feedReward(state, 0);
 	}
 	else if(g.winner() == 2){
-		bot1.feedReward(0);
-		bot2.feedReward(1);
+		bot1.feedReward(state, 0);
+		bot2.feedReward(state, 1);
 	}
 	else {
-		bot1.feedReward(0.1);
-		bot2.feedReward(0.5);
+		bot1.feedReward(state, 0.1);
+		bot2.feedReward(state, 0.5);
 	}
 }
 
@@ -34,98 +35,59 @@ void TheGym::reset(){
 	g = Game(bot1, bot2);
 }	
 
-void TheGym::playRound(){
-	double winner;
-	Dict<Move, vector<int> > options;
-	Move next_move;
+void print_states(Bot bot){
+	vector<string> states;
+	states = bot.getStates();
 
-	while(!g.finished()) {
-		std::cout << "bot 1's turn:\n";
-		while(!g.finished() && g.whoseTurn() == 1){
-			options = g.get_possibilities();
-			std::cout << "\tchoosing move\n";
-			next_move = bot1.chooseMove(options);
-			std::cout << "\tmoving\n";
-			g.makeMove(next_move.add_rem, next_move.x, next_move.y);
-			bot1.add_state(g.flatten());
-		}
-		std::cout << "bot 2's turn:\n";
-		while(!g.finished() && g.whoseTurn() == 2){
-			options = g.get_possibilities();
-			std::cout << "\tchoosing move\n";
-			next_move = bot2.chooseMove(options);
-			std::cout << "\tmoving\n";
-			g.makeMove(next_move.add_rem, next_move.x, next_move.y);
-			bot2.add_state(g.flatten());
-		}
+	for(int i = 0; i < states.size(); i++){
+		cout << states[i] << endl;
 	}
-	giveReward();
-	reset();
-	std::cout << "finished round\n";
 }
 
 void TheGym::playRound(bool quiet){
 	double winner;
-	Dict<Move, vector<int> > options;
+	Dict<Move, string> options;
 	Move next_move;
-	
-	beQuiet();
 
 	while(!g.finished()) {
+		if (quiet) std::cout << "bot 1's turn:\n";
 		while(!g.finished() && g.whoseTurn() == 1){
 			options = g.get_possibilities();
-			next_move = bot1.chooseMove(options);
+			if (quiet) std::cout << "\tchoosing move\n";
+			next_move = bot1.chooseMove(state, options);
+			if (quiet) std::cout << "\tmoving\n";
 			g.makeMove(next_move.add_rem, next_move.x, next_move.y);
-			bot1.add_state(g.flatten());
+			bot1.add_state(serialize(g.flatten()));
 		}
+		if (quiet) std::cout << "bot 2's turn:\n";
 		while(!g.finished() && g.whoseTurn() == 2){
 			options = g.get_possibilities();
-			next_move = bot2.chooseMove(options);
+			if (quiet) std::cout << "\tchoosing move\n";
+			next_move = bot2.chooseMove(state, options);
+			if (quiet) std::cout << "\tmoving\n";
 			g.makeMove(next_move.add_rem, next_move.x, next_move.y);
-			bot2.add_state(g.flatten());
+			bot2.add_state(serialize(g.flatten()));
 		}
 	}
 	giveReward();
+
+	//print_states(bot1);
+
 	reset();
 }
 
-void TheGym::train(int rounds, bool quiet){
-	std::cout << "Staring training...\n";
+void TheGym::train(int rounds, bool quiet, bool start_fresh){
+	std::cout << "Starting training...\n";
+	if(!start_fresh){
+		state.readPolicy();
+	}
 	for(int i = 0; i < rounds; i++){
-		std::cout << "\nRound: " << i << endl;
-		if(quiet){
-			playRound(quiet);
+		std::cout << "\nRound: " << i + 1 << endl;
+		if(quiet){	
+			beQuiet();
 		}
-		else {
-			playRound();
-		}
+		playRound(quiet);
 	}
-}
-
-void printBot(Bot bot) {
-	ofstream file ("src/ai/" + bot.name + ".json");
-
-	std::cout << bot.name << " has " << bot.getStateVals().size() << " number of states to output.\n";
-
-	file << "[\n";
-
-	Dict<vector<int>, double> dict = bot.getStateVals();
-	for (int i = 0; i < dict.size(); ++i) {
-		pair<vector<int>, double> val = dict.index_get(i);
-
-		file << "\t{\n";
-		file << "\t\t\"state\": [" << (val.first.size() ? to_string(val.first[0]) : "");
-		for (int j = 1; j < val.first.size(); ++j) {
-			file << "," << val.first[j];	
-		}
-
-		file << "],\n\t\t\"val\": " << val.second << endl;
-		file << "\t}" << (i + 1 < dict.size() ? "," : "") << "\n";
-	}
-
-	file << "]\n";
-
-	file.close();
 }
 
 void TheGym::beQuiet(){
@@ -133,7 +95,10 @@ void TheGym::beQuiet(){
 	bot2.quiet = true;
 }
 
-void TheGym::print() {
-	printBot(bot1);
-	printBot(bot2);
+State TheGym::getState() const {
+	return state;
+}
+
+void TheGym::savePolicy() {
+	state.savePolicy();
 }

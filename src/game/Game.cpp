@@ -230,19 +230,19 @@ vector<int> Game::get_state_after(Move move) const {
 	return dummy_game.flatten();
 }
 
-Dict<Move, vector<int> > Game::get_possibilities() const {
-	Dict<Move, vector<int> > possibilities;
+Dict<Move, string> Game::get_possibilities() const {
+	Dict<Move,string> possibilities;
 	vector<pair<int, int> > adds = availableAdds();
 	vector<pair<int, int> > removes = availableRemoves();
 
 	for(int i = 0; i < this->availableAdds().size(); i++){
 		Move temp = {ADD, adds[i].first, adds[i].second};
-		possibilities.add(temp, get_state_after(temp));
+		possibilities.add(temp, serialize(get_state_after(temp)));
 	}
 
 	for(int i = 0; i < this->availableRemoves().size(); i++){
 		Move temp = {REMOVE, removes[i].first, removes[i].second};
-		possibilities.add(temp, get_state_after(temp));
+		possibilities.add(temp, serialize(get_state_after(temp)));
 	}
 
 	return possibilities;
