@@ -105,10 +105,14 @@ void TheGym::playRound(bool quiet){
 	reset();
 }
 
-void TheGym::train(int rounds, bool quiet){
-	std::cout << "Staring training...\n";
+void TheGym::train(int rounds, bool quiet, bool start_fresh){
+	std::cout << "Starting training...\n";
+	if(!start_fresh){
+		bot1.readPolicy("src/ai/bot1.txt");
+		bot2.readPolicy("src/ai/bot2.txt");
+	}
 	for(int i = 0; i < rounds; i++){
-		std::cout << "\nRound: " << i << endl;
+		std::cout << "\nRound: " << i + 1 << endl;
 		if(quiet){
 			playRound(quiet);
 		}
@@ -144,12 +148,50 @@ void printBot(Bot bot) {
 	file.close();
 }
 
+void savePolicy(Bot bot){
+	ofstream file("src/ai/" + bot.name + ".txt");
+	Dict<vector<int>, double> dict = bot.getStateVals();
+	file << dict.size() << endl;
+	for(int i = 0; i < dict.size(); i++){
+		pair<vector<int>, double> sv_pair = dict.index_get(i);
+		//std::cout << sv_pair.second << endl;
+		file << sv_pair.second << " ";
+		for(int j = 0; j < 27; j++){
+			file << sv_pair.first[j] << " ";
+		}
+		file << endl;
+	}
+	file.close();
+}
+
+void Bot::readPolicy(string filename){
+	ifstream file(filename);
+	state_vals.empty();
+	double dummy_val;
+	vector<int> dummy_state;
+	for(int i = 0; i < 27; i++){
+		dummy_state.push_back(0);
+	}
+	int pair_count;
+	file >> pair_count;
+	for(int i = 0; i < pair_count; i++){
+		file >> dummy_val;
+		for(int j = 0; j < 27; j++){
+			file >> dummy_state[j];
+		}
+		state_vals.add(dummy_state, dummy_val);
+	}
+	file.close();
+}
+
 void TheGym::beQuiet(){
 	bot1.quiet = true;
 	bot2.quiet = true;
 }
 
 void TheGym::print() {
+	savePolicy(bot1);
+	savePolicy(bot2);
 	printBot(bot1);
 	printBot(bot2);
 }

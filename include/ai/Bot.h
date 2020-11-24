@@ -42,6 +42,10 @@ class Bot : public Player {
 		//Pre-condition: none
 		//Post-condition: returns states 2d vector
 
+		void readPolicy(string filename);
+		//Pre-condition: takes filename of policy
+		//Post-condition: sets state_vals to policy in filename
+
 		string name;
  		bool quiet = false;
  

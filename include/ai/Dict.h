@@ -50,6 +50,11 @@ class Dict {
 			return keys.size();
 		}
 
+		void empty(){
+			keys = {};
+			values = {};
+		}
+
 	private:
 		vector<KeyType> keys;
 		vector<ValueType> values;
