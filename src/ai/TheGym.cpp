@@ -6,8 +6,6 @@
 #include <vector>
 #include <utility>
 
-//test comment
-
 TheGym::TheGym() : 	
 		bot1("bot1", 1),
 		bot2("bot2", 2),
@@ -35,7 +33,6 @@ void TheGym::reset(){
 }	
 
 void print_states(Bot bot){
-	//vector<vector<int> > states;
 	vector<string> states;
 	states = bot.getStates();
 
@@ -49,7 +46,6 @@ void print_states(Bot bot){
 
 void TheGym::playRound(){
 	double winner;
-	//Dict<Move, vector<int> > options;
 	std::unordered_map<std::string, Move> options;
 	Move next_move;
 
@@ -83,7 +79,6 @@ void TheGym::playRound(){
 
 void TheGym::playRound(bool quiet){
 	double winner;
-	//Dict<Move, vector<int> > options;
 	std::unordered_map<std::string, Move> options;
 	Move next_move;
 	
@@ -104,7 +99,6 @@ void TheGym::playRound(bool quiet){
 		}
 	}
 	giveReward();
-	//print_states(bot1);
 	reset();
 }
 
@@ -128,44 +122,13 @@ void TheGym::train(int rounds, bool quiet, bool start_fresh){
 	}
 }
 
-/*
-void printBot(Bot bot) {
-	ofstream file ("src/ai/" + bot.name + ".json");
-
-	std::cout << bot.name << " has " << bot.getStateVals().size() << " state-val pairs to output.\n";
-
-	file << "[\n";
-
-	Dict<vector<int>, double> dict = bot.getStateVals();
-	for (int i = 0; i < dict.size(); ++i) {
-		pair<vector<int>, double> val = dict.index_get(i);
-
-		file << "\t{\n";
-		file << "\t\t\"state\": [" << (val.first.size() ? to_string(val.first[0]) : "");
-		for (int j = 1; j < val.first.size(); ++j) {
-			file << "," << val.first[j];	
-		}
-
-		file << "],\n\t\t\"val\": " << val.second << endl;
-		file << "\t}" << (i + 1 < dict.size() ? "," : "") << "\n";
-	}
-
-	file << "]\n";
-
-	file.close();
-}
-*/
-
 void savePolicy(Bot bot){
 	std::cout << bot.name << " has " << bot.getStateVals().size() << " state-val pairs to output.\n";
+
 	ofstream file("src/ai/" + bot.name + ".txt");
-	//Dict<vector<int>, double> dict = bot.getStateVals();
 	std::unordered_map<std::string, double> dict = bot.getStateVals();
 	file << dict.size() << endl;
-	//for(int i = 0; i < dict.size(); i++){
 	for(pair<std::string, double> sv_pair : dict){
-		//pair<vector<int>, double> sv_pair = dict.index_get(i);
-		//std::cout << sv_pair.second << endl;
 		file << sv_pair.second << " ";
 		for(int j = 0; j < 27; j++){
 			file << sv_pair.first[j] << " ";
@@ -190,7 +153,6 @@ void Bot::readPolicy(string filename){
 		for(int j = 0; j < 27; j++){
 			file >> dummy_state[j];
 		}
-		//state_vals.add(dummy_state, dummy_val);
 		state_vals[dummy_state] = dummy_val;
 	}
 	file.close();
@@ -204,6 +166,4 @@ void TheGym::beQuiet(){
 void TheGym::print() {
 	savePolicy(bot1);
 	savePolicy(bot2);
-	//printBot(bot1);
-	//printBot(bot2);
 }

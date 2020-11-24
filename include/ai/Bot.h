@@ -53,9 +53,8 @@ class Bot : public Player {
 		double alpha = 0.2; //learning rate
 		double gamma = 0.9; //decay rate
 		double explore_rate = 0.3; //random move rate
-		//vector<vector<int> > states; //tracks training round
+
 		vector<string> states;
-		//Dict<vector<int>, double> state_vals; //move policy; matches game states to its value
 		unordered_map<string, double> state_vals;
 
 };
