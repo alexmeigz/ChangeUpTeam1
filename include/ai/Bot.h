@@ -14,36 +14,38 @@ class Bot : public Player {
 		Bot(string name_str, int id);
 		//Bot(string name_str, double rand_move_pct);
 
-		void reset(){
-			states = {};
-			playerBallCount = 0;
-			score = 0;
-		}
+		void reset();
+		//Pre-condition: none
+		//Post-condition: empties states from training round,
+		//resets its score and ball count
 
-		void add_state(vector<int> state){
-			states.push_back(state);
-		}
+		void add_state(vector<int> state);
+		//Pre-condition: takes an input state
+		//Post-condition: stores state to track the current training round
 
 		void feedReward(double reward);
-		//backprops rewards, updating state_vals
+		//Pre-condition: takes a double reward representing the outcome of the next state
+		//Post-condition: backpropagates the reward to the stored game states, updating
+		//its policy dictionary accordingly
 
 		Move chooseMove(Dict<Move, vector<int> > options);
-		//chooses a move, randomly or greedily
+		//Pre-condition: takes a dictionary of moves and corresponding game states
+		//Post-condition: chooses a move randomly or the best move according to its policy
+		//the proportion of random moves is the Bot's explore_rate
 
-		string name;
 
 		Dict<vector<int>, double> getStateVals() const;
+		//Pre-condition: none
+		//Post-condition: returns stateVals dictionary
+
+		string name;
+ 		bool quiet = false;
  
 	private:
-
-		//Member Variables
-		//alpha: learning rate
-		//gamma: decay rate
-		//explore: how often should bot move randomly
-		double alpha = 0.2;
-		double gamma = 0.9;
-		double explore_rate = 0.3;
-		vector<vector<int> > states;
-		Dict<vector<int>, double> state_vals;
+		double alpha = 0.2; //learning rate
+		double gamma = 0.9; //decay rate
+		double explore_rate = 0.3; //random move rate
+		vector<vector<int> > states; //tracks training round
+		Dict<vector<int>, double> state_vals; //move policy; matches game states to its value
 
 };

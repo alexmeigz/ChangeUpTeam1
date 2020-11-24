@@ -5,6 +5,35 @@
 #include <string>
 #include <vector>
 #include <utility>
+
+//test comment
+
+TheGym::TheGym() : 	
+		bot1("bot1", 1),
+		bot2("bot2", 2),
+		g(){}
+
+void TheGym::giveReward(){
+	if(g.winner() == 1){
+		bot1.feedReward(1);
+		bot2.feedReward(0);
+	}
+	else if(g.winner() == 2){
+		bot1.feedReward(0);
+		bot2.feedReward(1);
+	}
+	else {
+		bot1.feedReward(0.1);
+		bot2.feedReward(0.5);
+	}
+}
+
+void TheGym::reset(){
+	bot1.reset();
+	bot2.reset();
+	g = Game(bot1, bot2);
+}	
+
 void TheGym::playRound(){
 	double winner;
 	Dict<Move, vector<int> > options;
@@ -35,16 +64,46 @@ void TheGym::playRound(){
 	std::cout << "finished round\n";
 }
 
-void TheGym::train(int rounds){
+void TheGym::playRound(bool quiet){
+	double winner;
+	Dict<Move, vector<int> > options;
+	Move next_move;
+	
+	beQuiet();
+
+	while(!g.finished()) {
+		while(!g.finished() && g.whoseTurn() == 1){
+			options = g.get_possibilities();
+			next_move = bot1.chooseMove(options);
+			g.makeMove(next_move.add_rem, next_move.x, next_move.y);
+			bot1.add_state(g.flatten());
+		}
+		while(!g.finished() && g.whoseTurn() == 2){
+			options = g.get_possibilities();
+			next_move = bot2.chooseMove(options);
+			g.makeMove(next_move.add_rem, next_move.x, next_move.y);
+			bot2.add_state(g.flatten());
+		}
+	}
+	giveReward();
+	reset();
+}
+
+void TheGym::train(int rounds, bool quiet){
 	std::cout << "Staring training...\n";
 	for(int i = 0; i < rounds; i++){
 		std::cout << "\nRound: " << i << endl;
-		playRound();
+		if(quiet){
+			playRound(quiet);
+		}
+		else {
+			playRound();
+		}
 	}
 }
 
 void printBot(Bot bot) {
-	ofstream file ("C:/Users/Alex3/Desktop/ROBOTICS SOFTWARE/Project/ChangeUpTeam1/" + bot.name + ".json");
+	ofstream file ("src/ai/" + bot.name + ".json");
 
 	std::cout << bot.name << " has " << bot.getStateVals().size() << " number of states to output.\n";
 
@@ -67,6 +126,11 @@ void printBot(Bot bot) {
 	file << "]\n";
 
 	file.close();
+}
+
+void TheGym::beQuiet(){
+	bot1.quiet = true;
+	bot2.quiet = true;
 }
 
 void TheGym::print() {

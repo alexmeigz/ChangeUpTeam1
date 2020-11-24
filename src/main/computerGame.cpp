@@ -7,17 +7,17 @@
 #include <cstdlib>
 
 int main() {
-    int playerNum;
+	int playerNum;
 
-    do {
-        std::cout << "Enter your number (1/2): ";
-        std::cin >> playerNum;
-    } while(playerNum != 1 && playerNum != 2);
-    cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	do {
+		std::cout << "Enter your number (1/2): ";
+		std::cin >> playerNum;
+	} while(playerNum != 1 && playerNum != 2);
+	cin.clear();
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
 	AIGame game(playerNum);
-    std::regex input_rgx("(add|remove) (\\d)");
+	std::regex input_rgx("(add|remove) (\\d)");
 
 	std::cout << "---------------------------------------------------------------------------\n"; 
 	while (!game.finished()) {
@@ -29,7 +29,7 @@ int main() {
 		int y = -1;
 
 		std::cout << "---------------------------------------------------------------------------\n"; 
-		
+
 		string slots =
 			"           1 -- 2 -- 3\n"
 			"          /    /    /     << Slot Numbers\n"
@@ -69,9 +69,9 @@ int main() {
 	if (game.winner() == playerNum) {
 		cout << "                           PLAYER WINS!" << endl;
 	}
-    else if (game.winner()) {
+	else if (game.winner()) {
 		cout << "                           COMPUTER WINS!" << endl;
-    }
+	}
 	else {
 		cout << "                           DRAW" << endl;
 	}
