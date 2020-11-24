@@ -115,7 +115,10 @@ void TheGym::train(int rounds, bool quiet, bool start_fresh){
 		bot2.readPolicy("src/ai/bot2.txt");
 	}
 	for(int i = 0; i < rounds; i++){
-		std::cout << "\nRound: " << i + 1 << endl;
+		if((i + 1) % 10 == 0){
+			std::cout << "On round: " << i + 1;
+			std::cout << endl;
+		}
 		if(quiet){
 			playRound(quiet);
 		}
