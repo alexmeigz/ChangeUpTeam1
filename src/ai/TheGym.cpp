@@ -154,6 +154,7 @@ void printBot(Bot bot) {
 */
 
 void savePolicy(Bot bot){
+	std::cout << bot.name << " has " << bot.getStateVals().size() << " state-val pairs to output.\n";
 	ofstream file("src/ai/" + bot.name + ".txt");
 	//Dict<vector<int>, double> dict = bot.getStateVals();
 	std::unordered_map<std::string, double> dict = bot.getStateVals();
