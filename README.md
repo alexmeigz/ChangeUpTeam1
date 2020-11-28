@@ -13,6 +13,8 @@ Team Members: <br/>
 
 ## Goal
 
+Our goal for this project was to develop problem solving skills in a team environment. Furthermore, in this project we employed the software development lifecycle and gained hands-on experience with the agile design process.
+
 ## How to run
 
 Player vs Player game:
