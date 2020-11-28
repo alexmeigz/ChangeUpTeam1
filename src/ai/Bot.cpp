@@ -4,6 +4,12 @@ using namespace std;
 
 Bot::Bot(string name_str, int id): Player(id){
 	name = name_str;
+	for(int i = 0; i < 27; i++){
+		rotate_indices[i] =
+			((i % 9) % 3) * 9 +
+			((i / 3) % 3) * 3 +
+			(2 - (i / 9));
+	}
 }
 
 void Bot::reset(){
@@ -66,3 +72,12 @@ unordered_map<string, double> Bot::getStateVals() const {
 vector<string> Bot::getStates() const {
 	return states;
 }
+
+string Bot::rotate(string state){
+	string rotated = state;
+	for(int i = 0; i < 27; i++){
+		rotated[rotate_indices[i]] = state[i];
+	}
+	return rotated;
+}
+

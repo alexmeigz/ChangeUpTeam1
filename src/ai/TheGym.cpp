@@ -130,10 +130,7 @@ void savePolicy(Bot bot){
 	file << dict.size() << endl;
 	for(pair<std::string, double> sv_pair : dict){
 		file << sv_pair.second << " ";
-		for(int j = 0; j < 27; j++){
-			file << sv_pair.first[j] << " ";
-		}
-		file << endl;
+		file << sv_pair.first << endl;
 	}
 	file.close();
 }
@@ -142,17 +139,22 @@ void Bot::readPolicy(string filename){
 	ifstream file(filename);
 	state_vals.empty();
 	double dummy_val;
-	string dummy_state = "";
+	string dummy_state;
+	/*
 	for(int i = 0; i < 27; i++){
 		dummy_state += " ";
 	}
+	*/
 	int pair_count;
 	file >> pair_count;
 	for(int i = 0; i < pair_count; i++){
 		file >> dummy_val;
+		/*
 		for(int j = 0; j < 27; j++){
 			file >> dummy_state[j];
 		}
+		*/
+		file >> dummy_state;
 		state_vals[dummy_state] = dummy_val;
 	}
 	file.close();

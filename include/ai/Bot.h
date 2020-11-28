@@ -46,6 +46,10 @@ class Bot : public Player {
 		//Pre-condition: takes filename of policy
 		//Post-condition: sets state_vals to policy in filename
 
+		string rotate(string state);
+		//Pre-condition: takes string state
+		//Post-condition: returns state rotated by 90deg about z-axis
+
 		string name;
  		bool quiet = false;
  
@@ -53,6 +57,8 @@ class Bot : public Player {
 		double alpha = 0.2; //learning rate
 		double gamma = 0.9; //decay rate
 		double explore_rate = 0.3; //random move rate
+
+		unordered_map<int, int> rotate_indices;
 
 		vector<string> states;
 		unordered_map<string, double> state_vals;
