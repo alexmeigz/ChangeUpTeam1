@@ -55,7 +55,35 @@ Each player can make 3 moves per turn with a maximum of 1 remove per turn. The p
 
 ## How it works
 
-Once you compile and run the executable file game.exe, an instance of class Game will be declared. This immediately declares and initializes a gameboard of class Gameboard, two players of class Player, and a set of rules for the game(score limit, max # of balls, moves/removes per turn). It will then begin a set of loops that will continue until one player has achieved or exceeded the score limit. Each loop will basically represent two turns (one by each player) and start by refreshing and displaying the board via a Game member function...
+**main():**
+Uses Game object of class Game (declare)
+Runs and displays the game
+
+**Game class:**
+Uses class GameBoard and class Player (declare and initialize)
+Determine a set of rules for the game (score limit, max # of balls, moves/removes per turn).
+
+Member functions usage:
+-	Checks status of game (scores, turn, # of balls remaining)
+-	Display status of game
+
+**GameBoard class:**
+Uses GoalPost class (declare and initialize)
+
+Member function usage:
+-	(via GoalPost) Controls the state of the board (add/remove ball)
+-	Checks status of the board (full, layer occupied,)
+
+**GoalPost class:**
+Is used by the GameBoard class to add and remove ball from the “board”
+
+**Player class:**
+Contains ID to identify individual players
+
+Member functions usage:
+-	control # of balls available
+-	get ID value
+-	control and get individual score
 
 ## Reinforcement Learning
 
