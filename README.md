@@ -56,11 +56,15 @@ Each player can make 3 moves per turn with a maximum of 1 remove per turn. The p
 ## How it works
 
 **main():**
+
 Uses Game object of class Game (declare)
+
 Runs and displays the game
 
 **Game class:**
+
 Uses class GameBoard and class Player (declare and initialize)
+
 Determine a set of rules for the game (score limit, max # of balls, moves/removes per turn).
 
 Member functions usage:
@@ -68,6 +72,7 @@ Member functions usage:
 -	Display status of game
 
 **GameBoard class:**
+
 Uses GoalPost class (declare and initialize)
 
 Member function usage:
@@ -75,9 +80,11 @@ Member function usage:
 -	Checks status of the board (full, layer occupied,)
 
 **GoalPost class:**
+
 Is used by the GameBoard class to add and remove ball from the “board”
 
 **Player class:**
+
 Contains ID to identify individual players
 
 Member functions usage:
