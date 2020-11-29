@@ -55,7 +55,7 @@ Each player can make 3 moves per turn with a maximum of 1 remove per turn. The p
 
 ## How it works
 
-Player class, goalpost class, gameboard class, game class...
+Once you compile and run the executable file game.exe, an instance of class Game will be declared. This immediately declares and initializes a gameboard of class Gameboard, two players of class Player, and a set of rules for the game(score limit, max # of balls, moves/removes per turn). It will then begin a set of loops that will continue until one player has achieved or exceeded the score limit. Each loop will basically represent two turns (one by each player) and start by refreshing and displaying the board via a Game member function...
 
 ## Reinforcement Learning
 
