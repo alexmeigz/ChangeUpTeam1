@@ -55,12 +55,57 @@ Each player can make 3 moves per turn with a maximum of 1 remove per turn. The p
 
 ## How it works
 
-Player class, goalpost class, gameboard class, game class...
+**main():**
+ Uses Game object of class Game (declare)
+
+Runs and displays the game
+
+
+**Game class:**
+ Uses class GameBoard and class Player (declare and initialize)
+
+Determine a set of rules for the game (score limit, max # of balls, moves/removes per turn).
+
+Member functions usage:
+-	Checks status of game (scores, turn, # of balls remaining)
+-	Display status of game
+
+
+**GameBoard class:**
+ Uses GoalPost class (declare and initialize)
+
+Member function usage:
+-	(via GoalPost) Controls the state of the board (add/remove ball)
+-	Checks status of the board (full, layer occupied,)
+
+
+**GoalPost class:**
+ Is used by the GameBoard class to add and remove ball from the “board”
+
+
+**Player class:**
+
+Contains ID to identify individual players
+
+Member functions usage:
+-	control # of balls available
+-	get ID value
+-	control and get individual score
+
 
 ## Reinforcement Learning
 
-Train model:
-```bash
+Members involved:
+* Matthew Ho
+* Alex Rudolph
+
+We implemented a dynamic programming algorithm to learn favourability values for different gameboard state combinations. These value/state policies are then used for the computer to choose the most favourable move in our play against computer game option.
+
+Two bots play training matches against each other. Bots choose favourable moves according to their policy, but there is a predetermined probability that a bot chooses to move randomly (explore) and thereby add new gamestates to its policy. At the end of a match, the winner updates the favourability of its moves with backpropagation. 
+
+Train the model:
+```{bash}
 make train
 train.exe
 ```
+We took advantage of UCSB’s CSIL computers to perform the training for our model. Due to time constraints, we didn’t get through all of the 38 billion (upper bound estimate) gameboard state combinations. 
