@@ -60,6 +60,7 @@ Each player can make 3 moves per turn with a maximum of 1 remove per turn. The p
 
 Runs and displays the game
 
+
 **Game class:**
  Uses class GameBoard and class Player (declare and initialize)
 
@@ -69,6 +70,7 @@ Member functions usage:
 -	Checks status of game (scores, turn, # of balls remaining)
 -	Display status of game
 
+
 **GameBoard class:**
  Uses GoalPost class (declare and initialize)
 
@@ -76,8 +78,10 @@ Member function usage:
 -	(via GoalPost) Controls the state of the board (add/remove ball)
 -	Checks status of the board (full, layer occupied,)
 
+
 **GoalPost class:**
  Is used by the GameBoard class to add and remove ball from the “board”
+
 
 **Player class:**
 
@@ -87,6 +91,7 @@ Member functions usage:
 -	control # of balls available
 -	get ID value
 -	control and get individual score
+
 
 ## Reinforcement Learning
 
