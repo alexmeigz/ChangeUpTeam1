@@ -60,3 +60,5 @@ pair<int, int> countDiag3D(vector<Vector2D<int> > layer);
 //Pre-Condition: 2D vector of ints, 
 //Post-Condition: returns coordinates of layers where the condition is met by iterating over one value
 vector<pair<int, int>> getAvailable(Vector2D<int> layer, function<bool(int)> condition);
+
+string serialize(vector<int>);

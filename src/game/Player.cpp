@@ -1,9 +1,12 @@
 #include "../../include/game/Player.h"
 #include "../../include/game/GameParams.h"
 
+#include <iostream>
+
 //Pre-Condition: input is a string value for the team name
 //Post-Condition: sets variable teamName to the input argument, sets playerBallCount to 16
-Player::Player(int id) : playerId(id) {
+Player::Player(int id){
+	playerId = id;
 	playerBallCount = 0;
 	score = 0;
 }
@@ -46,11 +49,4 @@ void Player::setScore(int newScore){
 
 void Player::addScore(int inc) {
 	score += inc;
-}
-
-Player Player::operator=(const Player &p){
-	Player newPlayer = Player(p.playerId);
-	newPlayer.playerBallCount = p.playerBallCount;
-	newPlayer.score = p.score;
-	return newPlayer;
 }

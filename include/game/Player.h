@@ -17,6 +17,7 @@ class Player {
 		//Post-Condition: sets variable teamName to the input argument, sets playerBallCount to 0
 		Player(int id);
 
+
 		/*
 		   Player(const Player &og): playerId(og.playerId),
 		   maxBalls(og.maxBalls) {
@@ -53,11 +54,10 @@ class Player {
 		//Post-Condition: increase player's score by that value
 		void addScore(int score);
 
-		Player operator=(const Player &p);
 
 	private:
 		//integer variable to keep explicit title of each player
-		const int playerId;
+		int playerId;
 	
 	protected:
 		//integer variable to keep track of how many balls each individual player has

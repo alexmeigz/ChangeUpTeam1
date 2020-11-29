@@ -1,5 +1,5 @@
 #include "../../include/game/Game.h"
-#include "../../include/game/Utility.h"
+#include "../../include/game/utility.h"
 #include <functional>
 #include <string>
 #include <vector>
@@ -31,7 +31,7 @@ bool Game::canRemove() const {
 
 bool Game::finished() const {
 	return (
-		gameboard.isFull() ||
+		availableAdds().size() == 0 ||
 		getScore(1) >= WINNING_SCORE ||
 		getScore(2) >= WINNING_SCORE
 	);

@@ -74,11 +74,12 @@ class Game {
 		string get_state_after(Move move) const;
 
 		unordered_map<string, Move> get_possibilities() const;
+		//Dict<Move, string> get_possibilities() const;
 
 	protected:
 		string drawBall(string skel, int index, int playerId) const;
-	
-        GameBoard gameboard; //gameboard structure 
+
+        	GameBoard gameboard; //gameboard structure 
 
 	private:
 		//Pre-Condition: none

@@ -9,35 +9,33 @@ GameBoard::GameBoard() : board(SIZE) {
 		// set each element to a vector of size SIZE, passing in SIZE to the constructor of GoalPost
 		board[i] = vector<GoalPost>(SIZE, SIZE);
 	}
-}
-
-int GameBoard::action(int x, int y, function<int(int x, int y)> action) {
-	if (!inRange(x, SIZE) || !inRange(y, SIZE)) {
-		return false;
-	}
-	return action(x, y);
+	numBalls = 0;
 }
 
 int GameBoard::removeBall(int x, int y) {
-	return action(x, y, [this](int x, int y){
-		return board[x][y].pop();
-	});
+	if (!inRange(x, SIZE) || !inRange(y, SIZE)) {
+		return false;
+	}
+	bool result = board[x][y].pop();
+
+	if (result) {
+		--numBalls;
+	}
+
+	return result;
 }
 
 bool GameBoard::addBall(int player, int x, int y) {
-	return action(x, y, [this, player](int x, int y){
-		return board[x][y].push(player);
-	});
-}
+	if (!inRange(x, SIZE) || !inRange(y, SIZE)) {
+		return false;
+	}
+	bool result = board[x][y].push(player);
 
-Vector2D<int> GameBoard::getLayer(function<vector<int>(int itr)> col) const {
-	Vector2D<int> output(SIZE);
-
-	for (int i = 0; i < SIZE; ++i) {
-		output[i] = fillVector(col(i), SIZE);
+	if (result) {
+		++numBalls;
 	}
 
-	return output;
+	return result;
 }
 
 Vector2D<int> GameBoard::getLayer(char c, int i) const {
@@ -50,6 +48,16 @@ Vector2D<int> GameBoard::getLayer(char c, int i) const {
 			return getLayerZ(i);
 	}
 	return {{-1}};
+}
+
+Vector2D<int> GameBoard::getLayer(function<vector<int>(int itr)> col) const {
+	Vector2D<int> output(SIZE);
+
+	for (int i = 0; i < SIZE; ++i) {
+		output[i] = fillVector(col(i), SIZE);
+	}
+
+	return output;
 }
 
 Vector2D<int> GameBoard::getLayerX(int x) const {
@@ -68,6 +76,7 @@ Vector2D<int> GameBoard::getLayerZ(int z) const {
 	return getLayer([this, z](int itr){
 		vector<int> output = vector<int>(SIZE);
 
+		// build row
 		for (int y = 0; y < SIZE; ++y) {
 			vector<int> col = board[itr][y].getPost();
 			output[y] = fillVector(col, SIZE)[z];
@@ -78,6 +87,7 @@ Vector2D<int> GameBoard::getLayerZ(int z) const {
 }
 
 bool GameBoard::isFull() const {
+	//return numBalls == SIZE * SIZE * SIZE;
 	return getAvailableAdds().size() == 0;
 }
 

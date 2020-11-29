@@ -11,11 +11,7 @@ Team Members: <br/>
 - Kelly Lin
 - William Huang
 
----
-
 ## Goal
-
----
 
 ## How to run
 
@@ -31,14 +27,10 @@ make aigame
 aigame.exe
 ```
 
----
-
 ## The game
 
 There is a 3x3 grid of goal posts with a max of 3 balls in each post...
 Goal is to get 4, 3 in a rows...
-
----
 
 ## How to play
 
@@ -58,15 +50,9 @@ remove #
 
 If you're playing against the computer, the computer's will run automatically after your turn is over.
 
----
-
 ## How it works
 
----
-
 ## Graphics
-
----
 
 ## Reinforcement Learning
 

@@ -26,8 +26,8 @@ public:
     vector<pair<int, int>> getAvailableAdds() const;
 
 private:
-    int action(int x, int y, function<int(int x, int y)> action);
     Vector2D<int> getLayer(function<vector<int>(int itr)> func) const;
     
     Vector2D<GoalPost> board;
+    int numBalls;
 };

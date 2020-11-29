@@ -7,6 +7,7 @@
 #include <ctime>
 #include <cstdlib>
 #include "Dict.h"
+#include "State.h"
 #include "../game/Game.h"
 
 class Bot : public Player {
@@ -23,12 +24,13 @@ class Bot : public Player {
 		//Pre-condition: takes an input state
 		//Post-condition: stores state to track the current training round
 
-		void feedReward(double reward);
+		void feedReward(State &state, double reward);
 		//Pre-condition: takes a double reward representing the outcome of the next state
 		//Post-condition: backpropagates the reward to the stored game states, updating
 		//its policy dictionary accordingly
 
 		Move chooseMove(unordered_map<string, Move> options);
+		Move chooseMove(State &state, unordered_map<string, Move> options);
 		//Pre-condition: takes a dictionary of moves and corresponding game states
 		//Post-condition: chooses a move randomly or the best move according to its policy
 		//the proportion of random moves is the Bot's explore_rate
@@ -57,10 +59,16 @@ class Bot : public Player {
 		double alpha = 0.2; //learning rate
 		double gamma = 0.9; //decay rate
 		double explore_rate = 0.3; //random move rate
+/*
+<<<<<<< HEAD
 
 		unordered_map<int, int> rotate_indices;
 
 		vector<string> states;
 		unordered_map<string, double> state_vals;
 
+=======
+*/
+		vector<string> states; //tracks training round
+		unordered_map<int, int> rotate_indices;
 };

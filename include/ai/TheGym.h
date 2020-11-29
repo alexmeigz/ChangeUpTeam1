@@ -1,6 +1,7 @@
 #pragma once
 #include "../game/Game.h"
 #include "Bot.h"
+#include "State.h"
 #include <iostream>
 
 class TheGym {
@@ -33,12 +34,13 @@ class TheGym {
 		//Pre-condition: none
 		//Post-condition: sets Bots to quiet
 
-		void print();
-		//Pre-condition: none
-		//Post-condition: prints both bots
+		State getState() const;
+
+		void savePolicy();
 
 	private:
 		Bot bot1;
 		Bot bot2;
 		Game g;
+		State state;
 };
