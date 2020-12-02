@@ -23,11 +23,12 @@ void Bot::feedReward(State &stateDict, double reward) {
 	for (int i = states.size() - 1; i >= 0; i--) {
 		string state = states[i];
 
-		if(!stateDict.has_key(state, playerGetId())){
+		if(!stateDict.has_key(state)){
 			stateDict.set(state, 0, playerGetId());
 		}
 
-		stateDict.set(state, stateDict.get(state, playerGetId()) + alpha * (gamma * reward - stateDict.get(state, playerGetId())), playerGetId());
+		double current = stateDict.get(state, playerGetId());
+		stateDict.set(state, current + alpha * (gamma * reward - current), playerGetId());
 		reward = stateDict.get(state, playerGetId());
 	}
 }
@@ -46,7 +47,7 @@ Move Bot::chooseMove(State &stateDict, Dict<Move, string> possible_moves){
 	int greedy_index = -1;
 	for(int i = 0; i < possible_moves.size(); i++){
 		//std::cout << "i: " << i << " : " << possible_moves.index_get(i).second[0] << endl;
-		if(	stateDict.has_key(possible_moves.index_get(i).second, playerGetId()) &&
+		if(	stateDict.has_key(possible_moves.index_get(i).second) &&
 			(greedy_index == -1 ||
 			stateDict.get(possible_moves.index_get(i).second, playerGetId()) >
 			stateDict.get(possible_moves.index_get(greedy_index).second, playerGetId()))){

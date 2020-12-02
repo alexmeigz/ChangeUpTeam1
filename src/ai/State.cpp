@@ -22,12 +22,9 @@ string invert(string state) {
     return state;
 }
 
-bool State::has_key(string state, int player) {
-    if (player == 2) {
-        state = invert(state);
-    }
-
-    return state_vals.find(state) != state_vals.end();
+bool State::has_key(string state) {
+    return state_vals.find(state) != state_vals.end() 
+        || state_vals.find(invert(state)) != state_vals.end();
 }
 
 double State::get(string state, int player = 1) {
@@ -41,12 +38,6 @@ double State::get(string state, int player = 1) {
 void State::set(string state, double val, int player, bool readFromFile) {
     if (player == 2) {
         state = invert(state);
-    }
-    if (has_key(state, player) && !readFromFile) {
-        newAdds.push_back(state);
-        if (newAdds.size() == 1000) {
-            savePolicy();
-        }
     }
     state_vals[state] = val;
 }

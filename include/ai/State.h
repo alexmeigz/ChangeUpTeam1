@@ -6,7 +6,7 @@ using namespace std;
 
 class State {
 public:
-    bool has_key(string, int);
+    bool has_key(string);
     double get(string, int);
     void set(string, double, int, bool readFromFile = false);
     int size();
