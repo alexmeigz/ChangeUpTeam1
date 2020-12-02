@@ -1,5 +1,6 @@
 #pragma once
 #include "../game/Game.h"
+#include "State.h"
 #include <random>
 #include <string>
 
@@ -13,5 +14,7 @@ class AIGame : public Game {
 		void displayBoard() const;
 	private:
 		void AIMakeMove();
+		Move getMove();
 		const int PLAYER_ID;
+		State state;
 };

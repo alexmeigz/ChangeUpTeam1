@@ -7,8 +7,6 @@
 #include <vector>
 #include <utility>
 
-//test comment
-
 TheGym::TheGym() : 	
 		bot1("bot1", 1),
 		bot2("bot2", 2),
@@ -40,39 +38,39 @@ void print_states(Bot bot){
 	states = bot.getStates();
 
 	for(int i = 0; i < states.size(); i++){
-		cout << states[i] << endl;
+		for(int j = 0; j < 27; j++){
+			cout << states[i][j] << " ";
+		}
+		cout << endl;
 	}
 }
 
 void TheGym::playRound(bool quiet){
 	double winner;
-	Dict<Move, string> options;
+	std::unordered_map<std::string, Move> options;
 	Move next_move;
 
 	while(!g.finished()) {
-		if (quiet) std::cout << "bot 1's turn:\n";
+		if (!quiet) std::cout << "bot 1's turn:\n";
 		while(!g.finished() && g.whoseTurn() == 1){
 			options = g.get_possibilities();
-			if (quiet) std::cout << "\tchoosing move\n";
+			if (!quiet) std::cout << "\tchoosing move\n";
 			next_move = bot1.chooseMove(state, options);
-			if (quiet) std::cout << "\tmoving\n";
+			if (!quiet) std::cout << "\tmoving\n";
 			g.makeMove(next_move.add_rem, next_move.x, next_move.y);
-			bot1.add_state(serialize(g.flatten()));
+			bot1.add_state(g.flatten());
 		}
-		if (quiet) std::cout << "bot 2's turn:\n";
+		if (!quiet) std::cout << "bot 2's turn:\n";
 		while(!g.finished() && g.whoseTurn() == 2){
 			options = g.get_possibilities();
-			if (quiet) std::cout << "\tchoosing move\n";
+			if (!quiet) std::cout << "\tchoosing move\n";
 			next_move = bot2.chooseMove(state, options);
-			if (quiet) std::cout << "\tmoving\n";
+			if (!quiet) std::cout << "\tmoving\n";
 			g.makeMove(next_move.add_rem, next_move.x, next_move.y);
-			bot2.add_state(serialize(g.flatten()));
+			bot2.add_state(g.flatten());
 		}
 	}
 	giveReward();
-
-	//print_states(bot1);
-
 	reset();
 }
 
@@ -82,10 +80,17 @@ void TheGym::train(int rounds, bool quiet, bool start_fresh){
 		state.readPolicy();
 	}
 	for(int i = 0; i < rounds; i++){
-		std::cout << "\nRound: " << i + 1 << endl;
-		if(quiet){	
-			beQuiet();
+		
+		if((i + 1) % 10 == 0){
+			std::cout << "On round: " << i + 1;
+			std::cout << endl;
 		}
+		
+		
+		if(i != 0 && i % 1000 == 0){
+			savePolicy();
+		}
+
 		playRound(quiet);
 	}
 }
@@ -100,5 +105,6 @@ State TheGym::getState() const {
 }
 
 void TheGym::savePolicy() {
+	cout << "state_vals size: " << state.size() << endl;
 	state.savePolicy();
 }

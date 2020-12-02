@@ -8,11 +8,7 @@ game:
 	g++ -std=c++11 -o game src/main/pvpGame.cpp $(MAIN_SRC_FILES)
 
 aigame:
-	g++ -std=c++11 -o aigame src/main/computerGame.cpp $(MAIN_SRC_FILES) src/ai/AIGame.cpp
+	g++ -std=c++11 -o aigame src/main/computerGame.cpp $(MAIN_SRC_FILES) src/ai/AIGame.cpp src/ai/State.cpp
 
 train:
 	g++ -std=c++11 -o train src/main/train.cpp $(MAIN_SRC_FILES) $(AI_SRC_FILES)
-
-test:
-	g++ -std=c++11 -o test1 tests/testAssignmentOperators.cpp $(MAIN_SRC_FILES)
-	

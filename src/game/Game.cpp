@@ -1,5 +1,5 @@
 #include "../../include/game/Game.h"
-#include "../../include/game/Utility.h"
+#include "../../include/game/utility.h"
 #include <functional>
 #include <string>
 #include <vector>
@@ -31,7 +31,7 @@ bool Game::canRemove() const {
 
 bool Game::finished() const {
 	return (
-		gameboard.isFull() ||
+		get_possibilities().size() == 0 ||
 		getScore(1) >= WINNING_SCORE ||
 		getScore(2) >= WINNING_SCORE
 	);
@@ -180,6 +180,7 @@ string Game::drawBall(string skel, int index, int playerId) const{
 }
 
 void Game::displayBoard() const {
+
 	string display = (
 		"               *     *     *\n"
 		"               *     *     *              Current Score\n"
@@ -198,51 +199,57 @@ void Game::displayBoard() const {
 			ball_indices.push_back(i);
 		}
 	}
+	string balls = gameboard.flatten();
 
-	vector<int> balls = gameboard.flatten();
+	std::cout << balls.size() << "\n";
 
+	cout << "DISPLAYING BOARD3\n";
 	for(int i = 0; i < 27; i++){
-		display = drawBall(display, ball_indices[i], balls[i]);
+		display = drawBall(display, ball_indices[i], balls[i] - '0');
 	}
 
+	cout << "DISPLAYING BOARD4\n";
 	cout << display << endl;
 }
 
-vector<pair<int, int>> Game::availableAdds() const {
+vector<pair<int, int> > Game::availableAdds() const {
 	return ballsLeft() 
 		? gameboard.getAvailableAdds() 
-		: vector<pair<int, int>>();
+		: vector<pair<int, int> >();
 }
 
-vector<pair<int, int>> Game::availableRemoves() const {
+vector<pair<int, int> > Game::availableRemoves() const {
 	return canRemove() 
 		? gameboard.getAvailableRemoves() 
-		: vector<pair<int, int>>();
+		: vector<pair<int, int> >();
 }
 
-vector<int> Game::flatten() const {
+string Game::flatten() const {
 	return gameboard.flatten();
 }
 
-vector<int> Game::get_state_after(Move move) const {
+string Game::get_state_after(Move move) const {
 	Game dummy_game = *this;
 	dummy_game.makeMove(move.add_rem, move.x, move.y);
 	return dummy_game.flatten();
 }
 
-Dict<Move, string> Game::get_possibilities() const {
-	Dict<Move,string> possibilities;
+unordered_map<string, Move> Game::get_possibilities() const {
+	unordered_map<string, Move> possibilities;
+	//Dict<Move, vector<int> > possibilities;
 	vector<pair<int, int> > adds = availableAdds();
 	vector<pair<int, int> > removes = availableRemoves();
 
 	for(int i = 0; i < this->availableAdds().size(); i++){
 		Move temp = {ADD, adds[i].first, adds[i].second};
-		possibilities.add(temp, serialize(get_state_after(temp)));
+		//possibilities.add(temp, get_state_after(temp));
+		possibilities[get_state_after(temp)] = temp;
 	}
 
 	for(int i = 0; i < this->availableRemoves().size(); i++){
 		Move temp = {REMOVE, removes[i].first, removes[i].second};
-		possibilities.add(temp, serialize(get_state_after(temp)));
+		//possibilities.add(temp, get_state_after(temp));
+		possibilities[get_state_after(temp)] = temp;
 	}
 
 	return possibilities;

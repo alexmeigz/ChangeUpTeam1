@@ -3,6 +3,7 @@
 #include <vector>
 #include <utility>
 #include "../../include/ai/AIGame.h"
+#include "../../include/ai/State.h"
 #include "../../include/game/Game.h"
 #include "../../include/game/utility.h"
 
@@ -10,6 +11,7 @@ AIGame::AIGame(int playerId) : PLAYER_ID(playerId) {
 	if (playerId == 2) {
 		makeMove("", -1, -1);
 	}
+	state.readPolicy();
 }
 
 bool AIGame::makeMove(std::string move, int x, int y) {
@@ -23,21 +25,44 @@ bool AIGame::makeMove(std::string move, int x, int y) {
 }
 
 void AIGame::AIMakeMove(){
-	vector<pair<int, int> > availableAdds = Game::availableAdds(),
-		availableRemoves = Game::availableRemoves();
-	int addSize = availableAdds.size();
+	Move m = getMove();
+	Game::makeMove(m.add_rem, m.x, m.y);
+}
 
-	// available adds now contains all possible move pairs
-	availableAdds.insert(std::end(availableAdds), std::begin(availableRemoves), std::end(availableRemoves));
+Move AIGame::getMove(){
+	// if policy is empty then do random:
+	srand(time(0));
 
-	int num = rand() % availableAdds.size();
+	unordered_map<string, Move> possible_moves = Game::get_possibilities();
 
-	std::string computerMove = num < addSize ? "ADD" : "REMOVE";
-	int x = availableAdds[num].first,
-	    y = availableAdds[num].second;
+	if(possible_moves.size() == 0){
+		cerr << "no possible moves ya dingus" << endl;
+		exit(1);
+	}
 
-	//std::cout << computerMove << " " << x << "," << y << std::endl;
-	Game::makeMove(computerMove, x, y);
+	if(state.size() == 0 || (rand() % 100) <= 0.3 * 100){
+		unordered_map<string, Move>::iterator item = possible_moves.begin();
+		
+		int move_index = rand() % possible_moves.size();
+		advance(item, move_index);
+
+		return item->second;
+	}
+
+	string g_key;
+	bool foundValue = false;
+
+	for(pair<string, Move> state_move : possible_moves){
+		if(state.has_key(state_move.first) &&
+			(!foundValue ||
+			state.get(state_move.first, Game::whoseTurn()) >
+			state.get(g_key, Game::whoseTurn()))) {
+
+			g_key = state_move.first;	
+			foundValue = true;
+		}
+	}
+	return possible_moves[g_key];
 }
 
 void AIGame::displayBoard() const {
@@ -63,10 +88,10 @@ void AIGame::displayBoard() const {
 		}
 	}
 
-	vector<int> balls = gameboard.flatten();
+	std::string balls = gameboard.flatten();
 
 	for(int i = 0; i < 27; i++){
-		display = drawBall(display, ball_indices[i], balls[i]);
+		display = drawBall(display, ball_indices[i], balls[i] - '0');
 	}
 
 	cout << display << endl;

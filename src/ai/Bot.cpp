@@ -1,8 +1,16 @@
 #include "../../include/ai/Bot.h"
 #include "../../include/ai/State.h"
 
+using namespace std;
+
 Bot::Bot(string name_str, int id): Player(id){
 	name = name_str;
+	for(int i = 0; i < 27; i++){
+		this->rotate_indices[i] =
+			((i % 9) % 3) * 9 +
+			((i / 3) % 3) * 3 +
+			(2 - (i / 9));
+	}
 }
 
 void Bot::reset(){
@@ -20,40 +28,66 @@ vector<string> Bot::getStates() const {
 }
 
 void Bot::feedReward(State &stateDict, double reward) {
+	string state;
 	for (int i = states.size() - 1; i >= 0; i--) {
-		string state = states[i];
+		state = states[i];
 
+		//cout << "updating dict entry" << endl;
 		if(!stateDict.has_key(state)){
 			stateDict.set(state, 0, playerGetId());
 		}
 
-		double current = stateDict.get(state, playerGetId());
-		stateDict.set(state, current + alpha * (gamma * reward - current), playerGetId());
-		reward = stateDict.get(state, playerGetId());
+		double currentVal = stateDict.get(state, playerGetId());
+		double newVal = currentVal + alpha * (gamma * reward - currentVal);
+
+		stateDict.set(state, newVal, playerGetId());
+		reward = newVal;
 	}
 }
 
-Move Bot::chooseMove(State &stateDict, Dict<Move, string> possible_moves){
-	// if possible_moves is empty then do random:
-	if(stateDict.size() == 0 || (rand() % 100) <= explore_rate * 100){
-		std::cout << "\t\trandom move\n";
-		srand(time(0));
-		int move_index = rand() % possible_moves.size();
-		return possible_moves.index_get(move_index).first;
+Move Bot::chooseMove(State &stateDict, unordered_map<string, Move> possible_moves){
+	// if policy is empty then do random:
+	srand(time(0));
+
+	if(possible_moves.size() == 0){
+		cerr << "no possible moves ya dingus" << endl;
+		exit(1);
 	}
 
-	std::cout << "\t\tbest move of " << stateDict.size() << "\n";
+	if(stateDict.size() == 0 || (rand() % 100) <= explore_rate * 100){
+		unordered_map<string, Move>::iterator item = possible_moves.begin();
+		
+		int move_index = rand() % possible_moves.size();
+		advance(item, move_index);
 
-	int greedy_index = -1;
-	for(int i = 0; i < possible_moves.size(); i++){
-		//std::cout << "i: " << i << " : " << possible_moves.index_get(i).second[0] << endl;
-		if(	stateDict.has_key(possible_moves.index_get(i).second) &&
-			(greedy_index == -1 ||
-			stateDict.get(possible_moves.index_get(i).second, playerGetId()) >
-			stateDict.get(possible_moves.index_get(greedy_index).second, playerGetId()))){
-			
-			greedy_index = i;	
+		return item->second;
+	}
+
+	string g_key;
+	bool foundValue = false;
+
+	for(pair<string, Move> state_move : possible_moves){
+		if(stateDict.has_key(state_move.first) &&
+			(!foundValue ||
+			stateDict.get(state_move.first, playerGetId()) >
+			stateDict.get(g_key, playerGetId()))) {
+
+			g_key = state_move.first;	
+			foundValue = true;
 		}
 	}
-	return possible_moves.index_get(greedy_index).first;
+	return possible_moves[g_key];
+}
+
+
+unordered_map<string, double> Bot::getStateVals() const {
+	return state_vals;	
+}
+
+string Bot::rotate(string state){
+	string rotated = state;
+	for(int i = 0; i < 27; i++){
+		rotated[this->rotate_indices[i]] = state[i];
+	}
+	return rotated;
 }
