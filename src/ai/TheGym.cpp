@@ -3,6 +3,7 @@
 #include "../../include/game/utility.h"
 #include <fstream>
 #include <iostream>
+#include <chrono>
 #include <string>
 #include <vector>
 #include <utility>
@@ -76,9 +77,12 @@ void TheGym::playRound(bool quiet){
 
 void TheGym::train(int rounds, bool quiet, bool start_fresh, int print_freq){
 	std::cout << "Starting training...\n";
+	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
 	if(!start_fresh){
 		state.readPolicy();
 	}
+
 	for(int i = 0; i < rounds; i++){
 		
 		if((i + 1) % print_freq == 0){
@@ -93,6 +97,13 @@ void TheGym::train(int rounds, bool quiet, bool start_fresh, int print_freq){
 
 		playRound(quiet);
 	}
+	std::cout << "finished training" << endl;
+	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+	std::cout << "Time difference = " 
+		<< std::chrono::duration_cast<std::chrono::seconds>(end - begin).count()
+		<< "[sec]" << std::endl;
+
+	savePolicy();
 }
 
 void TheGym::beQuiet(){
