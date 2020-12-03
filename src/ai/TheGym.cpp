@@ -74,14 +74,14 @@ void TheGym::playRound(bool quiet){
 	reset();
 }
 
-void TheGym::train(int rounds, bool quiet, bool start_fresh){
+void TheGym::train(int rounds, bool quiet, bool start_fresh, int print_freq){
 	std::cout << "Starting training...\n";
 	if(!start_fresh){
 		state.readPolicy();
 	}
 	for(int i = 0; i < rounds; i++){
 		
-		if((i + 1) % 10 == 0){
+		if((i + 1) % print_freq == 0){
 			std::cout << "On round: " << i + 1;
 			std::cout << endl;
 		}

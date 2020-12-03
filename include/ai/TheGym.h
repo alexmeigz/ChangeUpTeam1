@@ -25,10 +25,11 @@ class TheGym {
 		//Pre-condition: none
 		//Post-condition: plays one training round without printing individual turns
 
-		void train(int rounds, bool quiet=false, bool start_fresh=false);
-		//Pre-condition: takes an int number of rounds and bool quiet (default false)
-		//Post-condition: plays that many number of rounds, with fewer
-		//prints if quiet is true
+		void train(int rounds, bool quiet=false, bool start_fresh=false, int print_freq=10);
+		//Pre-condition: takes an int number of rounds, bools quiet and start_fresh, and int print_freq
+		//Post-condition: trains on that many rounds, reporting current round on multiples of print_freq,
+		//prints fewer outputs to console if quiet is true and overwrites policy file from scratch if
+		//start_fresh is true
 
 		void beQuiet();
 		//Pre-condition: none
