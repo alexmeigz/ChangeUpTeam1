@@ -1,7 +1,7 @@
 #include <chrono>
 #include "../../include/ai/TheGym.h"
 
-const int TRAINING_ROUNDS = 1000000;
+const int TRAINING_ROUNDS = 10000;
 const int PRINT_ROUND_FREQ = 50;
 const bool QUIET = true;
 const bool START_FRESH = false;

@@ -12,3 +12,4 @@ aigame:
 
 train:
 	g++ -std=c++11 -o train src/main/train.cpp $(MAIN_SRC_FILES) $(AI_SRC_FILES)
+

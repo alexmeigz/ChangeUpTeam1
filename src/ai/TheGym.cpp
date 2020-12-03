@@ -10,7 +10,10 @@
 TheGym::TheGym() : 	
 		bot1("bot1", 1),
 		bot2("bot2", 2),
-		g(){}
+		g(){
+
+	state.readPolicy();
+}
 
 void TheGym::giveReward(){
 	if(g.winner() == 1){
