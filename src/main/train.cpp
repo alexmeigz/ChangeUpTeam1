@@ -1,7 +1,12 @@
 #include <chrono>
 #include "../../include/ai/TheGym.h"
 
-int main() {
+const int TRAINING_ROUNDS = 1000000;
+const int PRINT_ROUND_FREQ = 50;
+const bool QUIET = true;
+const bool START_FRESH = false;
+
+int main(){
 	TheGym model;
 	//model.train(10);
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
