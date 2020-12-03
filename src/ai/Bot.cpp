@@ -80,11 +80,6 @@ Move Bot::chooseMove(State &stateDict, unordered_map<string, Move> possible_move
 	return possible_moves[g_key];
 }
 
-
-unordered_map<string, double> Bot::getStateVals() const {
-	return state_vals;	
-}
-
 string Bot::rotate(string state){
 	string rotated = state;
 	for(int i = 0; i < 27; i++){

@@ -34,11 +34,6 @@ class Bot : public Player {
 		//Post-condition: chooses a move randomly or the best move according to its policy
 		//the proportion of random moves is the Bot's explore_rate
 
-
-		unordered_map<string, double> getStateVals() const;
-		//Pre-condition: none
-		//Post-condition: returns stateVals dictionary
-
 		vector<string> getStates() const;
 		//Pre-condition: none
 		//Post-condition: returns states 2d vector
