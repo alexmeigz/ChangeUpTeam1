@@ -35,8 +35,12 @@ class TheGym {
 		//Post-condition: sets Bots to quiet
 
 		State getState() const;
+		//Pre-condition: none
+		//Post-condition: returns member state
 
 		void savePolicy();
+		//Pre-condition: none
+		//Post-condition: saves results of training in policy file
 
 	private:
 		Bot bot1;

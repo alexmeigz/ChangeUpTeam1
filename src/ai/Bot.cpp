@@ -54,6 +54,7 @@ Move Bot::chooseMove(State &stateDict, unordered_map<string, Move> possible_move
 		exit(1);
 	}
 
+	//use rng to determine whether to move random (explore) or follow policy
 	if(stateDict.size() == 0 || (rand() % 100) <= explore_rate * 100){
 		unordered_map<string, Move>::iterator item = possible_moves.begin();
 		

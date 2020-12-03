@@ -53,13 +53,14 @@ class Bot : public Player {
 
 		string name;
  		bool quiet = false;
+ 		//prints more training updates if quiet is false
  
 	private:
 		double alpha = 0.2; //learning rate
 		double gamma = 0.9; //decay rate
 		double explore_rate = 0.3; //random move rate
 
-		unordered_map<string, double> state_vals;
+		//unordered_map<string, double> state_vals;
 		vector<string> states; //tracks training round
 		unordered_map<int, int> rotate_indices;
 };
