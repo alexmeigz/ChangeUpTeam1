@@ -87,7 +87,6 @@ void TheGym::train(int rounds, bool quiet, bool start_fresh){
 			std::cout << endl;
 		}
 		
-		
 		if(i != 0 && i % 1000 == 0){
 			savePolicy();
 		}

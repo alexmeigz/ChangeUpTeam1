@@ -63,10 +63,20 @@ void State::readPolicy(){
 
     std::cout << "Loading in " << pair_count << " states\n";
 
+    int size = 0;
+
 	for(int i = 0; i < pair_count; i++){
 		file >> dummy_val;
 		file >> dummy_state;
+
 		state_vals[dummy_state] = dummy_val;
+
+        if (size + 1 != state_vals.size()) {
+            cout << i << " " << dummy_val << " " << dummy_state << "\n";
+            exit(1);
+        }
+
+        size = state_vals.size();
 	}
 	file.close();
 }
