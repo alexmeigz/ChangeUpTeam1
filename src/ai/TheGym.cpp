@@ -10,10 +10,7 @@
 TheGym::TheGym() : 	
 		bot1("bot1", 1),
 		bot2("bot2", 2),
-		g(){
-
-	state.readPolicy();
-}
+		g(){}
 
 void TheGym::giveReward(){
 	if(g.winner() == 1){
@@ -81,6 +78,7 @@ void TheGym::train(int rounds, bool quiet, bool start_fresh){
 	std::cout << "Starting training...\n";
 	if(!start_fresh){
 		state.readPolicy();
+		std::cout << "Loaded in " << state.size() << " states\n";
 	}
 	for(int i = 0; i < rounds; i++){
 		
