@@ -201,14 +201,10 @@ void Game::displayBoard() const {
 	}
 	string balls = gameboard.flatten();
 
-	std::cout << balls.size() << "\n";
-
-	cout << "DISPLAYING BOARD3\n";
 	for(int i = 0; i < 27; i++){
 		display = drawBall(display, ball_indices[i], balls[i] - '0');
 	}
 
-	cout << "DISPLAYING BOARD4\n";
 	cout << display << endl;
 }
 

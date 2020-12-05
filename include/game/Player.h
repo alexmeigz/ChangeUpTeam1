@@ -32,7 +32,7 @@ class Player {
 
 		//Pre-Condition: no input required
 		//Post-Condition: increase the value of variable playerBallCount by 1
-		void  playerAddBall();
+		void playerAddBall();
 
 		//Pre-Condition:  no input required
 		//Post-Condition:  returns the number of balls the player has left

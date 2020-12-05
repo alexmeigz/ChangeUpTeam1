@@ -19,7 +19,7 @@ void Player::playerRemoveBall(){
 
 //Pre-Condition: no input required
 //Post-Condition: increase the value of variable playerBallCount by 1
-void  Player::playerAddBall(){
+void Player::playerAddBall(){
 	++playerBallCount;
 }
 

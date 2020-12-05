@@ -16,7 +16,7 @@ int GameBoard::removeBall(int x, int y) {
 	if (!inRange(x, SIZE) || !inRange(y, SIZE)) {
 		return false;
 	}
-	bool result = board[x][y].pop();
+	int result = board[x][y].pop();
 
 	if (result) {
 		--numBalls;

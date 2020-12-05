@@ -61,8 +61,6 @@ void State::readPolicy(){
 	int pair_count;
 	file >> pair_count;
 
-    std::cout << "Loading in " << pair_count << " states\n";
-
     int size = 0;
 
 	for(int i = 0; i < pair_count; i++){
