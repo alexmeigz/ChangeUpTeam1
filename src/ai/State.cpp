@@ -61,20 +61,11 @@ void State::readPolicy(){
 	int pair_count;
 	file >> pair_count;
 
-    int size = 0;
-
 	for(int i = 0; i < pair_count; i++){
 		file >> dummy_val;
 		file >> dummy_state;
 
 		state_vals[dummy_state] = dummy_val;
-
-        if (size + 1 != state_vals.size()) {
-            cout << i << " " << dummy_val << " " << dummy_state << "\n";
-            exit(1);
-        }
-
-        size = state_vals.size();
 	}
 	file.close();
 }
