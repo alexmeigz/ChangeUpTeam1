@@ -1,14 +1,14 @@
-# Change Up Project: Team 1
+# Change Up Project: Team Uno
 
 Team Members: <br/>
 - Brandon Lee 
+- Kelly Lin
+- Erin Ambriz
 - Amy Hao
 - Matthew Ho
+- William Huang
 - Alex Rudolph
 - Max Shen
-- Kelly Lin
-- William Huang
-- Erin Ambriz
 
 ## Goal
 
